@@ -1,34 +1,33 @@
 using Godot;
 
-
 namespace pdxpartyparrot.ssjAug2022
 {
-    public class MainMenu : Node
-    {
-        [Export]
-        private string _initialLevel = "level01.tscn";
+	public class MainMenu : Node
+	{
+		[Export]
+		private PackedScene _initialLevelScene;
 
-        #region Godot Lifecycle
+		#region Godot Lifecycle
 
-        public override void _Ready()
-        {
-        }
+		public override void _Ready()
+		{
+		}
 
-        #endregion
+		#endregion
 
-        private void LoadInitialLevel()
-        {
-            GD.Print($"Loading initial level ${_initialLevel}...");
-            GetTree().ChangeScene($"res://scenes/levels/{_initialLevel}");
-        }
+		private void LoadInitialLevel()
+		{
+			GD.Print($"Loading initial level ${_initialLevelScene.ResourceName}...");
+			GetTree().ChangeSceneTo(_initialLevelScene);
+		}
 
-        #region Signals
+		#region Signals
 
-        private void _on_Play_pressed()
-        {
-            LoadInitialLevel();
-        }
+		private void _on_Play_pressed()
+		{
+			LoadInitialLevel();
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }
