@@ -5,7 +5,6 @@
 [sub_resource type="CubeMesh" id=2]
 
 [node name="Ground" type="StaticBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0 )

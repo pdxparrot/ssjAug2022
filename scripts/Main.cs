@@ -6,11 +6,21 @@ namespace pdxpartyparrot.ssjAug2022
     public class Main : Node
     {
         [Export]
-        private string _mainLevel = "level01.tscn";
+        private string _initialLevel = "level01.tscn";
+
+        #region Godot Lifecycle
 
         public override void _Ready()
         {
-            GetTree().ChangeScene($"res://scenes/{_mainLevel}");
+            LoadInitialLevel();
+        }
+
+        #endregion
+
+        private void LoadInitialLevel()
+        {
+            GD.Print($"Loading initial level ${_initialLevel}...");
+            GetTree().ChangeScene($"res://scenes/{_initialLevel}");
         }
     }
 }

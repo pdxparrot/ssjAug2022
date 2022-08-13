@@ -12,6 +12,8 @@ namespace pdxpartyparrot.ssjAug2022
 
         private Vector3 _velocity = Vector3.Zero;
 
+        #region Godot Lifecycle
+
         public override void _PhysicsProcess(float dt)
         {
             Vector3 heading = Vector3.Zero;
@@ -48,5 +50,7 @@ namespace pdxpartyparrot.ssjAug2022
             // move the player
             _velocity = MoveAndSlide(_velocity, Vector3.Up);
         }
+
+        #endregion
     }
 }
