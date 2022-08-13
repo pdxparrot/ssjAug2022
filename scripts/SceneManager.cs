@@ -11,6 +11,7 @@ namespace pdxpartyparrot.ssjAug2022
         public override void _Ready()
         {
             _loadingScreen = GetNode<LoadingScreen>("/root/LoadingScreen");
+            _loadingScreen.Hide();
         }
 
         #endregion

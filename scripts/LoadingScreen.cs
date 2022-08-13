@@ -2,7 +2,7 @@ using Godot;
 
 namespace pdxpartyparrot.ssjAug2022
 {
-    public class LoadingScreen : Node
+    public class LoadingScreen : Spatial
     {
         #region Godot Lifecycle
 
@@ -11,15 +11,5 @@ namespace pdxpartyparrot.ssjAug2022
         }
 
         #endregion
-
-        public void Show()
-        {
-            GD.Print("[LoadingScreen] Show");
-        }
-
-        public void Hide()
-        {
-            GD.Print("[LoadingScreen] Hide");
-        }
     }
 }
