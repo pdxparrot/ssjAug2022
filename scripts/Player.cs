@@ -21,7 +21,7 @@ namespace pdxpartyparrot.ssjAug2022
             _pivot = GetNode<Spatial>("Pivot");
         }
 
-        public override void _PhysicsProcess(float dt)
+        public override void _PhysicsProcess(float delta)
         {
             Vector3 heading = Vector3.Zero;
 
@@ -52,7 +52,7 @@ namespace pdxpartyparrot.ssjAug2022
             _velocity.z = heading.z * _speed;
 
             // gravity
-            _velocity.y -= _gravity * dt;
+            _velocity.y -= _gravity * delta;
 
             // move the player
             _velocity = MoveAndSlide(_velocity, Vector3.Up);
