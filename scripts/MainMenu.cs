@@ -19,7 +19,7 @@ namespace pdxpartyparrot.ssjAug2022
         private void LoadInitialLevel()
         {
             GD.Print($"Loading initial level ${_initialLevel}...");
-            GetTree().ChangeScene($"res://scenes/{_initialLevel}");
+            GetTree().ChangeScene($"res://scenes/levels/{_initialLevel}");
         }
 
         #region Signals
