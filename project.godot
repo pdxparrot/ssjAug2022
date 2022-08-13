@@ -24,6 +24,12 @@ config/name="ssjAug2022"
 run/main_scene="res://scenes/main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GameManager="*res://scripts/GameManager.cs"
+SceneManager="*res://scripts/SceneManager.cs"
+DebugMenu="*res://scenes/debug_menu.tscn"
+
 [editor]
 
 version_control_autoload_on_startup=true

@@ -2,32 +2,34 @@ using Godot;
 
 namespace pdxpartyparrot.ssjAug2022
 {
-	public class MainMenu : Node
-	{
-		[Export]
-		private PackedScene _initialLevelScene;
+    public class MainMenu : Node
+    {
+        [Export]
+        private PackedScene _initialLevelScene;
 
-		#region Godot Lifecycle
+        private SceneManager _sceneManager;
 
-		public override void _Ready()
-		{
-		}
+        #region Godot Lifecycle
 
-		#endregion
+        public override void _Ready()
+        {
+            _sceneManager = GetNode<SceneManager>("/root/SceneManager");
+        }
 
-		private void LoadInitialLevel()
-		{
-			GD.Print($"Loading initial level ${_initialLevelScene.ResourceName}...");
-			GetTree().ChangeSceneTo(_initialLevelScene);
-		}
+        #endregion
 
-		#region Signals
+        private void LoadInitialLevel()
+        {
+            _sceneManager.LoadLevel(_initialLevelScene);
+        }
 
-		private void _on_Play_pressed()
-		{
-			LoadInitialLevel();
-		}
+        #region Signals
 
-		#endregion
-	}
+        private void _on_Play_pressed()
+        {
+            LoadInitialLevel();
+        }
+
+        #endregion
+    }
 }
