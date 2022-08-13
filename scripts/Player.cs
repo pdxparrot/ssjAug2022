@@ -20,7 +20,7 @@ namespace pdxpartyparrot.ssjAug2022
                 heading.x += 1.0f;
             }
 
-            if(Input.IsActionPressed("move_right")) {
+            if(Input.IsActionPressed("move_left")) {
                 heading.x -= 1.0f;
             }
 
