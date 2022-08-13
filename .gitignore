@@ -10,4 +10,9 @@ export.cfg
 .mono/
 data_*/
 
+# Added by cargo
+
+/target
+/Cargo.lock
+
 build/
