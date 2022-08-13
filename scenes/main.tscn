@@ -7,6 +7,7 @@
 [node name="Main" type="Spatial"]
 
 [node name="Ground" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ground"]
 transform = Transform( 30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0 )
