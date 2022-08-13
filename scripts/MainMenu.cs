@@ -3,7 +3,7 @@ using Godot;
 
 namespace pdxpartyparrot.ssjAug2022
 {
-    public class Main : Node
+    public class MainMenu : Node
     {
         [Export]
         private string _initialLevel = "level01.tscn";
@@ -12,7 +12,6 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _Ready()
         {
-            LoadInitialLevel();
         }
 
         #endregion
@@ -22,5 +21,14 @@ namespace pdxpartyparrot.ssjAug2022
             GD.Print($"Loading initial level ${_initialLevel}...");
             GetTree().ChangeScene($"res://scenes/{_initialLevel}");
         }
+
+        #region Signals
+
+        private void _on_Play_pressed()
+        {
+            LoadInitialLevel();
+        }
+
+        #endregion
     }
 }
