@@ -4,15 +4,14 @@ namespace pdxpartyparrot.ssjAug2022
 {
     public class Level : Node
     {
-        [Export]
-        private PackedScene _playerHUDScene;
+        private GameUIManager _gameUIManager;
 
         #region Godot Lifecycle
 
         public override void _Ready()
         {
-            var playerHUD = _playerHUDScene.Instance();
-            AddChild(playerHUD);
+            _gameUIManager = GetNode<GameUIManager>("/root/GameUiManager");
+            _gameUIManager.ShowHUD();
         }
 
         #endregion

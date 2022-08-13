@@ -26,9 +26,11 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GameManager="*res://scripts/GameManager.cs"
 SceneManager="*res://scripts/SceneManager.cs"
+GameManager="*res://scripts/GameManager.cs"
+GameUiManager="*res://scenes/managers/game_ui_manager.tscn"
 DebugMenu="*res://scenes/debug_menu.tscn"
+LoadingScreen="*res://scenes/loading_screen.tscn"
 
 [editor]
 

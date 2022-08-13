@@ -18,16 +18,11 @@ namespace pdxpartyparrot.ssjAug2022
 
         #endregion
 
-        private void LoadInitialLevel()
-        {
-            _sceneManager.LoadLevel(_initialLevelScene);
-        }
-
         #region Signals
 
         private void _on_Play_pressed()
         {
-            LoadInitialLevel();
+            _sceneManager.LoadLevel(_initialLevelScene);
         }
 
         #endregion

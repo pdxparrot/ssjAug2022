@@ -12,7 +12,14 @@ namespace pdxpartyparrot.ssjAug2022
 
         private Vector3 _velocity = Vector3.Zero;
 
+        private Spatial _pivot;
+
         #region Godot Lifecycle
+
+        public override void _Ready()
+        {
+            _pivot = GetNode<Spatial>("Pivot");
+        }
 
         public override void _PhysicsProcess(float dt)
         {
@@ -37,7 +44,7 @@ namespace pdxpartyparrot.ssjAug2022
             // look in the direction we're moving
             if(heading != Vector3.Zero) {
                 heading = heading.Normalized();
-                GetNode<Spatial>("Pivot").LookAt(Translation + heading, Vector3.Up);
+                _pivot.LookAt(Translation + heading, Vector3.Up);
             }
 
             // movement

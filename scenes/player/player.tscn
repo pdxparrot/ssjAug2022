@@ -8,7 +8,7 @@ height = 2.0
 
 [sub_resource type="CapsuleMesh" id=2]
 
-[node name="Player" type="KinematicBody"]
+[node name="Main" type="KinematicBody"]
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
