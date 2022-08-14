@@ -10,23 +10,19 @@ namespace pdxpartyparrot.ssjAug2022.UI
         [Export]
         public Label _timer;
 
-        private GameManager _gameManager;
-
         #region Godot Lifecycle
 
         public override void _Ready()
         {
-            _gameManager = GetNode<GameManager>("/root/GameManager");
-
             _timer = GetNode<Label>("TEMP TIMER");
         }
 
         public override void _Process(float delta)
         {
-            if(_gameManager.IsGameOver) {
+            if(GameManager.Instance.IsGameOver) {
                 _timer.Text = "0";
             } else {
-                _timer.Text = $"{_gameManager.TimeRemaining}";
+                _timer.Text = $"{GameManager.Instance.TimeRemaining}";
             }
         }
 

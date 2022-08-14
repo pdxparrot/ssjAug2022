@@ -1,9 +1,11 @@
 using Godot;
 
+using pdxpartyparrot.ssjAug2022.Util;
+
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
-    // singleton
-    public class SpawnManager : Node
+    public class SpawnManager : Singleton<SpawnManager>
+    {
     {
         [Export]
         private PackedScene _playerScene;
@@ -12,6 +14,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public override void _Ready()
         {
+            base._Ready();
         }
 
         #endregion

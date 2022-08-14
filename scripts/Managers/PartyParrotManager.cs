@@ -3,9 +3,11 @@ using Godot;
 using System;
 using System.Globalization;
 
+using pdxpartyparrot.ssjAug2022.Util;
+
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
-    public sealed class PartyParrotManager : Node
+    public sealed class PartyParrotManager : Singleton<PartyParrotManager>
     {
         #region Events
 
@@ -59,6 +61,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public override void _Ready()
         {
+            base._Ready();
+
             // TODO: is this the best place for this log?
             GD.Print("Party Parrot Engine starting up...");
             GD.Print($"Godot version: {Engine.GetVersionInfo()["string"]}");

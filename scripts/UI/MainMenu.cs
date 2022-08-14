@@ -6,13 +6,11 @@ namespace pdxpartyparrot.ssjAug2022.UI
 {
     public class MainMenu : Node
     {
-        private GameManager _gameManager;
-
         #region Godot Lifecycle
 
         public override void _Ready()
         {
-            _gameManager = GetNode<GameManager>("/root/GameManager");
+
         }
 
         #endregion
@@ -21,7 +19,7 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         private void _on_Play_pressed()
         {
-            _gameManager.StartGame();
+            GameManager.Instance.StartGame();
         }
 
         #endregion

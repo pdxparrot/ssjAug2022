@@ -1,11 +1,11 @@
 using Godot;
 
 using pdxpartyparrot.ssjAug2022.UI;
+using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
-    // singleton
-    public class GameUIManager : Node
+    public class GameUIManager : Singleton<GameUIManager>
     {
         [Export]
         private PackedScene _playerHUDScene;
@@ -16,6 +16,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public override void _Ready()
         {
+            base._Ready();
+
             CreatePlayerHUD();
         }
 

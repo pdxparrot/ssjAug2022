@@ -1,9 +1,10 @@
 using Godot;
 
+using pdxpartyparrot.ssjAug2022.Util;
+
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
-    // singleton
-    public class GameManager : Node
+    public class GameManager : Singleton<GameManager>
     {
         [Export]
         private PackedScene _mainMenuScene;
@@ -19,13 +20,11 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         private float _timer;
         public int TimeRemaining => (int)_timer;
 
-        private SceneManager _sceneManager;
-
         #region Godot Lifecycle
 
         public override void _Ready()
         {
-            _sceneManager = GetNode<SceneManager>("/root/SceneManager");
+            base._Ready();
 
             _isGameOver = false;
         }
@@ -47,14 +46,14 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         {
             GD.Print("[GameManager] Starting game ...");
 
-            _sceneManager.LoadLevel(_initialLevelScene, () => _timer = 30.0f);
+            SceneManager.Instance.LoadLevel(_initialLevelScene, () => _timer = 30.0f);
         }
 
         public void GameOver()
         {
             GD.Print("[GameManager] Game over!");
 
-            _sceneManager.LoadLevel(_mainMenuScene);
+            SceneManager.Instance.LoadLevel(_mainMenuScene);
         }
     }
 }

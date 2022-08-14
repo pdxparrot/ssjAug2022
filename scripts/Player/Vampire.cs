@@ -6,8 +6,6 @@ namespace pdxpartyparrot.ssjAug2022.Player
 {
     public class Vampire : SimplePlayer
     {
-        private GameManager _gameManager;
-
         [Export]
         private int _maxHealth = 10;
 
@@ -19,8 +17,6 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public override void _Ready()
         {
-            _gameManager = GetNode<GameManager>("/root/GameManager");
-
             _currentHealth = _maxHealth;
 
             base._Ready();
@@ -57,7 +53,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
         {
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
             if(IsDead) {
-                _gameManager.GameOver();
+                GameManager.Instance.GameOver();
             }
         }
     }

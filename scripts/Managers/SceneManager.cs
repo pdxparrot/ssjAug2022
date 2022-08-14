@@ -2,12 +2,12 @@ using Godot;
 
 using System;
 
+using pdxpartyparrot.ssjAug2022.Util;
+
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
-    // singleton
-    // TODO: we should thread loading the resource
-    // if the number of stages is high
-    public class SceneManager : Node
+    // TODO: we should thread loading the resource if the number of stages is high
+    public class SceneManager : Singleton<SceneManager>
     {
         [Export]
         private ulong maxLoadMs = 100;
@@ -26,6 +26,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public override void _Ready()
         {
+            base._Ready();
+
             _loadingScreen = GetNode<LoadingScreen>("/root/LoadingScreen");
             _loadingScreen.Hide();
 
