@@ -11,7 +11,7 @@ height = 2.0
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 0.999987, -0.00365248, -0.00347022, -0.00349182, -0.00592745, -0.999976, 0.00363183, 0.999976, -0.00594012, 0, 2, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 shape = SubResource( 1 )
 
 [node name="Pivot" type="Spatial" parent="."]
