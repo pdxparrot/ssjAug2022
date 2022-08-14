@@ -7,7 +7,6 @@ namespace pdxpartyparrot.ssjAug2022.UI
     public class PlayerHUD : Control
     {
         // TODO: temp hack
-        [Export]
         public Label _timer;
 
         #region Godot Lifecycle

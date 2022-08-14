@@ -7,7 +7,7 @@ namespace pdxpartyparrot.ssjAug2022.World
     public class SpawnPoint : Spatial
     {
         [Export]
-        private string _tag;
+        private string _tag = string.Empty;
 
         public string Tag => _tag;
 
