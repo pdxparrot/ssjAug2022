@@ -10,6 +10,8 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _Ready()
         {
+            SpawnManager.Instance.Initialize();
+
             GameUIManager.Instance.ShowHUD();
         }
 

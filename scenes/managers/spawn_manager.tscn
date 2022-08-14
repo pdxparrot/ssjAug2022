@@ -6,3 +6,4 @@
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
 _playerScene = ExtResource( 2 )
+_playerSpawnPointTags = PoolStringArray( "player" )
