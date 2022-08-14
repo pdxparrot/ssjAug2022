@@ -4,7 +4,7 @@ using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
-    public class GameManager : Singleton<GameManager>
+    public class GameManager : SingletonNode<GameManager>
     {
         [Export]
         private PackedScene _mainMenuScene;

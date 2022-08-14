@@ -2,7 +2,7 @@ using Godot;
 
 namespace pdxpartyparrot.ssjAug2022.Util
 {
-    public class Singleton<T> : Node where T : Singleton<T>
+    public class SingletonSpatial<T> : Spatial where T : SingletonSpatial<T>
     {
         private static T instance;
 

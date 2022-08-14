@@ -7,7 +7,7 @@ using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
-    public sealed class PartyParrotManager : Singleton<PartyParrotManager>
+    public sealed class PartyParrotManager : SingletonNode<PartyParrotManager>
     {
         #region Events
 

@@ -5,7 +5,7 @@ using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
-    public class GameUIManager : Singleton<GameUIManager>
+    public class GameUIManager : SingletonNode<GameUIManager>
     {
         [Export]
         private PackedScene _playerHUDScene;

@@ -27,12 +27,12 @@ config/icon="res://icon.png"
 [autoload]
 
 EngineManager="*res://scenes/managers/engine_manager.tscn"
+LoadingScreen="*res://scenes/loading_screen.tscn"
 SceneManager="*res://scripts/Managers/SceneManager.cs"
 GameManager="*res://scenes/managers/game_manager.tscn"
 GameUiManager="*res://scenes/managers/game_ui_manager.tscn"
 SpawnManager="*res://scenes/managers/spawn_manager.tscn"
 DebugMenu="*res://scenes/debug_menu.tscn"
-LoadingScreen="*res://scenes/loading_screen.tscn"
 
 [editor]
 

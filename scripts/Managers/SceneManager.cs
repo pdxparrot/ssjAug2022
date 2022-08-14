@@ -7,12 +7,10 @@ using pdxpartyparrot.ssjAug2022.Util;
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
     // TODO: we should thread loading the resource if the number of stages is high
-    public class SceneManager : Singleton<SceneManager>
+    public class SceneManager : SingletonNode<SceneManager>
     {
         [Export]
         private ulong maxLoadMs = 100;
-
-        private LoadingScreen _loadingScreen;
 
         private Node _currentScene;
 
@@ -28,8 +26,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         {
             base._Ready();
 
-            _loadingScreen = GetNode<LoadingScreen>("/root/LoadingScreen");
-            _loadingScreen.Hide();
+            LoadingScreen.Instance.Hide();
 
             GetCurrentScene();
         }
@@ -113,7 +110,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
             _currentScene.QueueFree();
 
-            _loadingScreen.Show();
+            LoadingScreen.Instance.Show();
             UpdateProgress(0.0f);
 
             _wait = true;
