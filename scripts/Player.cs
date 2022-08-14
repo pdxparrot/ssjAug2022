@@ -5,10 +5,10 @@ namespace pdxpartyparrot.ssjAug2022
     public class Player : KinematicBody
     {
         [Export]
-        private float _speed = 14.0f;
+        private float _maxSpeed = 14.0f;
 
         [Export]
-        private float _gravity = 75.0f;
+        private float _gravityModifier = 75.0f;
 
         private Vector3 _velocity = Vector3.Zero;
 
@@ -48,11 +48,11 @@ namespace pdxpartyparrot.ssjAug2022
             }
 
             // movement
-            _velocity.x = heading.x * _speed;
-            _velocity.z = heading.z * _speed;
+            _velocity.x = heading.x * _maxSpeed;
+            _velocity.z = heading.z * _maxSpeed;
 
-            // gravity
-            _velocity.y -= _gravity * delta;
+            // gravity mod
+            _velocity.y -= _gravityModifier * delta;
 
             // move the player
             _velocity = MoveAndSlide(_velocity, Vector3.Up);
