@@ -4,7 +4,7 @@ using pdxpartyparrot.ssjAug2022.Managers;
 
 namespace pdxpartyparrot.ssjAug2022
 {
-    public class Level : Node
+    public class LevelHelper : Node
     {
         #region Godot Lifecycle
 
