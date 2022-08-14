@@ -4,7 +4,7 @@ using pdxpartyparrot.ssjAug2022.Managers;
 
 namespace pdxpartyparrot.ssjAug2022.UI
 {
-    public class MainMenu : Node
+    public class MainMenu : Control
     {
         #region Godot Lifecycle
 
