@@ -13,3 +13,5 @@ margin_top = 499.0
 margin_right = 506.0
 margin_bottom = 519.0
 text = "Play"
+
+[connection signal="pressed" from="Play" to="." method="_on_Play_pressed"]

@@ -5,7 +5,3 @@
 [node name="Main" type="Spatial"]
 
 [node name="Main Menu" parent="." instance=ExtResource( 2 )]
-
-[connection signal="pressed" from="Main Menu/Play" to="Main Menu" method="_on_Play_pressed"]
-
-[editable path="Main Menu"]
