@@ -1,6 +1,6 @@
 using Godot;
 
-namespace pdxpartyparrot.ssjAug2022
+namespace pdxpartyparrot.ssjAug2022.Managers
 {
     // singleton
     public class GameUIManager : Node

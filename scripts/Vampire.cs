@@ -1,5 +1,7 @@
 using Godot;
 
+using pdxpartyparrot.ssjAug2022.Managers;
+
 namespace pdxpartyparrot.ssjAug2022
 {
     public class Vampire : SimplePlayer

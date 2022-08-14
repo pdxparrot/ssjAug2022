@@ -26,7 +26,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-SceneManager="*res://scripts/SceneManager.cs"
+SceneManager="*res://scripts/Managers/SceneManager.cs"
 GameManager="*res://scenes/managers/game_manager.tscn"
 GameUiManager="*res://scenes/managers/game_ui_manager.tscn"
 DebugMenu="*res://scenes/debug_menu.tscn"

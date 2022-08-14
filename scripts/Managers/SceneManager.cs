@@ -2,7 +2,7 @@ using Godot;
 
 using System;
 
-namespace pdxpartyparrot.ssjAug2022
+namespace pdxpartyparrot.ssjAug2022.Managers
 {
     // singleton
     // TODO: we should thread loading the resource
