@@ -34,6 +34,11 @@ GameUiManager="*res://scenes/managers/game_ui_manager.tscn"
 SpawnManager="*res://scenes/managers/spawn_manager.tscn"
 DebugMenu="*res://scenes/debug_menu.tscn"
 
+[display]
+
+window/size/width=1280
+window/size/height=720
+
 [editor]
 
 version_control_autoload_on_startup=true
