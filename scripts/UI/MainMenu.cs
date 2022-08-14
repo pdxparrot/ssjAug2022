@@ -2,7 +2,7 @@ using Godot;
 
 using pdxpartyparrot.ssjAug2022.Managers;
 
-namespace pdxpartyparrot.ssjAug2022
+namespace pdxpartyparrot.ssjAug2022.UI
 {
     public class MainMenu : Node
     {

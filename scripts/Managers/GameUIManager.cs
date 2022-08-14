@@ -1,5 +1,7 @@
 using Godot;
 
+using pdxpartyparrot.ssjAug2022.UI;
+
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
     // singleton
