@@ -2,13 +2,13 @@ using Godot;
 
 namespace pdxpartyparrot.ssjAug2022
 {
-    public class SimpleCharacter : KinematicBody
+    public abstract class SimpleCharacter : KinematicBody
     {
         [Export]
         private float _speed = 14.0f;
 
         [Export]
-        private float _gravityMultiplier = 2.0f;
+        private float _gravityMultiplier = 5.0f;
 
         private Vector3 _velocity = Vector3.Zero;
 
