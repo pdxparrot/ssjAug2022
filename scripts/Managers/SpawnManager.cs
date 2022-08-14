@@ -6,7 +6,6 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 {
     public class SpawnManager : Singleton<SpawnManager>
     {
-    {
         [Export]
         private PackedScene _playerScene;
 
