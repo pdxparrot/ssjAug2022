@@ -2,13 +2,9 @@ using Godot;
 
 namespace pdxpartyparrot.ssjAug2022
 {
-    public class Player : KinematicBody
+    public class SimplePlayer : SimpleCharacter
     {
-        [Export]
-        private float _maxSpeed = 14.0f;
-
-        [Export]
-        private float _gravityModifier = 75.0f;
+        private GameManager _gameManager;
 
         [Export]
         private int _maxHealth = 10;
@@ -17,26 +13,20 @@ namespace pdxpartyparrot.ssjAug2022
 
         public bool IsDead => _currentHealth <= 0;
 
-        private Vector3 _velocity = Vector3.Zero;
-
-        private GameManager _gameManager;
-
-        private Spatial _pivot;
-
         #region Godot Lifecycle
 
         public override void _Ready()
         {
             _gameManager = GetNode<GameManager>("/root/GameManager");
 
-            _pivot = GetNode<Spatial>("Pivot");
-
             _currentHealth = _maxHealth;
+
+            base._Ready();
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            Vector3 heading = Vector3.Zero;
+            var heading = Heading;
 
             if(Input.IsActionPressed("move_right")) {
                 heading.x += 1.0f;
@@ -54,21 +44,9 @@ namespace pdxpartyparrot.ssjAug2022
                 heading.z += 1.0f;
             }
 
-            // look in the direction we're moving
-            if(heading != Vector3.Zero) {
-                heading = heading.Normalized();
-                _pivot.LookAt(Translation + heading, Vector3.Up);
-            }
+            Heading = heading;
 
-            // movement
-            _velocity.x = heading.x * _maxSpeed;
-            _velocity.z = heading.z * _maxSpeed;
-
-            // gravity mod
-            _velocity.y -= _gravityModifier * delta;
-
-            // move the player
-            _velocity = MoveAndSlide(_velocity, Vector3.Up);
+            base._PhysicsProcess(delta);
         }
 
         #endregion
