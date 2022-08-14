@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/vampbody.fbx-a0d6105df768c08bc10b24fdcd0d8f93.scn"
+path="res://.import/vampbody.fbx-76a4c52c17848982151c31b1403fc116.scn"
 
 [deps]
 
-source_file="res://Art/3D/vampbody.fbx"
-dest_files=[ "res://.import/vampbody.fbx-a0d6105df768c08bc10b24fdcd0d8f93.scn" ]
+source_file="res://art/3d/vampbody.fbx"
+dest_files=[ "res://.import/vampbody.fbx-76a4c52c17848982151c31b1403fc116.scn" ]
 
 [params]
 

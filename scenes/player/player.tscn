@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/Player.cs" type="Script" id=1]
-[ext_resource path="res://Art/3D/vampbody.fbx" type="PackedScene" id=3]
+[ext_resource path="res://art/3d/vampbody.fbx" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
