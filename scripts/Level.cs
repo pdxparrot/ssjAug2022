@@ -14,6 +14,11 @@ namespace pdxpartyparrot.ssjAug2022
             _gameUIManager.ShowHUD();
         }
 
+        public override void _ExitTree()
+        {
+            _gameUIManager.HideHUD();
+        }
+
         #endregion
     }
 }
