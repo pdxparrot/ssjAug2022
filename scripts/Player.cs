@@ -10,7 +10,16 @@ namespace pdxpartyparrot.ssjAug2022
         [Export]
         private float _gravityModifier = 75.0f;
 
+        [Export]
+        private int _maxHealth = 10;
+
+        private int _currentHealth;
+
+        public bool IsDead => _currentHealth <= 0;
+
         private Vector3 _velocity = Vector3.Zero;
+
+        private GameManager _gameManager;
 
         private Spatial _pivot;
 
@@ -18,7 +27,11 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _Ready()
         {
+            _gameManager = GetNode<GameManager>("/root/GameManager");
+
             _pivot = GetNode<Spatial>("Pivot");
+
+            _currentHealth = _maxHealth;
         }
 
         public override void _PhysicsProcess(float delta)
@@ -59,5 +72,13 @@ namespace pdxpartyparrot.ssjAug2022
         }
 
         #endregion
+
+        public void Damage(int amount)
+        {
+            _currentHealth = Mathf.Max(_currentHealth - amount, 0);
+            if(IsDead) {
+                _gameManager.GameOver();
+            }
+        }
     }
 }

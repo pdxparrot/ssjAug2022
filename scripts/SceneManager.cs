@@ -1,5 +1,7 @@
 using Godot;
 
+using System;
+
 namespace pdxpartyparrot.ssjAug2022
 {
     // singleton
@@ -17,6 +19,8 @@ namespace pdxpartyparrot.ssjAug2022
         private ResourceInteractiveLoader _loader;
 
         private bool _wait = false;
+
+        private Action _onSuccess;
 
         #region Godot Lifecycle
 
@@ -53,12 +57,16 @@ namespace pdxpartyparrot.ssjAug2022
                     _loader = null;
 
                     SetCurrentScene((PackedScene)sceneResource);
+
+                    _onSuccess?.Invoke();
+                    _onSuccess = null;
                     break;
                 } else if(err == Error.Ok) {
                     // still loading
                     UpdateProgress(_loader.GetStage() / (float)_loader.GetStageCount());
                 } else {
                     _loader = null;
+                    _onSuccess = null;
 
                     ShowError();
                     return;
@@ -90,8 +98,10 @@ namespace pdxpartyparrot.ssjAug2022
             GD.Print($"[SceneManager] Error loading level!");
         }
 
-        public void LoadLevel(PackedScene level)
+        public void LoadLevel(PackedScene level, Action onSuccess = null)
         {
+            _onSuccess = onSuccess;
+
             GD.Print($"[SceneManager] Loading level {level.ResourcePath}...");
 
             _loader = ResourceLoader.LoadInteractive(level.ResourcePath);
