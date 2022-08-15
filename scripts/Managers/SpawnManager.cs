@@ -36,7 +36,6 @@ namespace pdxpartyparrot.ssjAug2022.Managers
                     return null;
                 }
 
-                // just in case
                 if(_nextRoundRobinIndex >= SpawnPoints.Count) {
                     AdvanceRoundRobin();
                 }
@@ -114,6 +113,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         #endregion
 
+        // this should be called after a level has loaded
         public void Initialize()
         {
             GD.Print("[SpawnManager] Seeding spawn points...");

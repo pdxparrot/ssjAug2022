@@ -6,12 +6,6 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 {
     public class GameManager : SingletonNode<GameManager>
     {
-        [Export]
-        private PackedScene _mainMenuScene;
-
-        [Export]
-        private PackedScene _initialLevelScene;
-
         private bool _isGameOver;
 
         public bool IsGameOver => _isGameOver;
@@ -46,14 +40,14 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         {
             GD.Print("[GameManager] Starting game ...");
 
-            SceneManager.Instance.LoadLevel(_initialLevelScene, () => _timer = 30.0f);
+            SceneManager.Instance.LoadInitialLevel(() => _timer = 30.0f);
         }
 
         public void GameOver()
         {
             GD.Print("[GameManager] Game over!");
 
-            SceneManager.Instance.LoadLevel(_mainMenuScene);
+            SceneManager.Instance.LoadMainMenu();
         }
     }
 }

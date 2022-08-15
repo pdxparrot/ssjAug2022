@@ -12,6 +12,12 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         [Export]
         private ulong maxLoadMs = 100;
 
+        [Export]
+        private PackedScene _mainMenuScene;
+
+        [Export]
+        private PackedScene _initialLevelScene;
+
         private Node _currentScene;
 
         private ResourceInteractiveLoader _loader;
@@ -28,7 +34,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
             LoadingScreen.Instance.Hide();
 
-            GetCurrentScene();
+            CallDeferred("LoadMainMenu");
         }
 
         public override void _Process(float delta)
@@ -53,6 +59,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
                     UpdateProgress(1.0f);
 
                     var sceneResource = _loader.GetResource();
+                    _loader.Dispose();
                     _loader = null;
 
                     SetCurrentScene((PackedScene)sceneResource);
@@ -64,6 +71,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
                     // still loading
                     UpdateProgress(_loader.GetStage() / (float)_loader.GetStageCount());
                 } else {
+                    _loader.Dispose();
                     _loader = null;
                     _onSuccess = null;
 
@@ -74,12 +82,6 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         }
 
         #endregion
-
-        private void GetCurrentScene()
-        {
-            var root = GetTree().Root;
-            _currentScene = root.GetChild(root.GetChildCount() - 1);
-        }
 
         private void SetCurrentScene(PackedScene scene)
         {
@@ -97,6 +99,16 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             GD.Print($"[SceneManager] Error loading level!");
         }
 
+        public void LoadMainMenu()
+        {
+            LoadLevel(_mainMenuScene);
+        }
+
+        public void LoadInitialLevel(Action onSuccess = null)
+        {
+            LoadLevel(_initialLevelScene, onSuccess);
+        }
+
         public void LoadLevel(PackedScene level, Action onSuccess = null)
         {
             _onSuccess = onSuccess;
@@ -108,7 +120,9 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
             SetProcess(true);
 
-            _currentScene.QueueFree();
+            if(IsInstanceValid(_currentScene)) {
+                _currentScene.QueueFree();
+            }
 
             LoadingScreen.Instance.Show();
             UpdateProgress(0.0f);

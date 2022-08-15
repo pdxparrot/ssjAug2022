@@ -28,7 +28,7 @@ config/icon="res://icon.png"
 
 EngineManager="*res://scenes/managers/engine_manager.tscn"
 LoadingScreen="*res://scenes/loading_screen.tscn"
-SceneManager="*res://scripts/Managers/SceneManager.cs"
+SceneManager="*res://scenes/managers/scene_manager.tscn"
 GameManager="*res://scenes/managers/game_manager.tscn"
 GameUiManager="*res://scenes/managers/game_ui_manager.tscn"
 SpawnManager="*res://scenes/managers/spawn_manager.tscn"
