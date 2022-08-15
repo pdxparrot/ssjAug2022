@@ -10,27 +10,49 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 {
     public class ResourceManager : SingletonNode<ResourceManager>
     {
+        public class ProgressEventArgs : EventArgs
+        {
+            public float Progress { get; set; }
+        }
+
+        public class SuccessEventArgs : EventArgs
+        {
+            public Resource Resource { get; set; }
+        }
+
+        public class FailureEventArgs : EventArgs
+        {
+            public Error Error { get; set; }
+        }
+
+
         private class Notifier
         {
-            public event EventHandler<EventArgs> ProgressEvent;
+            public event EventHandler<ProgressEventArgs> ProgressEvent;
 
-            public event EventHandler<EventArgs> SuccessEvent;
+            public event EventHandler<SuccessEventArgs> SuccessEvent;
 
-            public event EventHandler<EventArgs> FailureEvent;
+            public event EventHandler<FailureEventArgs> FailureEvent;
 
             public void Progress(ResourceManager sender, float progress)
             {
-                ProgressEvent?.Invoke(sender, EventArgs.Empty);
+                ProgressEvent?.Invoke(sender, new ProgressEventArgs {
+                    Progress = progress,
+                });
             }
 
             public void Success(ResourceManager sender, Resource resource)
             {
-                SuccessEvent?.Invoke(sender, EventArgs.Empty);
+                SuccessEvent?.Invoke(sender, new SuccessEventArgs {
+                    Resource = resource,
+                });
             }
 
             public void Failure(ResourceManager sender, Error err)
             {
-                FailureEvent?.Invoke(sender, EventArgs.Empty);
+                FailureEvent?.Invoke(sender, new FailureEventArgs {
+                    Error = err,
+                });
             }
         }
 
@@ -45,10 +67,10 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         #endregion
 
-        public async Task LoadResourceAsync<T>(string path, EventHandler<EventArgs> onSuccess = null, EventHandler<EventArgs> onFailure = null, EventHandler<EventArgs> onProgress = null) where T : Resource
+        public async Task LoadResourceAsync(string path, EventHandler<SuccessEventArgs> onSuccess = null, EventHandler<FailureEventArgs> onFailure = null, EventHandler<ProgressEventArgs> onProgress = null)
         {
             // if we're already loading this resource
-            // just sign up for notifications
+            // just subscribe for notifications
             if(_loadingSet.TryGetValue(path, out Notifier notifier)) {
                 notifier.SuccessEvent += onSuccess;
                 notifier.FailureEvent += onFailure;
@@ -57,9 +79,16 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             }
 
             notifier = new Notifier();
+            notifier.SuccessEvent += onSuccess;
+            notifier.FailureEvent += onFailure;
+            notifier.ProgressEvent += onProgress;
+
             _loadingSet[path] = notifier;
 
+            GD.Print($"[ResourceManager] Loading resource {path}...");
             using(var loader = ResourceLoader.LoadInteractive(path)) {
+                GD.Print($"[ResourceManager] {loader.GetStageCount()} stage(s)");
+
                 notifier.Progress(this, 0.0f);
 
                 Error err;

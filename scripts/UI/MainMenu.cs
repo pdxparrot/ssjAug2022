@@ -10,16 +10,15 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         public override void _Ready()
         {
-
         }
 
         #endregion
 
         #region Signals
 
-        private void _on_Play_pressed()
+        private async void _on_Play_pressed()
         {
-            GameManager.Instance.StartGame();
+            await GameManager.Instance.StartGameAsync().ConfigureAwait(false);
         }
 
         #endregion

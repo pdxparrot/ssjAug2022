@@ -1,5 +1,7 @@
 using Godot;
 
+using System.Threading.Tasks;
+
 using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.Managers
@@ -23,31 +25,31 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             _isGameOver = false;
         }
 
-        public override void _Process(float delta)
+        public override async void _Process(float delta)
         {
             // TODO: temp hack
             if(_timer > 0.0f) {
                 _timer -= delta;
                 if(_timer <= 0.0f) {
-                    GameOver();
+                    await GameOverAsync().ConfigureAwait(false);
                 }
             }
         }
 
         #endregion
 
-        public void StartGame()
+        public async Task StartGameAsync()
         {
             GD.Print("[GameManager] Starting game ...");
 
-            SceneManager.Instance.LoadInitialLevel(() => _timer = 30.0f);
+            await SceneManager.Instance.LoadInitialLevelAsync(() => _timer = 30.0f).ConfigureAwait(false);
         }
 
-        public void GameOver()
+        public async Task GameOverAsync()
         {
             GD.Print("[GameManager] Game over!");
 
-            SceneManager.Instance.LoadMainMenu();
+            await SceneManager.Instance.LoadMainMenuAsync().ConfigureAwait(false);
         }
     }
 }

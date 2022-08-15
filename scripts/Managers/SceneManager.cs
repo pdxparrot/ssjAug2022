@@ -1,6 +1,7 @@
 using Godot;
 
 using System;
+using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Util;
 
@@ -75,7 +76,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
                     _loader = null;
                     _onSuccess = null;
 
-                    ShowError();
+                    ShowError(err);
                     return;
                 }
             }
@@ -94,40 +95,45 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             GD.Print($"[SceneManager] {progress * 100.0}%");
         }
 
-        private void ShowError()
+        private void ShowError(Error err)
         {
-            GD.Print($"[SceneManager] Error loading level!");
+            GD.Print($"[SceneManager] Error loading level: {err}");
         }
 
-        public void LoadMainMenu()
+        private void LoadMainMenu()
         {
-            LoadLevel(_mainMenuScene);
+            new Task(async () => await LoadMainMenuAsync().ConfigureAwait(false)).RunSynchronously();
         }
 
-        public void LoadInitialLevel(Action onSuccess = null)
+        public async Task LoadMainMenuAsync()
         {
-            LoadLevel(_initialLevelScene, onSuccess);
+            await LoadLevelAsync(_mainMenuScene).ConfigureAwait(false);
         }
 
-        public void LoadLevel(PackedScene level, Action onSuccess = null)
+        public async Task LoadInitialLevelAsync(Action onSuccess = null)
         {
-            _onSuccess = onSuccess;
+            await LoadLevelAsync(_initialLevelScene, onSuccess).ConfigureAwait(false);
+        }
 
+        public async Task LoadLevelAsync(PackedScene level, Action onSuccess = null)
+        {
             GD.Print($"[SceneManager] Loading level {level.ResourcePath}...");
-
-            _loader = ResourceLoader.LoadInteractive(level.ResourcePath);
-            GD.Print($"[SceneManager] {_loader.GetStageCount()} stage(s)");
-
-            SetProcess(true);
 
             if(IsInstanceValid(_currentScene)) {
                 _currentScene.QueueFree();
             }
 
             LoadingScreen.Instance.Show();
-            UpdateProgress(0.0f);
 
-            _wait = true;
+            await ResourceManager.Instance.LoadResourceAsync(level.ResourcePath,
+                (owner, args) => {
+                    SetCurrentScene((PackedScene)args.Resource);
+
+                    onSuccess?.Invoke();
+                },
+                (owner, args) => ShowError(args.Error),
+                (owner, args) => UpdateProgress(args.Progress)
+            ).ConfigureAwait(false);
         }
     }
 }

@@ -49,11 +49,11 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #endregion
 
-        public void Damage(int amount)
+        public async void DamageAsync(int amount)
         {
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
             if(IsDead) {
-                GameManager.Instance.GameOver();
+                await GameManager.Instance.GameOverAsync().ConfigureAwait(false);
             }
         }
     }
