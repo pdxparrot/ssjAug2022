@@ -30,17 +30,17 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             AddChild(playerHUD);
 
             _playerHUD = (PlayerHUD)playerHUD;
-            _playerHUD.Hide();
+            _playerHUD.HideHUD();
         }
 
         public void ShowHUD()
         {
-            _playerHUD.Show();
+            _playerHUD.ShowHUD();
         }
 
         public void HideHUD()
         {
-            _playerHUD.Hide();
+            _playerHUD.HideHUD();
         }
     }
 }

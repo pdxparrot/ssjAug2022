@@ -6,6 +6,8 @@ namespace pdxpartyparrot.ssjAug2022.UI
 {
     public class PlayerHUD : Control
     {
+        private CanvasLayer _canvas;
+
         // TODO: temp hack
         public Label _timer;
 
@@ -13,11 +15,15 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         public override void _Ready()
         {
-            _timer = GetNode<Label>("TEMP TIMER");
+            _canvas = GetNode<CanvasLayer>("CanvasLayer");
+
+            // TODO: temp hack
+            _timer = GetNode<Label>("CanvasLayer/VBoxContainer/TEMP TIMER");
         }
 
         public override void _Process(float delta)
         {
+            // TODO: temp hack
             if(GameManager.Instance.IsGameOver) {
                 _timer.Text = "0";
             } else {
@@ -26,5 +32,15 @@ namespace pdxpartyparrot.ssjAug2022.UI
         }
 
         #endregion
+
+        public void HideHUD()
+        {
+            _canvas.Hide();
+        }
+
+        public void ShowHUD()
+        {
+            _canvas.Show();
+        }
     }
 }
