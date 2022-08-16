@@ -26,6 +26,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         private void CreatePlayerHUD()
         {
             var playerHUD = _playerHUDScene.Instance();
+            playerHUD.Name = "Player HUD";
             AddChild(playerHUD);
 
             _playerHUD = (PlayerHUD)playerHUD;

@@ -49,6 +49,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         {
             GD.Print("[GameManager] Game over!");
 
+            PlayerManager.Instance.DestroyPlayers();
+
             await SceneManager.Instance.LoadMainMenuAsync().ConfigureAwait(false);
         }
     }

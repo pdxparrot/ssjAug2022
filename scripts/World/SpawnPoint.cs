@@ -3,6 +3,7 @@ using Godot;
 using System;
 
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.Player;
 
 namespace pdxpartyparrot.ssjAug2022.World
 {
@@ -46,6 +47,45 @@ namespace pdxpartyparrot.ssjAug2022.World
             }
         }
 
+        protected void InitSpatial(Spatial spatial)
+        {
+            spatial.Transform = Transform;
+            spatial.Show();
+        }
+
+        #region Spawn
+
+        public Spatial SpawnFromScene(PackedScene scene, string name)
+        {
+            var spawned = (Spatial)scene.Instance();
+            spawned.Name = name;
+            GetTree().Root.AddChild(spawned);
+
+            InitSpatial(spawned);
+
+            return spawned;
+        }
+
+        public SimplePlayer SpawnPlayer(PackedScene playerScene, string name)
+        {
+            var player = (SimplePlayer)SpawnFromScene(playerScene, name);
+
+            // NOTE: players spawn and then deactivate
+            // so that the level can respawn them as it needs to
+            player.Hide();
+
+            return player;
+        }
+
+        public void ReSpawn(Spatial spatial)
+        {
+            InitSpatial(spatial);
+        }
+
+        #endregion
+
+        #region Acquire
+
         public bool Acquire(Godot.Object owner, Action onRelease = null, bool force = false)
         {
             if(!force && null != _owner) {
@@ -73,5 +113,7 @@ namespace pdxpartyparrot.ssjAug2022.World
 
             Register();
         }
+
+        #endregion
     }
 }

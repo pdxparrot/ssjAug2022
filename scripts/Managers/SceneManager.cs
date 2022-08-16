@@ -34,6 +34,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         private void SetCurrentScene(PackedScene scene)
         {
             _currentScene = scene.Instance();
+            _currentScene.Name = "Level";
             GetTree().Root.AddChild(_currentScene);
         }
 

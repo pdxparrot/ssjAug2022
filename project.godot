@@ -32,6 +32,7 @@ LoadingScreen="*res://scenes/loading_screen.tscn"
 SceneManager="*res://scenes/managers/scene_manager.tscn"
 GameManager="*res://scenes/managers/game_manager.tscn"
 GameUiManager="*res://scenes/managers/game_ui_manager.tscn"
+PlayerManager="*res://scenes/managers/player_manager.tscn"
 SpawnManager="*res://scenes/managers/spawn_manager.tscn"
 DebugMenu="*res://scenes/debug_menu.tscn"
 

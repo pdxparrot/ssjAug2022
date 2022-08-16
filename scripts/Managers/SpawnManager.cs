@@ -68,9 +68,6 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         }
 
         [Export]
-        private PackedScene _playerScene;
-
-        [Export]
         private string[] _playerSpawnPointTags = new string[0];
 
         [Export]
@@ -174,23 +171,23 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         #region Player Spawnpoints
 
-        public SpawnPoint GetPlayerSpawnPoint(ulong clientId)
+        public SpawnPoint GetPlayerSpawnPoint(int clientId)
         {
-            int spawnPointIdx = Mathf.Clamp((int)clientId, 0, _playerSpawnPointTags.Length - 1);
+            int spawnPointIdx = clientId % _playerSpawnPointTags.Length;
             return GetSpawnPoint(_playerSpawnPointTags.ElementAt(spawnPointIdx));
         }
 
         // gets a random player spawnpoint regardless of how the spawnpoints are configured
-        public SpawnPoint GetRandomPlayerSpawnPoint(ulong clientId)
+        public SpawnPoint GetRandomPlayerSpawnPoint(int clientId)
         {
-            int spawnPointIdx = Mathf.Clamp((int)clientId, 0, _playerSpawnPointTags.Length - 1);
+            int spawnPointIdx = clientId % _playerSpawnPointTags.Length;
             return GetRandomSpawnPoint(_playerSpawnPointTags.ElementAt(spawnPointIdx));
         }
 
         // gets the player spawnpoint nearest the given position
-        public SpawnPoint GetNearestPlayerSpawnPoint(ulong clientId, Vector3 position)
+        public SpawnPoint GetNearestPlayerSpawnPoint(int clientId, Vector3 position)
         {
-            int spawnPointIdx = Mathf.Clamp((int)clientId, 0, _playerSpawnPointTags.Length - 1);
+            int spawnPointIdx = clientId % _playerSpawnPointTags.Length;
             return GetNearestSpawnPoint(_playerSpawnPointTags.ElementAt(spawnPointIdx), position);
         }
 

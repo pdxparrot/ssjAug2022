@@ -13,6 +13,8 @@ namespace pdxpartyparrot.ssjAug2022
             SpawnManager.Instance.Initialize();
 
             GameUIManager.Instance.ShowHUD();
+
+            PlayerManager.Instance.SpawnPlayer(0);
         }
 
         public override void _ExitTree()
