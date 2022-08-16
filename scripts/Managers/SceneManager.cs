@@ -11,21 +11,12 @@ namespace pdxpartyparrot.ssjAug2022.Managers
     public class SceneManager : SingletonNode<SceneManager>
     {
         [Export]
-        private ulong maxLoadMs = 100;
-
-        [Export]
         private PackedScene _mainMenuScene;
 
         [Export]
         private PackedScene _initialLevelScene;
 
         private Node _currentScene;
-
-        private ResourceInteractiveLoader _loader;
-
-        private bool _wait = false;
-
-        private Action _onSuccess;
 
         #region Godot Lifecycle
 
@@ -36,50 +27,6 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             LoadingScreen.Instance.Hide();
 
             CallDeferred("LoadMainMenu");
-        }
-
-        public override void _Process(float delta)
-        {
-            // don't run if we aren't loading anything
-            if(_loader == null) {
-                SetProcess(false);
-                return;
-            }
-
-            // wait a frame for the loading screen to show
-            if(_wait) {
-                _wait = false;
-                return;
-            }
-
-            ulong now = OS.GetTicksMsec();
-            while(OS.GetTicksMsec() < now + maxLoadMs) {
-                var err = _loader.Poll();
-                if(err == Error.FileEof) {
-                    // finished loading
-                    UpdateProgress(1.0f);
-
-                    var sceneResource = _loader.GetResource();
-                    _loader.Dispose();
-                    _loader = null;
-
-                    SetCurrentScene((PackedScene)sceneResource);
-
-                    _onSuccess?.Invoke();
-                    _onSuccess = null;
-                    break;
-                } else if(err == Error.Ok) {
-                    // still loading
-                    UpdateProgress(_loader.GetStage() / (float)_loader.GetStageCount());
-                } else {
-                    _loader.Dispose();
-                    _loader = null;
-                    _onSuccess = null;
-
-                    ShowError(err);
-                    return;
-                }
-            }
         }
 
         #endregion
