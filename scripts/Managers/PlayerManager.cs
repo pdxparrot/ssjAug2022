@@ -19,14 +19,14 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public int PlayerCount => Players.Count;
 
-        public void SpawnPlayer(int clientId)
+        public SimplePlayer SpawnPlayer(int clientId)
         {
             GD.Print($"[PlayerManager] Spawning player {clientId}...");
 
             SpawnPoint spawnPoint = SpawnManager.Instance.GetPlayerSpawnPoint(clientId);
             if(null == spawnPoint) {
                 GD.PushError("Failed to get player spawnpoint!");
-                return;
+                return null;
             }
 
             if(_players.TryGetValue(clientId, out SimplePlayer player)) {
@@ -38,6 +38,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             }
 
             AddChild(player);
+
+            return player;
         }
 
         public void DespawnPlayer(SimplePlayer player)

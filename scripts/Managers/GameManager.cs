@@ -42,6 +42,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         {
             GD.Print("[GameManager] Starting game ...");
 
+            ViewerManager.Instance.InstanceViewers(1);
+
             await SceneManager.Instance.LoadInitialLevelAsync(() => _timer = 30.0f).ConfigureAwait(false);
         }
 

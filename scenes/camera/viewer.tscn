@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/Camera/FollowCamera.cs" type="Script" id=1]
 
-[node name="Camera Pivot" type="Position3D"]
+[node name="Main" type="Position3D"]
 transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0 )
 script = ExtResource( 1 )
 

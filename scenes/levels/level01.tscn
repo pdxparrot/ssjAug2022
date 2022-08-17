@@ -1,14 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/world/ground.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/viewer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/LevelHelper.cs" type="Script" id=3]
 [ext_resource path="res://scenes/world/spawnpoint.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 3 )
-
-[node name="Viewer" parent="." instance=ExtResource( 2 )]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.999967, -0.00694448, -0.00417352, 0.00785655, 0.705261, 0.708905, -0.00197956, -0.708914, 0.705292, 0, 10, 0 )

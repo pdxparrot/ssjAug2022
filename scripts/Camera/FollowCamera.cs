@@ -26,5 +26,10 @@ namespace pdxpartyparrot.ssjAug2022.Camera
         {
             _target = target;
         }
+
+        public override void OnRelease()
+        {
+            _target = null;
+        }
     }
 }
