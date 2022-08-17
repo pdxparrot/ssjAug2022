@@ -18,7 +18,9 @@ shape = SubResource( 1 )
 [node name="Pivot" type="Spatial" parent="."]
 
 [node name="Model" parent="Pivot" instance=ExtResource( 2 )]
-transform = Transform( -2.5, 0, -2.18557e-07, 0, 2.5, 0, 2.18557e-07, 0, -2.5, 0, 0, 0 )
 script = ExtResource( 3 )
+
+[node name="AnimationTree" parent="Pivot/Model" index="2"]
+parameters/Motion/blend_position = 0.932
 
 [editable path="Pivot/Model"]
