@@ -30,7 +30,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             }
 
             if(_players.TryGetValue(clientId, out SimplePlayer player)) {
-                spawnPoint.ReSpawn(player);
+                spawnPoint.ReSpawnPlayer(player);
             } else {
                 player = spawnPoint.SpawnPlayer(_playerScene, $"Player {clientId}");
                 player.ClientId = clientId;

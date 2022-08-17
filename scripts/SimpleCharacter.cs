@@ -26,6 +26,8 @@ namespace pdxpartyparrot.ssjAug2022
 
         private Spatial _pivot;
 
+        private Model _model;
+
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -34,6 +36,7 @@ namespace pdxpartyparrot.ssjAug2022
             _gravityVector = (Vector3)ProjectSettings.GetSetting("physics/3d/default_gravity_vector");
 
             _pivot = GetNode<Spatial>("Pivot");
+            _model = GetNode<Model>("Pivot/Model");
         }
 
         public override void _PhysicsProcess(float delta)
@@ -55,6 +58,25 @@ namespace pdxpartyparrot.ssjAug2022
             _velocity = MoveAndSlide(_velocity, Vector3.Up);
 
             Heading = Vector3.Zero;
+        }
+
+        #endregion
+
+        #region Events
+
+        public void OnSpawn()
+        {
+            OnIdle();
+        }
+
+        public void OnReSpawn()
+        {
+            OnIdle();
+        }
+
+        public void OnIdle()
+        {
+            _model.Travel("Idle");
         }
 
         #endregion

@@ -54,9 +54,9 @@ namespace pdxpartyparrot.ssjAug2022.World
 
         #region Spawn
 
-        public Spatial SpawnFromScene(PackedScene scene, string name)
+        public T SpawnFromScene<T>(PackedScene scene, string name) where T : Spatial
         {
-            var spawned = (Spatial)scene.Instance();
+            var spawned = (T)scene.Instance();
             spawned.Name = name;
 
             InitSpatial(spawned);
@@ -66,14 +66,24 @@ namespace pdxpartyparrot.ssjAug2022.World
 
         public SimplePlayer SpawnPlayer(PackedScene playerScene, string name)
         {
-            var player = (SimplePlayer)SpawnFromScene(playerScene, name);
+            var player = SpawnFromScene<SimplePlayer>(playerScene, name);
+
+            // have to temporarily add the player so _Ready() is called
+            AddChild(player);
+            player.OnSpawn();
+            RemoveChild(player);
 
             return player;
         }
 
-        public void ReSpawn(Spatial spatial)
+        public void ReSpawnPlayer(SimplePlayer player)
         {
-            InitSpatial(spatial);
+            InitSpatial(player);
+
+            // have to temporarily add the player so _Ready() is called
+            AddChild(player);
+            player.OnReSpawn();
+            RemoveChild(player);
         }
 
         #endregion
