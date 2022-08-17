@@ -2268,9 +2268,9 @@ nodes/BlendSpace1D/node = SubResource( 15 )
 nodes/BlendSpace1D/position = Vector2( -240, 80 )
 nodes/OneShot/node = SubResource( 18 )
 nodes/OneShot/position = Vector2( -100, -180 )
-node_connections = [ "Blend2", 0, "OneShot", "Blend2", 1, "BlendSpace1D", "OneShot", 0, "Animation 2", "OneShot", 1, "Animation", "output", 0, "Blend2" ]
+node_connections = [ "output", 0, "Blend2", "Blend2", 0, "OneShot", "Blend2", 1, "BlendSpace1D", "OneShot", 0, "Animation 2", "OneShot", 1, "Animation" ]
 
-[node name="knight" type="Spatial"]
+[node name="Model" type="Spatial"]
 
 [node name="Knight" type="Spatial" parent="."]
 transform = Transform( 0.01, 0, 0, 0, -1.19209e-09, -0.01, 0, 0.01, -1.19209e-09, 0, 0, 0 )
