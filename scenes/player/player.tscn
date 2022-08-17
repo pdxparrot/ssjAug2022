@@ -18,3 +18,5 @@ shape = SubResource( 1 )
 
 [node name="Model" parent="Pivot" instance=ExtResource( 2 )]
 transform = Transform( -2.5, 0, -2.18557e-07, 0, 2.5, 0, 2.18557e-07, 0, -2.5, 0, 0, 0 )
+
+[editable path="Pivot/Model"]
