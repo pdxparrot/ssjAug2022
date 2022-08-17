@@ -25,22 +25,24 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         private void CreatePlayerHUD()
         {
-            var playerHUD = _playerHUDScene.Instance();
-            playerHUD.Name = "Player HUD";
-            AddChild(playerHUD);
+            if(IsInstanceValid(_playerHUD)) {
+                GD.PushWarning("[GameUIManager] Re-creating HUD ...");
 
-            _playerHUD = (PlayerHUD)playerHUD;
-            _playerHUD.HideHUD();
+                _playerHUD.QueueFree();
+            }
+
+            _playerHUD = (PlayerHUD)_playerHUDScene.Instance();
+            _playerHUD.Name = "Player HUD";
         }
 
         public void ShowHUD()
         {
-            _playerHUD.ShowHUD();
+            AddChild(_playerHUD);
         }
 
         public void HideHUD()
         {
-            _playerHUD.HideHUD();
+            RemoveChild(_playerHUD);
         }
     }
 }

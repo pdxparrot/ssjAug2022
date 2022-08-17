@@ -50,7 +50,6 @@ namespace pdxpartyparrot.ssjAug2022.World
         protected void InitSpatial(Spatial spatial)
         {
             spatial.Transform = Transform;
-            spatial.Show();
         }
 
         #region Spawn
@@ -59,7 +58,6 @@ namespace pdxpartyparrot.ssjAug2022.World
         {
             var spawned = (Spatial)scene.Instance();
             spawned.Name = name;
-            GetTree().Root.AddChild(spawned);
 
             InitSpatial(spawned);
 
@@ -69,10 +67,6 @@ namespace pdxpartyparrot.ssjAug2022.World
         public SimplePlayer SpawnPlayer(PackedScene playerScene, string name)
         {
             var player = (SimplePlayer)SpawnFromScene(playerScene, name);
-
-            // NOTE: players spawn and then deactivate
-            // so that the level can respawn them as it needs to
-            player.Hide();
 
             return player;
         }

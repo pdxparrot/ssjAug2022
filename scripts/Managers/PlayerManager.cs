@@ -13,15 +13,15 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         [Export]
         private PackedScene _playerScene;
 
-        private readonly HashSet<SimplePlayer> _players = new HashSet<SimplePlayer>();
+        private readonly Dictionary<int, SimplePlayer> _players = new Dictionary<int, SimplePlayer>();
 
-        public IReadOnlyCollection<SimplePlayer> Players => _players;
+        public IReadOnlyDictionary<int, SimplePlayer> Players => _players;
 
         public int PlayerCount => Players.Count;
 
         public void SpawnPlayer(int clientId)
         {
-            GD.Print($"Spawning player {clientId}...");
+            GD.Print($"[PlayerManager] Spawning player {clientId}...");
 
             SpawnPoint spawnPoint = SpawnManager.Instance.GetPlayerSpawnPoint(clientId);
             if(null == spawnPoint) {
@@ -29,18 +29,22 @@ namespace pdxpartyparrot.ssjAug2022.Managers
                 return;
             }
 
-            var player = spawnPoint.SpawnPlayer(_playerScene, $"Player {clientId}");
-            player.Show();
+            if(_players.TryGetValue(clientId, out SimplePlayer player)) {
+                spawnPoint.ReSpawn(player);
+            } else {
+                player = spawnPoint.SpawnPlayer(_playerScene, $"Player {clientId}");
+                player.ClientId = clientId;
+                _players[clientId] = player;
+            }
 
-            _players.Add(player);
+            AddChild(player);
         }
 
         public void DespawnPlayer(SimplePlayer player)
         {
-            //GD.Print($"Despawning player {player.Id}");
-            GD.Print("Despawning player");
+            GD.Print($"[PlayerManager] Despawning player {player.ClientId}");
 
-            player.Hide();
+            RemoveChild(player);
         }
 
         public void DespawnPlayers()
@@ -49,21 +53,20 @@ namespace pdxpartyparrot.ssjAug2022.Managers
                 return;
             }
 
-            foreach(var player in _players) {
-                DespawnPlayer(player);
+            foreach(var kvp in _players) {
+                DespawnPlayer(kvp.Value);
             }
         }
 
         public void DestroyPlayer(SimplePlayer player, bool remove = true)
         {
-            //GD.Print($"Destroying player {player.Id}");
-            GD.Print("Destroying player");
-
-            player.QueueFree();
+            GD.Print($"[PlayerManager] Destroying player {player.ClientId}");
 
             if(remove) {
-                _players.Remove(player);
+                _players.Remove(player.ClientId);
             }
+
+            player.QueueFree();
         }
 
         public void DestroyPlayers()
@@ -72,8 +75,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
                 return;
             }
 
-            foreach(var player in _players) {
-                DestroyPlayer(player, false);
+            foreach(var kvp in _players) {
+                DestroyPlayer(kvp.Value, false);
             }
 
             _players.Clear();

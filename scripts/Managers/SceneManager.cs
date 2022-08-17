@@ -7,6 +7,7 @@ using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
+    // TODO: rename this LevelManager
     // TODO: we should thread loading the resource if the number of stages is high
     public class SceneManager : SingletonNode<SceneManager>
     {
@@ -33,6 +34,10 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         private void SetCurrentScene(PackedScene scene)
         {
+            if(IsInstanceValid(_currentScene)) {
+                GD.PushWarning("[SceneManager] Overwriting valid scene pointer!");
+            }
+
             _currentScene = scene.Instance();
             _currentScene.Name = "Level";
             GetTree().Root.AddChild(_currentScene);
