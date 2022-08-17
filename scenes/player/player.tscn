@@ -16,5 +16,5 @@ shape = SubResource( 1 )
 
 [node name="Pivot" type="Spatial" parent="."]
 
-[node name="knight" parent="Pivot" instance=ExtResource( 2 )]
+[node name="Model" parent="Pivot" instance=ExtResource( 2 )]
 transform = Transform( -2.5, 0, -2.18557e-07, 0, 2.5, 0, 2.18557e-07, 0, -2.5, 0, 0, 0 )
