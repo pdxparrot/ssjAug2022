@@ -17,7 +17,7 @@ namespace pdxpartyparrot.ssjAug2022
         protected Vector3 Heading
         {
             get => _heading;
-            set => _heading = value;
+            set => _heading = value.Normalized();
         }
 
         private float _gravity;
@@ -36,16 +36,18 @@ namespace pdxpartyparrot.ssjAug2022
             _gravityVector = (Vector3)ProjectSettings.GetSetting("physics/3d/default_gravity_vector");
 
             _pivot = GetNode<Spatial>("Pivot");
-            _model = GetNode<Model>("Pivot/Model");
+            _model = _pivot.GetNode<Model>("Model");
+        }
+
+        public override void _Process(float delta)
+        {
+            _model.UpdateMotionBlend(Heading.Length());
         }
 
         public override void _PhysicsProcess(float delta)
         {
             // look in the direction we're heading
-            if(Heading != Vector3.Zero) {
-                Heading = Heading.Normalized();
-                _pivot.LookAt(Translation + Heading, Vector3.Up);
-            }
+            _pivot.LookAt(Translation + Heading, Vector3.Up);
 
             // movement
             _velocity.x = Heading.x * _speed;
@@ -56,8 +58,6 @@ namespace pdxpartyparrot.ssjAug2022
 
             // move the player
             _velocity = MoveAndSlide(_velocity, Vector3.Up);
-
-            Heading = Vector3.Zero;
         }
 
         #endregion

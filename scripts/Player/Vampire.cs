@@ -24,7 +24,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public override void _PhysicsProcess(float delta)
         {
-            var heading = Heading;
+            var heading = Vector3.Zero;
 
             if(Input.IsActionPressed("move_right")) {
                 heading.x += 1.0f;
