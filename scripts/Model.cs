@@ -25,6 +25,11 @@ namespace pdxpartyparrot.ssjAug2022
             _animationTree.Set("parameters/Motion/blend_position", Math.Abs(amount));
         }
 
+        public void TriggerOneShot(string property)
+        {
+            _animationTree.Set(property, true);
+        }
+
         public void Travel(string toNode)
         {
             //_stateMachine.Travel(toNode);

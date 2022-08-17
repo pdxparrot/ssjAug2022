@@ -2232,6 +2232,10 @@ animation = "Attack"
 filter_enabled = true
 filters = [ "Knight/Skeleton:mixamorig_Hips", "Knight/Skeleton:mixamorig_LeftFoot", "Knight/Skeleton:mixamorig_LeftLeg", "Knight/Skeleton:mixamorig_LeftToeBase", "Knight/Skeleton:mixamorig_LeftToe_End", "Knight/Skeleton:mixamorig_LeftUpLeg", "Knight/Skeleton:mixamorig_RightFoot", "Knight/Skeleton:mixamorig_RightLeg", "Knight/Skeleton:mixamorig_RightToeBase", "Knight/Skeleton:mixamorig_RightToe_End", "Knight/Skeleton:mixamorig_RightUpLeg" ]
 
+[sub_resource type="AnimationNodeOneShot" id=18]
+filter_enabled = true
+filters = [ "Knight/Skeleton:mixamorig_Head", "Knight/Skeleton:mixamorig_HeadTop_End", "Knight/Skeleton:mixamorig_Hips", "Knight/Skeleton:mixamorig_LeftArm", "Knight/Skeleton:mixamorig_LeftEye", "Knight/Skeleton:mixamorig_LeftForeArm", "Knight/Skeleton:mixamorig_LeftHand", "Knight/Skeleton:mixamorig_LeftHandIndex1", "Knight/Skeleton:mixamorig_LeftHandIndex2", "Knight/Skeleton:mixamorig_LeftHandIndex3", "Knight/Skeleton:mixamorig_LeftHandIndex4", "Knight/Skeleton:mixamorig_LeftHandMiddle1", "Knight/Skeleton:mixamorig_LeftHandMiddle2", "Knight/Skeleton:mixamorig_LeftHandMiddle3", "Knight/Skeleton:mixamorig_LeftHandMiddle4", "Knight/Skeleton:mixamorig_LeftHandPinky1", "Knight/Skeleton:mixamorig_LeftHandPinky2", "Knight/Skeleton:mixamorig_LeftHandPinky3", "Knight/Skeleton:mixamorig_LeftHandPinky4", "Knight/Skeleton:mixamorig_LeftHandRing1", "Knight/Skeleton:mixamorig_LeftHandRing2", "Knight/Skeleton:mixamorig_LeftHandRing3", "Knight/Skeleton:mixamorig_LeftHandRing4", "Knight/Skeleton:mixamorig_LeftHandThumb1", "Knight/Skeleton:mixamorig_LeftHandThumb2", "Knight/Skeleton:mixamorig_LeftHandThumb3", "Knight/Skeleton:mixamorig_LeftHandThumb4", "Knight/Skeleton:mixamorig_LeftShoulder", "Knight/Skeleton:mixamorig_Neck", "Knight/Skeleton:mixamorig_RightArm", "Knight/Skeleton:mixamorig_RightEye", "Knight/Skeleton:mixamorig_RightForeArm", "Knight/Skeleton:mixamorig_RightHand", "Knight/Skeleton:mixamorig_RightHandIndex1", "Knight/Skeleton:mixamorig_RightHandIndex2", "Knight/Skeleton:mixamorig_RightHandIndex3", "Knight/Skeleton:mixamorig_RightHandIndex4", "Knight/Skeleton:mixamorig_RightHandMiddle1", "Knight/Skeleton:mixamorig_RightHandMiddle2", "Knight/Skeleton:mixamorig_RightHandMiddle3", "Knight/Skeleton:mixamorig_RightHandMiddle4", "Knight/Skeleton:mixamorig_RightHandPinky1", "Knight/Skeleton:mixamorig_RightHandPinky2", "Knight/Skeleton:mixamorig_RightHandPinky3", "Knight/Skeleton:mixamorig_RightHandPinky4", "Knight/Skeleton:mixamorig_RightHandRing1", "Knight/Skeleton:mixamorig_RightHandRing2", "Knight/Skeleton:mixamorig_RightHandRing3", "Knight/Skeleton:mixamorig_RightHandRing4", "Knight/Skeleton:mixamorig_RightHandThumb1", "Knight/Skeleton:mixamorig_RightHandThumb2", "Knight/Skeleton:mixamorig_RightHandThumb3", "Knight/Skeleton:mixamorig_RightHandThumb4", "Knight/Skeleton:mixamorig_RightShoulder", "Knight/Skeleton:mixamorig_Shield_joint", "Knight/Skeleton:mixamorig_Spine", "Knight/Skeleton:mixamorig_Spine1", "Knight/Skeleton:mixamorig_Spine2", "Knight/Skeleton:mixamorig_Sword_joint" ]
+
 [sub_resource type="AnimationNodeAnimation" id=17]
 animation = "Idle"
 
@@ -2252,23 +2256,19 @@ blend_point_1/pos = 1.0
 blend_point_2/node = SubResource( 14 )
 blend_point_2/pos = 0.2
 
-[sub_resource type="AnimationNodeOneShot" id=18]
-filter_enabled = true
-filters = [ "Knight/Skeleton:mixamorig_Head", "Knight/Skeleton:mixamorig_HeadTop_End", "Knight/Skeleton:mixamorig_Hips", "Knight/Skeleton:mixamorig_LeftArm", "Knight/Skeleton:mixamorig_LeftEye", "Knight/Skeleton:mixamorig_LeftForeArm", "Knight/Skeleton:mixamorig_LeftHand", "Knight/Skeleton:mixamorig_LeftHandIndex1", "Knight/Skeleton:mixamorig_LeftHandIndex2", "Knight/Skeleton:mixamorig_LeftHandIndex3", "Knight/Skeleton:mixamorig_LeftHandIndex4", "Knight/Skeleton:mixamorig_LeftHandMiddle1", "Knight/Skeleton:mixamorig_LeftHandMiddle2", "Knight/Skeleton:mixamorig_LeftHandMiddle3", "Knight/Skeleton:mixamorig_LeftHandMiddle4", "Knight/Skeleton:mixamorig_LeftHandPinky1", "Knight/Skeleton:mixamorig_LeftHandPinky2", "Knight/Skeleton:mixamorig_LeftHandPinky3", "Knight/Skeleton:mixamorig_LeftHandPinky4", "Knight/Skeleton:mixamorig_LeftHandRing1", "Knight/Skeleton:mixamorig_LeftHandRing2", "Knight/Skeleton:mixamorig_LeftHandRing3", "Knight/Skeleton:mixamorig_LeftHandRing4", "Knight/Skeleton:mixamorig_LeftHandThumb1", "Knight/Skeleton:mixamorig_LeftHandThumb2", "Knight/Skeleton:mixamorig_LeftHandThumb3", "Knight/Skeleton:mixamorig_LeftHandThumb4", "Knight/Skeleton:mixamorig_LeftShoulder", "Knight/Skeleton:mixamorig_Neck", "Knight/Skeleton:mixamorig_RightArm", "Knight/Skeleton:mixamorig_RightEye", "Knight/Skeleton:mixamorig_RightForeArm", "Knight/Skeleton:mixamorig_RightHand", "Knight/Skeleton:mixamorig_RightHandIndex1", "Knight/Skeleton:mixamorig_RightHandIndex2", "Knight/Skeleton:mixamorig_RightHandIndex3", "Knight/Skeleton:mixamorig_RightHandIndex4", "Knight/Skeleton:mixamorig_RightHandMiddle1", "Knight/Skeleton:mixamorig_RightHandMiddle2", "Knight/Skeleton:mixamorig_RightHandMiddle3", "Knight/Skeleton:mixamorig_RightHandMiddle4", "Knight/Skeleton:mixamorig_RightHandPinky1", "Knight/Skeleton:mixamorig_RightHandPinky2", "Knight/Skeleton:mixamorig_RightHandPinky3", "Knight/Skeleton:mixamorig_RightHandPinky4", "Knight/Skeleton:mixamorig_RightHandRing1", "Knight/Skeleton:mixamorig_RightHandRing2", "Knight/Skeleton:mixamorig_RightHandRing3", "Knight/Skeleton:mixamorig_RightHandRing4", "Knight/Skeleton:mixamorig_RightHandThumb1", "Knight/Skeleton:mixamorig_RightHandThumb2", "Knight/Skeleton:mixamorig_RightHandThumb3", "Knight/Skeleton:mixamorig_RightHandThumb4", "Knight/Skeleton:mixamorig_RightShoulder", "Knight/Skeleton:mixamorig_Shield_joint", "Knight/Skeleton:mixamorig_Spine", "Knight/Skeleton:mixamorig_Spine1", "Knight/Skeleton:mixamorig_Spine2", "Knight/Skeleton:mixamorig_Sword_joint" ]
-
 [sub_resource type="AnimationNodeBlendTree" id=16]
-graph_offset = Vector2( -981.825, -227.775 )
+graph_offset = Vector2( -942.698, -301.797 )
 nodes/Attack/node = SubResource( 10 )
 nodes/Attack/position = Vector2( -320, -120 )
 nodes/Blend2/node = SubResource( 11 )
 nodes/Blend2/position = Vector2( 100, 0 )
+nodes/Claw_AttackTrigger/node = SubResource( 18 )
+nodes/Claw_AttackTrigger/position = Vector2( -100, -180 )
 nodes/Idle/node = SubResource( 17 )
 nodes/Idle/position = Vector2( -320, -240 )
 nodes/Motion/node = SubResource( 15 )
 nodes/Motion/position = Vector2( -240, 80 )
-nodes/OneShot/node = SubResource( 18 )
-nodes/OneShot/position = Vector2( -100, -180 )
-node_connections = [ "output", 0, "Blend2", "Blend2", 0, "OneShot", "Blend2", 1, "Motion", "OneShot", 0, "Idle", "OneShot", 1, "Attack" ]
+node_connections = [ "output", 0, "Blend2", "Blend2", 0, "Claw_AttackTrigger", "Blend2", 1, "Motion", "Claw_AttackTrigger", 0, "Idle", "Claw_AttackTrigger", 1, "Attack" ]
 
 [node name="Model" type="Spatial"]
 
@@ -2649,5 +2649,5 @@ tree_root = SubResource( 16 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/Blend2/blend_amount = 1.0
+parameters/Claw_AttackTrigger/active = false
 parameters/Motion/blend_position = 0
-parameters/OneShot/active = false

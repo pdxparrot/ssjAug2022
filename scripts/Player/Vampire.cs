@@ -22,6 +22,16 @@ namespace pdxpartyparrot.ssjAug2022.Player
             base._Ready();
         }
 
+        public override void _Process(float delta)
+        {
+            base._Process(delta);
+
+            if(Input.IsActionJustPressed("claw_attack")) {
+                GD.Print("[Player] Claw attack!");
+                Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
+            }
+        }
+
         public override void _PhysicsProcess(float delta)
         {
             var heading = Vector3.Zero;

@@ -28,6 +28,11 @@ namespace pdxpartyparrot.ssjAug2022
 
         private Model _model;
 
+        protected Model Model
+        {
+            get => _model;
+        }
+
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -47,7 +52,9 @@ namespace pdxpartyparrot.ssjAug2022
         public override void _PhysicsProcess(float delta)
         {
             // look in the direction we're heading
-            _pivot.LookAt(Translation + Heading, Vector3.Up);
+            if(Heading != Vector3.Zero) {
+                _pivot.LookAt(Translation + Heading, Vector3.Up);
+            }
 
             // movement
             _velocity.x = Heading.x * _speed;
