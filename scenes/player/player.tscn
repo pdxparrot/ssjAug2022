@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/Player/Vampire.cs" type="Script" id=1]
-[ext_resource path="res://art/3d/vampbody.fbx" type="PackedScene" id=3]
+[ext_resource path="res://art/3d/knight_anim_blend.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
@@ -16,4 +16,5 @@ shape = SubResource( 1 )
 
 [node name="Pivot" type="Spatial" parent="."]
 
-[node name="vampbody" parent="Pivot" instance=ExtResource( 3 )]
+[node name="knight" parent="Pivot" instance=ExtResource( 2 )]
+transform = Transform( -2.5, 0, -2.18557e-07, 0, 2.5, 0, 2.18557e-07, 0, -2.5, 0, 0, 0 )
