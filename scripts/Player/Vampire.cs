@@ -60,9 +60,35 @@ namespace pdxpartyparrot.ssjAug2022.Player
         public async void DamageAsync(int amount)
         {
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
+            GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
+
             if(IsDead) {
                 await GameManager.Instance.GameOverAsync().ConfigureAwait(false);
             }
         }
+
+        #region Events
+
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+
+            _currentHealth = _maxHealth;
+
+            GameUIManager.Instance.HUD.SetMaxHealth(_maxHealth);
+            GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
+        }
+
+        public override void OnReSpawn()
+        {
+            base.OnSpawn();
+
+            _currentHealth = _maxHealth;
+
+            GameUIManager.Instance.HUD.SetMaxHealth(_maxHealth);
+            GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
+        }
+
+        #endregion
     }
 }

@@ -26,8 +26,7 @@ fog_depth_curve = 0.615572
 tonemap_mode = 3
 tonemap_white = 5.0
 
-[node name="Main2" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+[node name="Main" type="Spatial"]
 script = ExtResource( 3 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

@@ -10,7 +10,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         [Export]
         private PackedScene _playerHUDScene;
 
-        private PlayerHUD _playerHUD;
+        public PlayerHUD HUD { get; private set; }
 
         #region Godot Lifecycle
 
@@ -25,24 +25,24 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         private void CreatePlayerHUD()
         {
-            if(IsInstanceValid(_playerHUD)) {
+            if(IsInstanceValid(HUD)) {
                 GD.PushWarning("[GameUIManager] Re-creating HUD ...");
 
-                _playerHUD.QueueFree();
+                HUD.QueueFree();
             }
 
-            _playerHUD = (PlayerHUD)_playerHUDScene.Instance();
-            _playerHUD.Name = "Player HUD";
+            HUD = (PlayerHUD)_playerHUDScene.Instance();
+            HUD.Name = "Player HUD";
         }
 
         public void ShowHUD()
         {
-            AddChild(_playerHUD);
+            AddChild(HUD);
         }
 
         public void HideHUD()
         {
-            RemoveChild(_playerHUD);
+            RemoveChild(HUD);
         }
     }
 }

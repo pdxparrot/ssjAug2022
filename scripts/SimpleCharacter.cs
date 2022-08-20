@@ -71,17 +71,17 @@ namespace pdxpartyparrot.ssjAug2022
 
         #region Events
 
-        public void OnSpawn()
+        public virtual void OnSpawn()
         {
             OnIdle();
         }
 
-        public void OnReSpawn()
+        public virtual void OnReSpawn()
         {
             OnIdle();
         }
 
-        public void OnIdle()
+        public virtual void OnIdle()
         {
             _model.Travel("Idle");
         }

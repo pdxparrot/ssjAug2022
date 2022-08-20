@@ -8,6 +8,8 @@ namespace pdxpartyparrot.ssjAug2022.UI
     {
         private CanvasLayer _canvas;
 
+        private TextureProgress _health;
+
         // TODO: temp hack
         public Label _timer;
 
@@ -16,6 +18,9 @@ namespace pdxpartyparrot.ssjAug2022.UI
         public override void _Ready()
         {
             _canvas = GetNode<CanvasLayer>("CanvasLayer");
+
+            _health = _canvas.GetNode<TextureProgress>("Pivot/Health");
+            _health.MinValue = 0;
 
             // TODO: temp hack
             _timer = GetNode<Label>("CanvasLayer/VBoxContainer/TEMP TIMER");
@@ -41,6 +46,16 @@ namespace pdxpartyparrot.ssjAug2022.UI
         public void ShowHUD()
         {
             _canvas.Show();
+        }
+
+        public void SetMaxHealth(int maxHealth)
+        {
+            _health.MaxValue = maxHealth;
+        }
+
+        public void UpdateHealth(int currentHealth)
+        {
+            _health.Value = currentHealth;
         }
     }
 }
