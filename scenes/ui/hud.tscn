@@ -22,15 +22,9 @@ margin_top = 8.0
 margin_right = 1270.0
 margin_bottom = 48.0
 
-[node name="TEMP TEXT" type="Label" parent="CanvasLayer/VBoxContainer"]
+[node name="TEMP TIMER" type="Label" parent="CanvasLayer/VBoxContainer"]
 margin_right = 73.0
 margin_bottom = 14.0
-text = "Player HUD"
-
-[node name="TEMP TIMER" type="Label" parent="CanvasLayer/VBoxContainer"]
-margin_top = 18.0
-margin_right = 73.0
-margin_bottom = 32.0
 text = "300"
 
 [node name="Pivot" type="Control" parent="CanvasLayer"]

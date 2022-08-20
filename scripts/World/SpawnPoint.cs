@@ -5,6 +5,7 @@ using System;
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.NPCs;
 using pdxpartyparrot.ssjAug2022.Player;
+using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.World
 {
@@ -14,6 +15,18 @@ namespace pdxpartyparrot.ssjAug2022.World
         private string[] _tags = new string[0];
 
         public string[] Tags => _tags;
+
+        [Export]
+        private float _minXSpawnRange;
+
+        [Export]
+        private float _maxXSpawnRange;
+
+        [Export]
+        private float _minZSpawnRange;
+
+        [Export]
+        private float _maxZSpawnRange;
 
         private Godot.Object _owner;
 
@@ -50,7 +63,24 @@ namespace pdxpartyparrot.ssjAug2022.World
 
         protected void InitSpatial(Spatial spatial)
         {
-            spatial.Transform = Transform;
+            var xSpawnRange = new FloatRangeConfig {
+                Min = _minXSpawnRange,
+                Max = _maxXSpawnRange,
+            };
+
+            var zSpawnRange = new FloatRangeConfig {
+                Min = _minZSpawnRange,
+                Max = _maxZSpawnRange,
+            };
+
+            var offset = new Vector3(
+                xSpawnRange.GetRandomValue() * PartyParrotManager.Instance.Random.NextSign(),
+                0.0f,
+                zSpawnRange.GetRandomValue() * PartyParrotManager.Instance.Random.NextSign()
+            );
+
+            spatial.Translation = Translation + offset;
+            spatial.Rotation = Rotation;
         }
 
         #region Spawn

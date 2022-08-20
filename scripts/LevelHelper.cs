@@ -7,6 +7,12 @@ namespace pdxpartyparrot.ssjAug2022
 {
     public class LevelHelper : Node
     {
+        [Export]
+        private int _enemiesToSpawn;
+
+        [Export]
+        private PackedScene _humanScene;
+
         private FollowCamera _viewer;
 
         #region Godot Lifecycle
@@ -21,6 +27,8 @@ namespace pdxpartyparrot.ssjAug2022
 
             var player = PlayerManager.Instance.SpawnPlayer(0);
             _viewer.Follow(player);
+
+            SpawnEnemies();
         }
 
         public override void _ExitTree()
@@ -32,5 +40,19 @@ namespace pdxpartyparrot.ssjAug2022
         }
 
         #endregion
+
+        private void SpawnEnemy()
+        {
+            // TODO:
+        }
+
+        private void SpawnEnemies()
+        {
+            GD.Print($"[Level] Spawning {_enemiesToSpawn} enemies ...");
+
+            for(int i = 0; i < _enemiesToSpawn; ++i) {
+                SpawnEnemy();
+            }
+        }
     }
 }

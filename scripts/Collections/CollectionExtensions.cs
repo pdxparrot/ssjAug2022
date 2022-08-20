@@ -43,7 +43,7 @@ namespace pdxpartyparrot.ssjAug2022.Collections
 
             for(int i = 0; i < collection.Count; ++i) {
                 T element = collection.ElementAt(i);
-                Vector3 epos = element.GlobalTransform.origin;
+                Vector3 epos = element.GlobalTranslation;
 
                 float dist = epos.DistanceSquaredTo(position);
                 if(dist < distanceSquared) {
@@ -62,7 +62,7 @@ namespace pdxpartyparrot.ssjAug2022.Collections
 
             for(int i = 0; i < collection.Count; ++i) {
                 T element = collection.ElementAt(i);
-                Vector3 epos = element.GlobalTransform.origin;
+                Vector3 epos = element.GlobalTranslation;
 
                 float dist = epos.ManhattanDistanceTo(position);
                 if(dist < distance) {
@@ -81,7 +81,7 @@ namespace pdxpartyparrot.ssjAug2022.Collections
 
             for(int i = 0; i < collection.Count; ++i) {
                 T element = collection.ElementAt(i);
-                Vector3 epos = element.GlobalTransform.origin;
+                Vector3 epos = element.GlobalTranslation;
 
                 float dist = epos.DistanceSquaredTo(position);
                 if(dist > distanceSquared) {
@@ -100,7 +100,7 @@ namespace pdxpartyparrot.ssjAug2022.Collections
 
             for(int i = 0; i < collection.Count; ++i) {
                 T element = collection.ElementAt(i);
-                Vector3 epos = element.GlobalTransform.origin;
+                Vector3 epos = element.GlobalTranslation;
 
                 float dist = epos.ManhattanDistanceTo(position);
                 if(dist > distance) {
@@ -115,7 +115,7 @@ namespace pdxpartyparrot.ssjAug2022.Collections
         public static void WithinDistance<T>(this IReadOnlyCollection<T> collection, Vector3 position, float distance, IList<T> matches) where T : Spatial
         {
             foreach(T element in collection) {
-                Vector3 epos = element.GlobalTransform.origin;
+                Vector3 epos = element.GlobalTranslation;
 
                 float dist = epos.ManhattanDistanceTo(position);
                 if(dist <= distance) {
