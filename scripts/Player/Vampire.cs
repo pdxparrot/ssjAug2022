@@ -1,5 +1,7 @@
 using Godot;
 
+using System.Threading.Tasks;
+
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.World;
 
@@ -58,7 +60,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #endregion
 
-        public async void DamageAsync(int amount)
+        public async Task DamageAsync(int amount)
         {
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
             GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);

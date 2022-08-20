@@ -1,5 +1,9 @@
 using Godot;
 
+using System.Threading.Tasks;
+
+using pdxpartyparrot.ssjAug2022.Managers;
+
 namespace pdxpartyparrot.ssjAug2022.NPCs
 {
     public class Human : SimpleNPC
@@ -22,11 +26,14 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         #endregion
 
-        public void Damage(int amount)
+        public async Task DamageAsync(int amount)
         {
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
+
             if(IsDead) {
-                QueueFree();
+                NPCManager.Instance.DeSpawnNPC(this, true);
+
+                await GameManager.Instance.EnemyDefeated();
             }
         }
     }
