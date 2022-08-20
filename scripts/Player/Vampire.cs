@@ -22,11 +22,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
             base._Ready();
         }
 
-        public override void _Process(float delta)
+        public override void _Input(InputEvent @event)
         {
-            base._Process(delta);
-
-            if(Input.IsActionJustPressed("claw_attack")) {
+            if(@event.IsActionPressed("claw_attack")) {
                 GD.Print("[Player] Claw attack!");
                 Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
             }
