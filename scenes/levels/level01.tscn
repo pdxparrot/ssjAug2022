@@ -27,7 +27,7 @@ tonemap_mode = 3
 tonemap_white = 5.0
 
 [node name="Main2" type="Spatial"]
-transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 3 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -45,7 +45,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 _tags = PoolStringArray( "player" )
 
 [node name="Test Cube Large" parent="." instance=ExtResource( 6 )]
-transform = Transform( 4, -9.36751e-17, 0, 3.22659e-16, 4, 3.05311e-16, 0, -3.1225e-17, 4, -24, 2, -24.726 )
+transform = Transform( 4, -9.36751e-17, 0, 3.22659e-16, 4, 3.05311e-16, 0, -3.1225e-17, 4, -24, 2, -24 )
 
 [node name="Test Cube Large2" parent="." instance=ExtResource( 6 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 24, 2, 24 )
@@ -56,14 +56,14 @@ transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -24, 2, 24 )
 [node name="Test Cube Large4" parent="." instance=ExtResource( 6 )]
 transform = Transform( 4, 0.00196176, -0.00247097, -0.00196096, 4, 0.00132305, 0.00247169, -0.00132186, 4, 24, 2, -24 )
 
-[node name="crystal" parent="." instance=ExtResource( 2 )]
-transform = Transform( -0.145513, 0, -0.989356, 0, 1, 0, 0.989356, 0, -0.145513, 0, 1, 20 )
+[node name="floating_crystal" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0 )
 
-[node name="crystal2" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.610546, 0, -0.791981, 0, 1, 0, 0.791981, 0, 0.610546, 0, 1, -20 )
+[node name="floating_crystal2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
 
-[node name="crystal3" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.610546, 0, -0.791981, 0, 1, 0, 0.791981, 0, 0.610546, 20, 1, 0 )
+[node name="floating_crystal3" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20 )
 
-[node name="crystal4" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.610546, 0, -0.791981, 0, 1, 0, 0.791981, 0, 0.610546, -20, 1, 0 )
+[node name="floating_crystal4" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0 )
