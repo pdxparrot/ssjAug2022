@@ -42,21 +42,23 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             return player;
         }
 
-        public void DespawnPlayer(SimplePlayer player)
+        public void DeSpawnPlayer(SimplePlayer player)
         {
             GD.Print($"[PlayerManager] Despawning player {player.ClientId}");
+
+            player.OnDeSpawn();
 
             RemoveChild(player);
         }
 
-        public void DespawnPlayers()
+        public void DeSpawnPlayers()
         {
             if(PlayerCount < 1) {
                 return;
             }
 
             foreach(var kvp in _players) {
-                DespawnPlayer(kvp.Value);
+                DeSpawnPlayer(kvp.Value);
             }
         }
 

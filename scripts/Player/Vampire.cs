@@ -1,6 +1,7 @@
 using Godot;
 
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022.Player
 {
@@ -69,9 +70,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #region Events
 
-        public override void OnSpawn()
+        public override void OnSpawn(SpawnPoint spawnPoint)
         {
-            base.OnSpawn();
+            base.OnSpawn(spawnPoint);
 
             _currentHealth = _maxHealth;
 
@@ -79,9 +80,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
             GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
         }
 
-        public override void OnReSpawn()
+        public override void OnReSpawn(SpawnPoint spawnPoint)
         {
-            base.OnSpawn();
+            base.OnSpawn(spawnPoint);
 
             _currentHealth = _maxHealth;
 

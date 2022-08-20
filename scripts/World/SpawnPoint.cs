@@ -3,6 +3,7 @@ using Godot;
 using System;
 
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.NPCs;
 using pdxpartyparrot.ssjAug2022.Player;
 
 namespace pdxpartyparrot.ssjAug2022.World
@@ -64,13 +65,15 @@ namespace pdxpartyparrot.ssjAug2022.World
             return spawned;
         }
 
+        #region Players
+
         public SimplePlayer SpawnPlayer(PackedScene playerScene, string name)
         {
             var player = SpawnFromScene<SimplePlayer>(playerScene, name);
 
             // have to temporarily add the player so _Ready() is called
             AddChild(player);
-            player.OnSpawn();
+            player.OnSpawn(this);
             RemoveChild(player);
 
             return player;
@@ -82,9 +85,37 @@ namespace pdxpartyparrot.ssjAug2022.World
 
             // have to temporarily add the player so _Ready() is called
             AddChild(player);
-            player.OnReSpawn();
+            player.OnReSpawn(this);
             RemoveChild(player);
         }
+
+        #endregion
+
+        #region NPCs
+
+        public SimpleNPC SpawnNPC(PackedScene npcScene, string name)
+        {
+            var npc = SpawnFromScene<SimpleNPC>(npcScene, name);
+
+            // have to temporarily add the npc so _Ready() is called
+            AddChild(npc);
+            npc.OnSpawn(this);
+            RemoveChild(npc);
+
+            return npc;
+        }
+
+        public void ReSpawnNPC(SimpleNPC npc)
+        {
+            InitSpatial(npc);
+
+            // have to temporarily add the npc so _Ready() is called
+            AddChild(npc);
+            npc.OnReSpawn(this);
+            RemoveChild(npc);
+        }
+
+        #endregion
 
         #endregion
 

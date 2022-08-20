@@ -1,5 +1,7 @@
 using Godot;
 
+using pdxpartyparrot.ssjAug2022.World;
+
 namespace pdxpartyparrot.ssjAug2022
 {
     public abstract class SimpleCharacter : KinematicBody
@@ -71,14 +73,18 @@ namespace pdxpartyparrot.ssjAug2022
 
         #region Events
 
-        public virtual void OnSpawn()
+        public virtual void OnSpawn(SpawnPoint spawnPoint)
         {
             OnIdle();
         }
 
-        public virtual void OnReSpawn()
+        public virtual void OnReSpawn(SpawnPoint spawnPoint)
         {
             OnIdle();
+        }
+
+        public virtual void OnDeSpawn()
+        {
         }
 
         public virtual void OnIdle()
