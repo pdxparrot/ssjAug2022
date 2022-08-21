@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/world/ground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/world/props/crystal.tscn" type="PackedScene" id=2]
@@ -26,6 +26,8 @@ fog_depth_end = 75.0
 fog_depth_curve = 0.615572
 tonemap_mode = 3
 tonemap_white = 5.0
+
+[sub_resource type="NavigationMesh" id=3]
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 3 )
@@ -88,3 +90,6 @@ _minXSpawnRange = 1.0
 _maxXSpawnRange = 10.0
 _minZSpawnRange = 1.0
 _maxZSpawnRange = 10.0
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="."]
+navmesh = SubResource( 3 )

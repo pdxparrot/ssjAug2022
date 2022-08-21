@@ -24,4 +24,6 @@ script = ExtResource( 3 )
 [node name="AnimationTree" parent="Pivot/Model" index="2"]
 parameters/Motion/blend_position = 0.932
 
+[node name="NavigationAgent" type="NavigationAgent" parent="."]
+
 [editable path="Pivot/Model"]
