@@ -22,6 +22,8 @@ namespace pdxpartyparrot.ssjAug2022
             set => _heading = value;
         }
 
+        public bool InputAllowed { get; set; } = true;
+
         private float _gravity;
 
         private Vector3 _gravityVector;

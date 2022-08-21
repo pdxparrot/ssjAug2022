@@ -35,15 +35,23 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public override async void _Input(InputEvent @event)
         {
+            if(!InputAllowed) {
+                return;
+            }
+
             if(@event.IsActionPressed("claw_attack")) {
                 await ClawAttackAsync();
+            } else if(@event.IsActionPressed("dash")) {
+                Dash();
             }
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            var heading = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
-            Heading = new Vector3(heading.x, 0.0f, heading.y);
+            if(InputAllowed) {
+                var heading = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
+                Heading = new Vector3(heading.x, 0.0f, heading.y);
+            }
 
             base._PhysicsProcess(delta);
         }
@@ -69,6 +77,12 @@ namespace pdxpartyparrot.ssjAug2022.Player
             if(enemy != null && distance <= _clawAttackRange) {
                 await enemy.DamageAsync(_clawAttackDamage);
             }
+        }
+
+        public void Dash()
+        {
+            GD.Print("[Player] Dash!");
+            //Model.TriggerOneShot("parameters/Dash_Trigger/active");
         }
 
         #region Events
