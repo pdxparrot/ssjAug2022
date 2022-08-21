@@ -18,17 +18,40 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public bool IsDead => _currentHealth <= 0;
 
+        #region Claw Attack
+
         [Export]
         private float _clawAttackRange = 5.0f;
 
         [Export]
         private int _clawAttackDamage = 1;
 
+        // TODO: this would be better if it was driven by the animation
+        private Timer _clawTimer;
+
+        private Timer _clawCooldown;
+
+        #endregion
+
+        #region Dash
+
+        private Timer _dashTimer;
+
+        private Timer _dashCooldown;
+
+        #endregion
+
         #region Godot Lifecycle
 
         public override void _Ready()
         {
             _currentHealth = _maxHealth;
+
+            _clawTimer = GetNode<Timer>("Timers/Claw Timer");
+            _clawCooldown = GetNode<Timer>("Timers/Claw Cooldown");
+
+            _dashTimer = GetNode<Timer>("Timers/Dash Timer");
+            _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
 
             base._Ready();
         }
@@ -70,6 +93,10 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public async Task ClawAttackAsync()
         {
+            if(!_clawTimer.IsStopped() || !_clawCooldown.IsStopped()) {
+                return;
+            }
+
             GD.Print("[Player] Claw attack!");
             Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
 
@@ -77,13 +104,35 @@ namespace pdxpartyparrot.ssjAug2022.Player
             if(enemy != null && distance <= _clawAttackRange) {
                 await enemy.DamageAsync(_clawAttackDamage);
             }
+
+            _clawTimer.Start();
         }
 
         public void Dash()
         {
+            if(!_dashTimer.IsStopped() || !_dashCooldown.IsStopped()) {
+                return;
+            }
+
             GD.Print("[Player] Dash!");
             //Model.TriggerOneShot("parameters/Dash_Trigger/active");
+
+            _dashTimer.Start();
         }
+
+        #region Signal Handlers
+
+        private void _on_Claw_Timer_timeout()
+        {
+            _clawCooldown.Start();
+        }
+
+        private void _on_Dash_Timer_timeout()
+        {
+            _dashCooldown.Start();
+        }
+
+        #endregion
 
         #region Events
 

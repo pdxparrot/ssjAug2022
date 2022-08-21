@@ -14,7 +14,7 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         #endregion
 
-        #region Signals
+        #region Signal Handlers
 
         private async void _on_Play_pressed()
         {
