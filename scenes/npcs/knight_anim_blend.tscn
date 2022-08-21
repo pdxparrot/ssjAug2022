@@ -2224,12 +2224,12 @@ tracks/68/imported = false
 tracks/68/enabled = true
 tracks/68/keys = PoolRealArray( 0, 1, -0.0318553, -3.82026, -0.432453, -0.0101023, 0.000759015, 0.0127579, 0.999867, 1, 1, 1, 0.0666667, 1, -0.147083, -3.17942, -0.721052, -0.00897512, -0.0079316, 0.0156822, 0.999805, 1, 1, 1, 0.133333, 1, -0.287162, -3.04584, -0.971898, -0.0064886, -0.0270033, 0.0205064, 0.999404, 1, 1, 1, 0.2, 1, -0.243976, -4.27925, -0.897373, -0.00327866, -0.0552918, 0.0193231, 0.998278, 1, 1, 1, 0.266667, 1, 0.366317, -6.08859, -0.465795, 0.00017784, -0.0775298, 0.0154061, 0.996871, 1, 1, 1, 0.333333, 1, 1.74456, -7.59815, 1.05088, -0.00247909, -0.0823502, 0.0151838, 0.996485, 1, 1, 1, 0.4, 1, 2.96982, -7.88781, 2.20633, -0.00892909, -0.0827326, 0.0111559, 0.996469, 1, 1, 1, 0.466667, 1, 3.81279, -7.01595, 2.55237, -0.0123312, -0.0766947, 0.00565072, 0.996962, 1, 1, 1, 0.533333, 1, 4.40052, -5.24436, 2.2583, -0.00650854, -0.0620582, 0.00270463, 0.998048, 1, 1, 1, 0.6, 1, 4.72086, -3.55199, 1.55718, 0.00370685, -0.0433076, 0.00239973, 0.999052, 1, 1, 1, 0.666667, 1, 4.71128, -3.07444, 0.816524, 0.0118451, -0.0222624, 0.00466847, 0.999671, 1, 1, 1, 0.733333, 1, 4.35502, -3.98917, 0.0149807, 0.0122982, -0.00285008, 0.00859923, 0.999883, 1, 1, 1, 0.8, 1, 3.65788, -6.37706, -0.230167, 0.00894682, 0.0188862, 0.0155119, 0.999661, 1, 1, 1, 0.866667, 1, 2.77379, -8.74136, 0.491347, 0.00964788, 0.0352545, 0.0175197, 0.999178, 1, 1, 1, 0.933333, 1, 1.66387, -9.55381, 0.967371, 0.00640422, 0.0482377, 0.00973062, 0.998768, 1, 1, 1, 1, 1, 0.799754, -8.68128, 0.745782, -0.00849281, 0.0468537, 0.00538368, 0.998851, 1, 1, 1, 1.06667, 1, 0.247471, -6.08348, 0.13552, -0.0115829, 0.0239635, 0.00789517, 0.999615, 1, 1, 1, 1.13333, 1, -0.029227, -3.82027, -0.432452, -0.0101023, 0.000759029, 0.0127581, 0.999867, 1, 1, 1 )
 
-[sub_resource type="AnimationNodeAnimation" id=10]
-animation = "Attack"
-
 [sub_resource type="AnimationNodeBlend2" id=11]
 filter_enabled = true
 filters = [ "Knight/Skeleton:mixamorig_Hips", "Knight/Skeleton:mixamorig_LeftFoot", "Knight/Skeleton:mixamorig_LeftLeg", "Knight/Skeleton:mixamorig_LeftToeBase", "Knight/Skeleton:mixamorig_LeftToe_End", "Knight/Skeleton:mixamorig_LeftUpLeg", "Knight/Skeleton:mixamorig_RightFoot", "Knight/Skeleton:mixamorig_RightLeg", "Knight/Skeleton:mixamorig_RightToeBase", "Knight/Skeleton:mixamorig_RightToe_End", "Knight/Skeleton:mixamorig_RightUpLeg" ]
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "Attack"
 
 [sub_resource type="AnimationNodeOneShot" id=18]
 filter_enabled = true
@@ -2257,17 +2257,17 @@ blend_point_2/pos = 0.2
 
 [sub_resource type="AnimationNodeBlendTree" id=16]
 graph_offset = Vector2( -942.698, -301.797 )
-nodes/Attack/node = SubResource( 10 )
-nodes/Attack/position = Vector2( -320, -120 )
 nodes/Blend2/node = SubResource( 11 )
 nodes/Blend2/position = Vector2( 100, 0 )
+nodes/Claw_Attack/node = SubResource( 10 )
+nodes/Claw_Attack/position = Vector2( -320, -120 )
 nodes/Claw_AttackTrigger/node = SubResource( 18 )
 nodes/Claw_AttackTrigger/position = Vector2( -100, -180 )
 nodes/Idle/node = SubResource( 17 )
 nodes/Idle/position = Vector2( -320, -240 )
 nodes/Motion/node = SubResource( 15 )
 nodes/Motion/position = Vector2( -240, 80 )
-node_connections = [ "output", 0, "Blend2", "Blend2", 0, "Claw_AttackTrigger", "Blend2", 1, "Motion", "Claw_AttackTrigger", 0, "Idle", "Claw_AttackTrigger", 1, "Attack" ]
+node_connections = [ "output", 0, "Blend2", "Blend2", 0, "Claw_AttackTrigger", "Blend2", 1, "Motion", "Claw_AttackTrigger", 0, "Idle", "Claw_AttackTrigger", 1, "Claw_Attack" ]
 
 [node name="Model" type="Spatial"]
 
