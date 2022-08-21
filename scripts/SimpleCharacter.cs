@@ -23,6 +23,8 @@ namespace pdxpartyparrot.ssjAug2022
 
         private Vector3 _velocity = Vector3.Zero;
 
+        public Vector3 Velocity => _velocity;
+
         private Vector3 _heading = Vector3.Zero;
 
         protected Vector3 Heading
