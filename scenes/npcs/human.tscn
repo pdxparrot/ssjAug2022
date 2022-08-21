@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/NPCs/Human.cs" type="Script" id=1]
-[ext_resource path="res://scenes/player/knight_anim_blend.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/npcs/knight_anim_blend.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Model.cs" type="Script" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -21,9 +21,6 @@ shape = SubResource( 1 )
 [node name="Model" parent="Pivot" instance=ExtResource( 2 )]
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
 script = ExtResource( 3 )
-
-[node name="AnimationTree" parent="Pivot/Model" index="2"]
-parameters/Motion/blend_position = 0.932
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
 
