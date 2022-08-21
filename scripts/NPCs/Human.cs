@@ -18,6 +18,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         private StateMachine<Human> _stateMachine;
 
+        private Steering _steering = new Steering();
+
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -31,11 +33,20 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public override void _Process(float delta)
         {
-            base._Process(delta);
-
             // TODO: we want to do this at a fixed rate
             // rather than every frame
             _stateMachine.Run();
+
+            base._Process(delta);
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            if(IsInputAllowed) {
+                Heading = _steering.Calculate();
+            }
+
+            base._PhysicsProcess(delta);
         }
 
         #endregion

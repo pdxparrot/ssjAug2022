@@ -7,6 +7,9 @@ namespace pdxpartyparrot.ssjAug2022
     public abstract class SimpleCharacter : KinematicBody
     {
         [Export]
+        private float _mass = 1.0f;
+
+        [Export]
         private float _speed = 14.0f;
 
         public float Speed
