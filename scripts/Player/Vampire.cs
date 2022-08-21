@@ -2,7 +2,9 @@ using Godot;
 
 using System.Threading.Tasks;
 
+using pdxpartyparrot.ssjAug2022.Collections;
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.NPCs;
 using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022.Player
@@ -16,6 +18,12 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public bool IsDead => _currentHealth <= 0;
 
+        [Export]
+        private float _clawAttackRange = 5.0f;
+
+        [Export]
+        private int _clawAttackDamage = 1;
+
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -25,11 +33,10 @@ namespace pdxpartyparrot.ssjAug2022.Player
             base._Ready();
         }
 
-        public override void _Input(InputEvent @event)
+        public override async void _Input(InputEvent @event)
         {
             if(@event.IsActionPressed("claw_attack")) {
-                GD.Print("[Player] Claw attack!");
-                Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
+                await ClawAttackAsync();
             }
         }
 
@@ -67,6 +74,17 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             if(IsDead) {
                 await GameManager.Instance.GameOverAsync().ConfigureAwait(false);
+            }
+        }
+
+        public async Task ClawAttackAsync()
+        {
+            GD.Print("[Player] Claw attack!");
+            Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
+
+            var enemy = (Human)NPCManager.Instance.NPCs.NearestManhattan(GlobalTranslation, out float distance);
+            if(enemy != null && distance <= _clawAttackRange) {
+                await enemy.DamageAsync(_clawAttackDamage);
             }
         }
 

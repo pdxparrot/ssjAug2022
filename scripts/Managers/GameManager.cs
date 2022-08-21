@@ -57,7 +57,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             await SceneManager.Instance.LoadMainMenuAsync().ConfigureAwait(false);
         }
 
-        public async Task EnemyDefeated()
+        public async Task EnemyDefeatedAsync()
         {
             if(NPCManager.Instance.NPCCount == 0) {
                 await GameOverAsync();

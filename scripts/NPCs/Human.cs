@@ -33,7 +33,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             if(IsDead) {
                 NPCManager.Instance.DeSpawnNPC(this, true);
 
-                await GameManager.Instance.EnemyDefeated();
+                await GameManager.Instance.EnemyDefeatedAsync();
             }
         }
     }

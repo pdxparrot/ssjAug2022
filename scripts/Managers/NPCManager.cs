@@ -50,11 +50,11 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         public void DeSpawnNPC(SimpleNPC npc, bool destroy)
         {
             if(destroy) {
-                GD.Print($"[NPCManager] Destroying npc {Name}");
+                GD.Print($"[NPCManager] Destroying npc {npc.Name}");
 
-                QueueFree();
+                npc.QueueFree();
             } else {
-                GD.Print($"[NPCManager] Despawning npc {Name}");
+                GD.Print($"[NPCManager] Despawning npc {npc.Name}");
             }
 
             npc.OnDeSpawn();
