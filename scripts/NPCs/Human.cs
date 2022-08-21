@@ -26,7 +26,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
             _currentHealth = _maxHealth;
 
-            _stateMachine = new StateMachine<Human>(this, new States.Idle());
+            _stateMachine = new StateMachine<Human>(this, new States.Idle(), new States.Global());
         }
 
         public override void _Process(float delta)
@@ -35,7 +35,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
             // TODO: we want to do this at a fixed rate
             // rather than every frame
-            _stateMachine.Execute(this);
+            _stateMachine.Run();
         }
 
         #endregion

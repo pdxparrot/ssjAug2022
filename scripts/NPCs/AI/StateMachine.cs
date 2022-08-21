@@ -2,37 +2,55 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 {
     public class StateMachine<T> where T : SimpleNPC
     {
+        private T _owner;
+
         private IState<T> _previousState;
 
         private IState<T> _currentState;
 
-        public StateMachine(T owner, IState<T> initialState)
+        private IState<T> _globalState;
+
+        public StateMachine(T owner, IState<T> initialState = null, IState<T> globalState = null)
         {
+            _owner = owner;
+
             _currentState = initialState;
-            _currentState.Enter(owner, this);
-        }
-
-        public void Execute(T owner)
-        {
             if(_currentState != null) {
-                _currentState.Execute(owner, this);
+                _currentState.Enter(_owner, this);
+            }
+
+            _globalState = globalState;
+            if(_globalState != null) {
+                _globalState.Enter(_owner, this);
             }
         }
 
-        public void ChangeState(T owner, IState<T> newState)
+        public void Run()
         {
-            if(_currentState != null) {
-                _currentState.Exit(owner, this);
+            if(_globalState != null) {
+                _globalState.Execute(_owner, this);
             }
 
+            if(_currentState != null) {
+                _currentState.Execute(_owner, this);
+            }
+        }
+
+        public void ChangeState(IState<T> newState)
+        {
             _previousState = _currentState;
+
+            if(_currentState != null) {
+                _currentState.Exit(_owner, this);
+            }
+
             _currentState = newState;
-            _currentState.Enter(owner, this);
+            _currentState.Enter(_owner, this);
         }
 
-        public void RevertToPreviousState(T owner)
+        public void RevertToPreviousState()
         {
-            ChangeState(owner, _previousState);
+            ChangeState(_previousState);
         }
     }
 }
