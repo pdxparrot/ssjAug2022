@@ -3,6 +3,7 @@ using Godot;
 using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.NPCs.AI;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs
 {
@@ -15,13 +16,26 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public bool IsDead => _currentHealth <= 0;
 
+        private StateMachine<Human> _stateMachine;
+
         #region Godot Lifecycle
 
         public override void _Ready()
         {
+            base._Ready();
+
             _currentHealth = _maxHealth;
 
-            base._Ready();
+            _stateMachine = new StateMachine<Human>(this, new States.Idle());
+        }
+
+        public override void _Process(float delta)
+        {
+            base._Process(delta);
+
+            // TODO: we want to do this at a fixed rate
+            // rather than every frame
+            _stateMachine.Execute(this);
         }
 
         #endregion
