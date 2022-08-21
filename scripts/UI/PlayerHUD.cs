@@ -10,9 +10,6 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         private TextureProgress _health;
 
-        // TODO: temp hack
-        public Label _timer;
-
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -21,19 +18,6 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
             _health = _canvas.GetNode<TextureProgress>("Pivot/Health");
             _health.MinValue = 0;
-
-            // TODO: temp hack
-            _timer = GetNode<Label>("CanvasLayer/VBoxContainer/TEMP TIMER");
-        }
-
-        public override void _Process(float delta)
-        {
-            // TODO: temp hack
-            if(GameManager.Instance.IsGameOver) {
-                _timer.Text = "0";
-            } else {
-                _timer.Text = $"{GameManager.Instance.TimeRemaining}";
-            }
         }
 
         #endregion
