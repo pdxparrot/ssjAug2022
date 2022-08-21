@@ -41,32 +41,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Play" type="Button" parent="CanvasLayer/VBoxContainer"]
-margin_left = 103.0
-margin_top = 8.0
-margin_right = 153.0
-margin_bottom = 28.0
-grow_vertical = 2
-rect_min_size = Vector2( 50, 0 )
-size_flags_horizontal = 4
-size_flags_vertical = 5
-text = "Play"
-
-[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer"]
-visible = false
-margin_left = 99.0
-margin_top = 24.0
-margin_right = 156.0
-margin_bottom = 44.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "Credits"
-
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
+[node name="Play" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
 margin_left = 28.0
-margin_top = 32.0
+margin_top = 20.0
 margin_right = 228.0
-margin_bottom = 82.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 200, 50 )
 rect_pivot_offset = Vector2( 100, 50 )
 size_flags_horizontal = 4
@@ -77,11 +56,11 @@ texture_hover = ExtResource( 4 )
 expand = true
 stretch_mode = 5
 
-[node name="TextureButton2" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
+[node name="Credits" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
 margin_left = 28.0
-margin_top = 86.0
+margin_top = 74.0
 margin_right = 228.0
-margin_bottom = 136.0
+margin_bottom = 124.0
 rect_min_size = Vector2( 200, 50 )
 rect_pivot_offset = Vector2( 100, 50 )
 size_flags_horizontal = 4
