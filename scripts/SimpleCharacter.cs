@@ -9,6 +9,12 @@ namespace pdxpartyparrot.ssjAug2022
         [Export]
         private float _speed = 14.0f;
 
+        public float Speed
+        {
+            get => _speed;
+            set => _speed = value;
+        }
+
         [Export]
         private float _gravityMultiplier = 5.0f;
 
@@ -22,13 +28,15 @@ namespace pdxpartyparrot.ssjAug2022
             set => _heading = value;
         }
 
-        public bool InputAllowed { get; set; } = true;
+        public bool IsInputAllowed { get; set; } = true;
 
         private float _gravity;
 
         private Vector3 _gravityVector;
 
         private Spatial _pivot;
+
+        protected Spatial Pivot => _pivot;
 
         private Model _model;
 

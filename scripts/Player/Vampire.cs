@@ -51,6 +51,11 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #region Dash
 
+        [Export]
+        private float _dashModifier = 3.0f;
+
+        private float _normalSpeed;
+
         private Timer _dashTimer;
 
         private Timer _dashCooldown;
@@ -61,6 +66,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public override void _Ready()
         {
+            base._Ready();
+
             _currentHealth = _maxHealth;
 
             _clawTimer = GetNode<Timer>("Timers/Claw Timer");
@@ -69,15 +76,15 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _powerUnleashedTimer = GetNode<Timer>("Timers/Power Unleashed Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/Power Unleashed Cooldown");
 
+            _normalSpeed = Speed;
+
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
-
-            base._Ready();
         }
 
         public override async void _Input(InputEvent @event)
         {
-            if(!InputAllowed) {
+            if(!IsInputAllowed) {
                 return;
             }
 
@@ -92,7 +99,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public override void _PhysicsProcess(float delta)
         {
-            if(InputAllowed) {
+            if(IsInputAllowed) {
                 var heading = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
                 Heading = new Vector3(heading.x, 0.0f, heading.y);
             }
@@ -157,6 +164,14 @@ namespace pdxpartyparrot.ssjAug2022.Player
             GD.Print("[Player] Dash!");
             //Model.TriggerOneShot("parameters/Dash_Trigger/active");
 
+            IsInputAllowed = false;
+            Speed = _normalSpeed * _dashModifier;
+
+            // if we aren't moving, dash in the direction we're facing
+            if(Heading == Vector3.Zero) {
+                Heading = -Pivot.Transform.basis.z;
+            }
+
             _dashTimer.Start();
         }
 
@@ -174,6 +189,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private void _on_Dash_Timer_timeout()
         {
+            Speed = _normalSpeed;
+            IsInputAllowed = true;
+
             _dashCooldown.Start();
         }
 
