@@ -276,7 +276,6 @@ surfaces/0 = {
 [sub_resource type="Animation" id=6]
 resource_name = "Attack"
 length = 1.53333
-loop = true
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Knight/Skeleton:mixamorig_HeadTop_End")
 tracks/0/interp = 1
