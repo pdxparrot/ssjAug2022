@@ -45,6 +45,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         public async Task EnemyDefeatedAsync()
         {
             if(NPCManager.Instance.NPCCount == 0) {
+                GD.Print("[GameManager] All enemies defeated!");
+
                 await GameOverAsync();
             }
         }
