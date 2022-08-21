@@ -52,6 +52,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             GD.Print("[GameManager] Game over!");
 
             PlayerManager.Instance.DestroyPlayers();
+            NPCManager.Instance.DespawnAllNPCs(true);
 
             await SceneManager.Instance.LoadMainMenuAsync().ConfigureAwait(false);
         }

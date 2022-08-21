@@ -103,8 +103,9 @@ namespace pdxpartyparrot.ssjAug2022.World
 
             // have to temporarily add the player so _Ready() is called
             AddChild(player);
-            player.OnSpawn(this);
             RemoveChild(player);
+
+            player.OnSpawn(this);
 
             return player;
         }
@@ -115,8 +116,9 @@ namespace pdxpartyparrot.ssjAug2022.World
 
             // have to temporarily add the player so _Ready() is called
             AddChild(player);
-            player.OnReSpawn(this);
             RemoveChild(player);
+
+            player.OnReSpawn(this);
         }
 
         #endregion
@@ -129,8 +131,9 @@ namespace pdxpartyparrot.ssjAug2022.World
 
             // have to temporarily add the npc so _Ready() is called
             AddChild(npc);
-            npc.OnSpawn(this);
             RemoveChild(npc);
+
+            npc.OnSpawn(this);
 
             return npc;
         }
@@ -141,8 +144,9 @@ namespace pdxpartyparrot.ssjAug2022.World
 
             // have to temporarily add the npc so _Ready() is called
             AddChild(npc);
-            npc.OnReSpawn(this);
             RemoveChild(npc);
+
+            npc.OnReSpawn(this);
         }
 
         #endregion

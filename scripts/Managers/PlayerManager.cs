@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 using pdxpartyparrot.ssjAug2022.Player;
 using pdxpartyparrot.ssjAug2022.Util;
-using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022.Managers
 {
@@ -23,7 +22,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         {
             GD.Print($"[PlayerManager] Spawning player {clientId}...");
 
-            SpawnPoint spawnPoint = SpawnManager.Instance.GetPlayerSpawnPoint(clientId);
+            var spawnPoint = SpawnManager.Instance.GetPlayerSpawnPoint(clientId);
             if(null == spawnPoint) {
                 GD.PushError("Failed to get player spawnpoint!");
                 return null;

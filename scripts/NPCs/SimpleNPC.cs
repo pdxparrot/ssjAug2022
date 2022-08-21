@@ -9,6 +9,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 {
     public abstract class SimpleNPC : SimpleCharacter
     {
+        public Guid Id { get; set; }
+
         #region Spawn
 
         public override void OnSpawn(SpawnPoint spawnPoint)

@@ -1,7 +1,10 @@
 using Godot;
 
+using System;
+
 using pdxpartyparrot.ssjAug2022.Camera;
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.NPCs;
 
 namespace pdxpartyparrot.ssjAug2022
 {
@@ -9,6 +12,9 @@ namespace pdxpartyparrot.ssjAug2022
     {
         [Export]
         private int _enemiesToSpawn;
+
+        [Export]
+        private string _enemySpawnTag = string.Empty;
 
         [Export]
         private PackedScene _humanScene;
@@ -41,9 +47,22 @@ namespace pdxpartyparrot.ssjAug2022
 
         #endregion
 
-        private void SpawnEnemy()
+        private SimpleNPC SpawnEnemy()
         {
-            // TODO:
+            var id = Guid.NewGuid();
+
+            GD.Print($"[Level] Spawning enemy {id}...");
+
+            var spawnPoint = SpawnManager.Instance.GetSpawnPoint(_enemySpawnTag);
+            if(null == spawnPoint) {
+                GD.PushError("Failed to get enemy spawnpoint!");
+                return null;
+            }
+
+            var enemy = spawnPoint.SpawnNPC(_humanScene, $"Human {id}");
+            enemy.Id = id;
+
+            return enemy;
         }
 
         private void SpawnEnemies()

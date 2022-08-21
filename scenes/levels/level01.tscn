@@ -30,6 +30,7 @@ tonemap_white = 5.0
 [node name="Main" type="Spatial"]
 script = ExtResource( 3 )
 _enemiesToSpawn = 5
+_enemySpawnTag = "human"
 _humanScene = ExtResource( 5 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -69,3 +70,21 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20 )
 
 [node name="floating_crystal4" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0 )
+
+[node name="Enemy Spawns" type="Spatial" parent="."]
+
+[node name="Enemy Spawn" parent="Enemy Spawns" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+_tags = PoolStringArray( "human" )
+_minXSpawnRange = 1.0
+_maxXSpawnRange = 10.0
+_minZSpawnRange = 1.0
+_maxZSpawnRange = 10.0
+
+[node name="Enemy Spawn2" parent="Enemy Spawns" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+_tags = PoolStringArray( "human" )
+_minXSpawnRange = 1.0
+_maxXSpawnRange = 10.0
+_minZSpawnRange = 1.0
+_maxZSpawnRange = 10.0
