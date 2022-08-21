@@ -2,11 +2,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 {
     public class StateMachine<T> where T : SimpleNPC
     {
-        private State<T> _previousState;
+        private IState<T> _previousState;
 
-        private State<T> _currentState;
+        private IState<T> _currentState;
 
-        public StateMachine(T owner, State<T> initialState)
+        public StateMachine(T owner, IState<T> initialState)
         {
             _currentState = initialState;
             _currentState.Enter(owner, this);
@@ -19,7 +19,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             }
         }
 
-        public void ChangeState(T owner, State<T> newState)
+        public void ChangeState(T owner, IState<T> newState)
         {
             if(_currentState != null) {
                 _currentState.Exit(owner, this);
