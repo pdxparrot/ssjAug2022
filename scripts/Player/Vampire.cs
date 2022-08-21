@@ -1,5 +1,6 @@
 using Godot;
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Collections;
@@ -33,6 +34,21 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #endregion
 
+        #region Power Unleashed
+
+        [Export]
+        private float _powerUnleashedRange = 5.0f;
+
+        [Export]
+        private int _powerUnleashedDamage = 1;
+
+        // TODO: this would be better if it was driven by the animation
+        private Timer _powerUnleashedTimer;
+
+        private Timer _powerUnleashedCooldown;
+
+        #endregion
+
         #region Dash
 
         private Timer _dashTimer;
@@ -50,6 +66,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _clawTimer = GetNode<Timer>("Timers/Claw Timer");
             _clawCooldown = GetNode<Timer>("Timers/Claw Cooldown");
 
+            _powerUnleashedTimer = GetNode<Timer>("Timers/Power Unleashed Timer");
+            _powerUnleashedCooldown = GetNode<Timer>("Timers/Power Unleashed Cooldown");
+
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
 
@@ -64,6 +83,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             if(@event.IsActionPressed("claw_attack")) {
                 await ClawAttackAsync();
+            } else if(@event.IsAction("power_unleashed")) {
+                await PowerUnleashedAsync();
             } else if(@event.IsActionPressed("dash")) {
                 Dash();
             }
@@ -108,6 +129,25 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _clawTimer.Start();
         }
 
+        public async Task PowerUnleashedAsync()
+        {
+            if(!_powerUnleashedTimer.IsStopped() || !_powerUnleashedCooldown.IsStopped()) {
+                return;
+            }
+
+            GD.Print("[Player] Power unleashed!");
+            //Model.TriggerOneShot("parameters/Power_UnleashedTrigger/active");
+
+            var enemies = new List<SimpleNPC>();
+            NPCManager.Instance.NPCs.WithinDistance(GlobalTranslation, _powerUnleashedRange, enemies);
+
+            foreach(var enemy in enemies) {
+                await ((Human)enemy).DamageAsync(_powerUnleashedDamage);
+            }
+
+            _powerUnleashedTimer.Start();
+        }
+
         public void Dash()
         {
             if(!_dashTimer.IsStopped() || !_dashCooldown.IsStopped()) {
@@ -125,6 +165,11 @@ namespace pdxpartyparrot.ssjAug2022.Player
         private void _on_Claw_Timer_timeout()
         {
             _clawCooldown.Start();
+        }
+
+        private void _on_Power_Unleashed_Timer_timeout()
+        {
+            _powerUnleashedCooldown.Start();
         }
 
         private void _on_Dash_Timer_timeout()

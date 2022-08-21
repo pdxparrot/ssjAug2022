@@ -32,6 +32,12 @@ one_shot = true
 [node name="Claw Cooldown" type="Timer" parent="Timers"]
 one_shot = true
 
+[node name="Power Unleashed Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Power Unleashed Cooldown" type="Timer" parent="Timers"]
+one_shot = true
+
 [node name="Dash Timer" type="Timer" parent="Timers"]
 one_shot = true
 
@@ -39,6 +45,7 @@ one_shot = true
 one_shot = true
 
 [connection signal="timeout" from="Timers/Claw Timer" to="." method="_on_Claw_Timer_timeout"]
+[connection signal="timeout" from="Timers/Power Unleashed Timer" to="." method="_on_Power_Unleashed_Timer_timeout"]
 [connection signal="timeout" from="Timers/Dash Timer" to="." method="_on_Dash_Timer_timeout"]
 
 [editable path="Pivot/Model"]
