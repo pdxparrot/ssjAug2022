@@ -102,7 +102,6 @@ namespace pdxpartyparrot.ssjAug2022
 
         public virtual void OnIdle()
         {
-            _model.Travel("Idle");
         }
 
         #endregion
