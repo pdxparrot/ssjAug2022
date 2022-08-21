@@ -19,7 +19,7 @@ namespace pdxpartyparrot.ssjAug2022
         protected Vector3 Heading
         {
             get => _heading;
-            set => _heading = value.Normalized();
+            set => _heading = value;
         }
 
         private float _gravity;

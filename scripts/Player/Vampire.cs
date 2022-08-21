@@ -42,25 +42,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public override void _PhysicsProcess(float delta)
         {
-            var heading = Vector3.Zero;
-
-            if(Input.IsActionPressed("move_right")) {
-                heading.x += 1.0f;
-            }
-
-            if(Input.IsActionPressed("move_left")) {
-                heading.x -= 1.0f;
-            }
-
-            if(Input.IsActionPressed("move_forward")) {
-                heading.z -= 1.0f;
-            }
-
-            if(Input.IsActionPressed("move_back")) {
-                heading.z += 1.0f;
-            }
-
-            Heading = heading;
+            var heading = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
+            Heading = new Vector3(heading.x, 0.0f, heading.y);
 
             base._PhysicsProcess(delta);
         }
