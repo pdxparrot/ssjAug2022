@@ -2647,6 +2647,6 @@ anims/Walk = SubResource( 9 )
 tree_root = SubResource( 16 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/Blend2/blend_amount = 0.0
+parameters/Blend2/blend_amount = 1.0
 parameters/Claw_AttackTrigger/active = false
 parameters/Motion/blend_position = 0

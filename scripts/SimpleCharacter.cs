@@ -58,7 +58,9 @@ namespace pdxpartyparrot.ssjAug2022
             _gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
             _pivot = GetNode<Spatial>("Pivot");
+
             _model = _pivot.GetNode<Model>("Model");
+            _model.UpdateMotionBlend(0.0f);
         }
 
         public override void _Process(float delta)
