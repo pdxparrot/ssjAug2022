@@ -16,9 +16,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public bool IsDead => _currentHealth <= 0;
 
-        private StateMachine<Human> _stateMachine;
+        private HumanStateMachine _stateMachine;
 
-        public Steering<Human> Steering { get; private set; }
+        public HumanSteering Steering { get; private set; }
 
         #region Godot Lifecycle
 
@@ -28,8 +28,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
             _currentHealth = _maxHealth;
 
-            Steering = new Steering<Human>(this);
-            _stateMachine = new StateMachine<Human>(this, new States.Idle(), new States.Global());
+            Steering = GetNode<HumanSteering>("Steering");
+
+            _stateMachine = GetNode<HumanStateMachine>("StateMachine");
+            _stateMachine.SetGlobalState(new States.Global());
+            _stateMachine.ChangeState(new States.Idle());
         }
 
         public override void _Process(float delta)

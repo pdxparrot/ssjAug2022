@@ -7,7 +7,7 @@ using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 {
-    public class Steering<T> where T : SimpleNPC
+    public abstract class Steering<T> : Node where T : SimpleNPC
     {
         public enum ArriveDeceleration
         {
@@ -54,10 +54,14 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private float _wanderJitter;
 
-        public Steering(T owner)
+        #region Godot Lifecycle
+
+        public override void _Ready()
         {
-            _owner = owner;
+            _owner = GetOwner<T>();
         }
+
+        #endregion
 
         #region Enable / Disable
 

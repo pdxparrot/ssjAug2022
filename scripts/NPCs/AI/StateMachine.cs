@@ -1,6 +1,8 @@
+using Godot;
+
 namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 {
-    public class StateMachine<T> where T : SimpleNPC
+    public abstract class StateMachine<T> : Node where T : SimpleNPC
     {
         private T _owner;
 
@@ -10,19 +12,23 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private IState<T> _globalState;
 
-        public StateMachine(T owner, IState<T> initialState = null, IState<T> globalState = null)
+        #region Godot Lifecycle
+
+        public override void _Ready()
         {
-            _owner = owner;
+            _owner = GetOwner<T>();
+        }
 
-            _currentState = initialState;
-            if(_currentState != null) {
-                _currentState.Enter(_owner, this);
-            }
+        #endregion
 
-            _globalState = globalState;
+        public void SetGlobalState(IState<T> newGlobalState)
+        {
             if(_globalState != null) {
-                _globalState.Enter(_owner, this);
+                _globalState.Exit(_owner, this);
             }
+
+            _globalState = newGlobalState;
+            _globalState.Enter(_owner, this);
         }
 
         public void Run()
