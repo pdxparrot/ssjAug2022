@@ -7,9 +7,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
         public void Enter(Human owner, StateMachine<Human> stateMachine)
         {
             owner.Steering.WanderOn(new HumanSteering.WanderParams {
-                radius = 1.0f,
+                radius = 5.0f,
                 distance = 10.0f,
-                jitter = 80.0f,
+                jitter = 50.0f,
+                maxSpeed = owner.MaxSpeed,
             });
         }
 

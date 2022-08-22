@@ -52,31 +52,31 @@ namespace pdxpartyparrot.ssjAug2022.Util
             return random.Next(2) != 0;
         }
 
-        // [0, int.MaxValue)
+        // [0, int.MaxValue]
         public static int Next(this RandomNumberGenerator random)
         {
             return random.Next(int.MaxValue);
         }
 
-        // [0, maxValue)
+        // [0, maxValue]
         public static int Next(this RandomNumberGenerator random, int maxValue)
         {
             return random.RandiRange(0, Math.Max(maxValue - 1, 0));
         }
 
-        // [0.0, 1.0)
+        // [0.0, 1.0]
         public static float NextSingle(this RandomNumberGenerator random)
         {
             return random.NextSingle(1.0f);
         }
 
-        // [0.0, maxValue)
+        // [0.0, maxValue]
         public static float NextSingle(this RandomNumberGenerator random, float maxValue)
         {
             return random.NextSingle(0.0f, Math.Max(maxValue - float.Epsilon, 0.0f));
         }
 
-        // [minValue, maxValue)
+        // [minValue, maxValue]
         public static float NextSingle(this RandomNumberGenerator random, float minValue, float maxValue)
         {
             return (float)random.RandfRange(minValue, maxValue);

@@ -51,6 +51,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
             public float jitter;
 
+            public float maxSpeed;
+
             internal Vector3 target;
         }
 
@@ -133,7 +135,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
             // start with a random point on the circle
             double theta = PartyParrotManager.Instance.Random.NextSingle() * 2.0 * Math.PI;
-            _wanderParams.target = new Vector3(_wanderParams.radius * (float)Math.Cos(theta), 0.0f, _wanderParams.radius * (float)Math.Sin(theta));
+            _wanderParams.target = new Vector3((float)Math.Cos(theta), 0.0f, (float)Math.Sin(theta)) * _wanderParams.radius;
 
             _enabledBehaviors |= SteeringBehavior.Wander;
         }
@@ -228,11 +230,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
                 PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * jitter
             );
 
+            // put the jitter target back on the circle
             var wanderTarget = _wanderParams.target.Normalized();
             _wanderParams.target = wanderTarget * _wanderParams.radius;
 
-            var target = _wanderParams.target + (wanderTarget * _wanderParams.distance);
-            return target;
+            // project the circle in the heading direction
+            var target = _owner.GlobalTranslation + _wanderParams.target + (_owner.Heading * _wanderParams.distance);
+            return Seek(target, _wanderParams.maxSpeed);
         }
 
         // TODO: path follow (probably the only thing we actually need)
