@@ -2,6 +2,9 @@ using Godot;
 
 using System;
 
+using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.Util;
+
 namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 {
     public class Steering<T> where T : SimpleNPC
@@ -23,11 +26,21 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private ArriveDeceleration _arriveDeceleration = ArriveDeceleration.Normal;
 
+        private Vector3 _wanderTarget;
+
+        public float WanderRadius { get; set; } = 1.0f;
+
+        public float WanderDistance { get; set; } = 1.0f;
+
+        public float WanderJitter { get; set; } = 1.0f;
+
         private SimpleCharacter _pursuitTarget;
 
         public Steering(T owner)
         {
             _owner = owner;
+
+            _wanderTarget = _owner.GlobalTranslation;
         }
 
         public Vector3 Calculate()
@@ -87,6 +100,20 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
             float lookAheadTime = toEvader.Length() / (_owner.Speed + _pursuitTarget.Speed);
             return Seek(_pursuitTarget.GlobalTranslation + _pursuitTarget.Velocity * lookAheadTime);
+        }
+
+        private Vector3 Wander()
+        {
+            _wanderTarget += new Vector3(
+                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * WanderJitter,
+                0.0f,
+                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * WanderJitter
+            );
+
+            _wanderTarget = _wanderTarget.Normalized() * WanderRadius;
+
+            var target = _owner.Transform.Xform(_wanderTarget + new Vector3(0.0f, 0.0f, WanderDistance));
+            return target - _owner.GlobalTranslation;
         }
     }
 }
