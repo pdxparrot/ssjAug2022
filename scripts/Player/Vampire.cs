@@ -177,6 +177,16 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #region Signal Handlers
 
+        private void _on_Claw_Attack_damage()
+        {
+            GD.Print($"Claw attack damage");
+        }
+
+        private void _on_Claw_Attack_animation_finished()
+        {
+            GD.Print($"Claw attack finished");
+        }
+
         private void _on_Claw_Timer_timeout()
         {
             _clawCooldown.Start();
