@@ -108,11 +108,14 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             _enabledBehaviors &= ~SteeringBehavior.Pursuit;
         }
 
-        public void WanderOn(float wanderRadius = 1.0f, float wanderDistance = 1.0f, float wanderJitter = 0.5f)
+        public void WanderOn(float wanderRadius = 100.0f, float wanderDistance = 200.0f, float wanderJitter = 80.0f)
         {
             _wanderRadius = wanderRadius;
             _wanderDistance = wanderDistance;
             _wanderJitter = wanderJitter;
+
+            double theta = PartyParrotManager.Instance.Random.NextSingle() * 2.0 * Math.PI;
+            _wanderTarget = new Vector3(_wanderRadius * (float)Math.Cos(theta), 0.0f, wanderRadius * (float)Math.Sin(theta));
 
             _enabledBehaviors |= SteeringBehavior.Wander;
         }
@@ -129,7 +132,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         #endregion
 
-        public Vector3 Calculate()
+        public Vector3 Calculate(float delta)
         {
             var steeringForce = Vector3.Zero;
 
@@ -146,7 +149,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             }
 
             if(On(SteeringBehavior.Wander)) {
-                steeringForce += Wander();
+                steeringForce += Wander(delta);
             }
 
             return steeringForce;
@@ -165,7 +168,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private Vector3 Seek(Vector3 target)
         {
-            var desiredVelocity = (target - _owner.GlobalTranslation).Normalized() * _owner.Speed;
+            var desiredVelocity = (target - _owner.GlobalTranslation).Normalized() * _owner.MaxSpeed;
             return desiredVelocity - _owner.Velocity;
         }
 
@@ -183,7 +186,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             }
 
             float speed = distance / ((int)_arriveDeceleration * DecelerationTweaker);
-            speed = Math.Min(speed, _owner.Speed);
+            speed = Math.Min(speed, _owner.MaxSpeed);
 
             var desiredVelocity = toTarget * speed / distance;
             return desiredVelocity - _owner.Velocity;
@@ -204,22 +207,24 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
                 return Seek(_pursuitTarget.GlobalTranslation);
             }
 
-            float lookAheadTime = toEvader.Length() / (_owner.Speed + _pursuitTarget.Speed);
+            float lookAheadTime = toEvader.Length() / (_owner.MaxSpeed + _pursuitTarget.MaxSpeed);
             return Seek(_pursuitTarget.GlobalTranslation + _pursuitTarget.Velocity * lookAheadTime);
         }
 
-        private Vector3 Wander()
+        private Vector3 Wander(float delta)
         {
+            float jitter = _wanderJitter * delta;
+
             _wanderTarget += new Vector3(
-                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * _wanderJitter,
+                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * jitter,
                 0.0f,
-                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * _wanderJitter
+                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * jitter
             );
 
             _wanderTarget = _wanderTarget.Normalized() * _wanderRadius;
 
             var target = _owner.Transform.Xform(_wanderTarget + new Vector3(0.0f, 0.0f, _wanderDistance));
-            return target - _owner.GlobalTranslation;
+            return (target - _owner.GlobalTranslation) * _owner.MaxSpeed;
         }
 
         // TODO: path follow (probably the only thing we actually need)

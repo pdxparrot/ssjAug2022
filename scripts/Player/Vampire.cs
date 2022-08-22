@@ -76,7 +76,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _powerUnleashedTimer = GetNode<Timer>("Timers/Power Unleashed Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/Power Unleashed Cooldown");
 
-            _normalSpeed = Speed;
+            _normalSpeed = MaxSpeed;
 
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
@@ -100,8 +100,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
         public override void _PhysicsProcess(float delta)
         {
             if(IsInputAllowed) {
-                var heading = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
-                Heading = new Vector3(heading.x, 0.0f, heading.y);
+                var input = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
+                Velocity = new Vector3(input.x, 0.0f, input.y) * MaxSpeed;
             }
 
             base._PhysicsProcess(delta);
@@ -165,12 +165,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
             //Model.TriggerOneShot("parameters/Dash_Trigger/active");
 
             IsInputAllowed = false;
-            Speed = _normalSpeed * _dashModifier;
 
-            // if we aren't moving, dash in the direction we're facing
-            if(Heading == Vector3.Zero) {
-                Heading = -Pivot.Transform.basis.z;
-            }
+            MaxSpeed = _normalSpeed * _dashModifier;
+            Velocity = -Pivot.Transform.basis.z * MaxSpeed;
 
             _dashTimer.Start();
         }
@@ -199,7 +196,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private void _on_Dash_Timer_timeout()
         {
-            Speed = _normalSpeed;
+            MaxSpeed = _normalSpeed;
             IsInputAllowed = true;
 
             _dashCooldown.Start();

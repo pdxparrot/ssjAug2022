@@ -6,6 +6,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
     {
         public void Enter(Human owner, StateMachine<Human> stateMachine)
         {
+            owner.MaxSpeed = owner.ChaseSpeed;
+
             //PlayerManager.Instance.Players.Values.NearestManhattan(owner.GlobalTranslation, out float distance);
             //owner.SetTarget(...);
         }

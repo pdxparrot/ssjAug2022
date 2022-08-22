@@ -10,34 +10,36 @@ namespace pdxpartyparrot.ssjAug2022
         private float _mass = 1.0f;
 
         [Export]
-        private float _speed = 14.0f;
+        private float _maxSpeed = 14.0f;
 
-        public float Speed
+        public float MaxSpeed
         {
-            get => _speed;
-            protected set => _speed = value;
+            get => _maxSpeed;
+            set => _maxSpeed = value;
         }
 
         [Export]
         private float _gravityMultiplier = 5.0f;
 
-        private Vector3 _velocity = Vector3.Zero;
+        private Vector3 _acceleration;
 
-        public Vector3 Velocity => _velocity;
+        private Vector3 _velocity;
 
-        private Vector3 _heading = Vector3.Zero;
-
-        public Vector3 Heading
+        public Vector3 Velocity
         {
-            get => _heading;
-            protected set => _heading = value.Normalized();
+            get => _velocity;
+            protected set => _velocity = value.LimitLength(MaxSpeed);
         }
+
+        public float Speed => _velocity.Length();
+
+        private Vector3 _heading;
+
+        public Vector3 Heading => _heading;
 
         public bool IsInputAllowed { get; set; } = true;
 
         private float _gravity;
-
-        private Vector3 _gravityVector;
 
         private Spatial _pivot;
 
@@ -45,17 +47,13 @@ namespace pdxpartyparrot.ssjAug2022
 
         private Model _model;
 
-        protected Model Model
-        {
-            get => _model;
-        }
+        protected Model Model => _model;
 
         #region Godot Lifecycle
 
         public override void _Ready()
         {
             _gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
-            _gravityVector = (Vector3)ProjectSettings.GetSetting("physics/3d/default_gravity_vector");
 
             _pivot = GetNode<Spatial>("Pivot");
             _model = _pivot.GetNode<Model>("Model");
@@ -63,28 +61,47 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _Process(float delta)
         {
-            _model.UpdateMotionBlend(Heading.Length());
+            _model.UpdateMotionBlend(Speed / MaxSpeed);
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            // look in the direction we're heading
-            if(Heading != Vector3.Zero) {
-                _pivot.LookAt(Translation + Heading, Vector3.Up);
+            // apply gravity
+            _acceleration += Vector3.Down * _gravity * _gravityMultiplier;
+
+            // apply acceleration
+            _velocity += _acceleration * delta;
+            _acceleration = Vector3.Zero;
+
+            // cap horizontal speed
+            float y = _velocity.y;
+            _velocity.y = 0.0f;
+            _velocity = _velocity.LimitLength(_maxSpeed);
+            _velocity.y = y;
+
+            // calculate horizontal heading
+            _heading = new Vector3(_velocity.x, 0.0f, _velocity.z);
+            if(_heading != Vector3.Zero) {
+                _heading = _heading.Normalized();
+
+                // look in the direction we're heading
+                _pivot.LookAt(Translation + _heading, Vector3.Up);
             }
-
-            // movement
-            _velocity.x = Heading.x * _speed;
-            _velocity.z = Heading.z * _speed;
-
-            // gravity
-            _velocity += _gravityVector * (_gravity * delta * _gravityMultiplier);
 
             // move the player
             _velocity = MoveAndSlide(_velocity, Vector3.Up);
         }
 
         #endregion
+
+        public void ApplyForce(Vector3 force)
+        {
+            if(_mass > 0.0f) {
+                force /= _mass;
+            }
+
+            _acceleration += force;
+        }
 
         #region Events
 

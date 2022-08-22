@@ -6,12 +6,14 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
     {
         public void Enter(Human owner, StateMachine<Human> stateMachine)
         {
-            //owner.Steering.WanderOn();
+            owner.MaxSpeed = owner.WalkSpeed;
+
+            owner.Steering.WanderOn();
         }
 
         public void Exit(Human owner, StateMachine<Human> stateMachine)
         {
-            //owner.Steering.WanderOff();
+            owner.Steering.WanderOff();
         }
 
         public void Execute(Human owner, StateMachine<Human> stateMachine)

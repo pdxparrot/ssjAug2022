@@ -3,7 +3,6 @@ using Godot;
 using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Managers;
-using pdxpartyparrot.ssjAug2022.NPCs.AI;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs
 {
@@ -11,6 +10,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
     {
         [Export]
         private int _maxHealth = 1;
+
+        [Export]
+        private float _walkSpeed = 3.0f;
+
+        public float WalkSpeed => _walkSpeed;
+
+        [Export]
+        private float _chaseSpeed = 10.0f;
+
+        public float ChaseSpeed => _chaseSpeed;
 
         private int _currentHealth;
 
@@ -47,7 +56,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         public override void _PhysicsProcess(float delta)
         {
             if(IsInputAllowed) {
-                Heading = Steering.Calculate();
+                ApplyForce(Steering.Calculate(delta));
             }
 
             base._PhysicsProcess(delta);
