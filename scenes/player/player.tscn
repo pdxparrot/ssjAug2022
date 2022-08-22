@@ -8,7 +8,7 @@
 margin = 0.001
 height = 2.0
 
-[node name="Main" type="KinematicBody"]
+[node name="Main2" type="KinematicBody"]
 script = ExtResource( 1 )
 _mass = 50.0
 
