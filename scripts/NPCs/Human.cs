@@ -18,7 +18,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         private StateMachine<Human> _stateMachine;
 
-        private Steering<Human> _steering;
+        public Steering<Human> Steering { get; private set; }
 
         #region Godot Lifecycle
 
@@ -28,8 +28,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
             _currentHealth = _maxHealth;
 
+            Steering = new Steering<Human>(this);
             _stateMachine = new StateMachine<Human>(this, new States.Idle(), new States.Global());
-            _steering = new Steering<Human>(this);
         }
 
         public override void _Process(float delta)
@@ -44,7 +44,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         public override void _PhysicsProcess(float delta)
         {
             if(IsInputAllowed) {
-                Heading = _steering.Calculate();
+                Heading = Steering.Calculate();
             }
 
             base._PhysicsProcess(delta);

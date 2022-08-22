@@ -18,23 +18,41 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             Slow = 3,
         }
 
+        [Flags]
+        private enum SteeringBehavior
+        {
+            None = 0,
+
+            Seek = 1,
+
+            Arrive = 2,
+
+            Pursuit = 4,
+
+            Wander = 8,
+        }
+
         const float DecelerationTweaker = 0.3f;
 
         private T _owner;
 
-        private Vector3? _target;
+        private SteeringBehavior _enabledBehaviors = SteeringBehavior.None;
+
+        private Vector3? _seekTarget;
+
+        private Vector3? _arriveTarget;
 
         private ArriveDeceleration _arriveDeceleration = ArriveDeceleration.Normal;
 
+        private SimpleCharacter _pursuitTarget;
+
         private Vector3 _wanderTarget;
 
-        public float WanderRadius { get; set; } = 1.0f;
+        private float _wanderRadius;
 
-        public float WanderDistance { get; set; } = 1.0f;
+        private float _wanderDistance;
 
-        public float WanderJitter { get; set; } = 1.0f;
-
-        private SimpleCharacter _pursuitTarget;
+        private float _wanderJitter;
 
         public Steering(T owner)
         {
@@ -43,18 +61,104 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             _wanderTarget = _owner.GlobalTranslation;
         }
 
+        #region Enable / Disable
+
+        public void SeekOn(Vector3 target)
+        {
+            _seekTarget = target;
+
+            _enabledBehaviors |= SteeringBehavior.Seek;
+        }
+
+        public void SeekOff()
+        {
+            _seekTarget = null;
+
+            _enabledBehaviors &= ~SteeringBehavior.Seek;
+        }
+
+        public void ArriveOn(Vector3 target, ArriveDeceleration deceleration = ArriveDeceleration.Normal)
+        {
+            _arriveTarget = target;
+            _arriveDeceleration = deceleration;
+
+            _enabledBehaviors |= SteeringBehavior.Arrive;
+        }
+
+        public void ArriveOff()
+        {
+            _arriveTarget = null;
+
+            _enabledBehaviors &= ~SteeringBehavior.Arrive;
+        }
+
+        public void PursuitOn(SimpleCharacter target)
+        {
+            _pursuitTarget = target;
+
+            _enabledBehaviors |= SteeringBehavior.Pursuit;
+        }
+
+        public void PursuitOff()
+        {
+            _pursuitTarget = null;
+
+            _enabledBehaviors &= ~SteeringBehavior.Pursuit;
+        }
+
+        public void WanderOn(float wanderRadius = 1.0f, float wanderDistance = 1.0f, float wanderJitter = 0.5f)
+        {
+            _wanderRadius = wanderRadius;
+            _wanderDistance = wanderDistance;
+            _wanderJitter = wanderJitter;
+
+            _enabledBehaviors |= SteeringBehavior.Wander;
+        }
+
+        public void WanderOff()
+        {
+            _enabledBehaviors &= ~SteeringBehavior.Wander;
+        }
+
+        private bool On(SteeringBehavior query)
+        {
+            return (_enabledBehaviors & query) == query;
+        }
+
+        #endregion
+
         public Vector3 Calculate()
         {
-            return Vector3.Zero;
+            var steeringForce = Vector3.Zero;
+
+            if(On(SteeringBehavior.Seek)) {
+                steeringForce += Seek();
+            }
+
+            if(On(SteeringBehavior.Arrive)) {
+                steeringForce += Arrive();
+            }
+
+            if(On(SteeringBehavior.Pursuit)) {
+                steeringForce += Pursuit();
+            }
+
+            if(On(SteeringBehavior.Wander)) {
+                steeringForce += Wander();
+            }
+
+            return steeringForce;
         }
+
+        #region Steering Behaviors
 
         private Vector3 Seek()
         {
-            if(!_target.HasValue) {
+            if(!_seekTarget.HasValue) {
                 return Vector3.Zero;
             }
 
-            return Seek(_target.Value);
+            return Seek(_seekTarget.Value);
         }
 
         private Vector3 Seek(Vector3 target)
@@ -65,11 +169,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private Vector3 Arrive()
         {
-            if(!_target.HasValue) {
+            if(!_arriveTarget.HasValue) {
                 return Vector3.Zero;
             }
 
-            var toTarget = _target.Value - _owner.GlobalTranslation;
+            var toTarget = _arriveTarget.Value - _owner.GlobalTranslation;
 
             float distance = toTarget.Length();
             if(distance <= 0.0f) {
@@ -105,15 +209,19 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         private Vector3 Wander()
         {
             _wanderTarget += new Vector3(
-                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * WanderJitter,
+                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * _wanderJitter,
                 0.0f,
-                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * WanderJitter
+                PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * _wanderJitter
             );
 
-            _wanderTarget = _wanderTarget.Normalized() * WanderRadius;
+            _wanderTarget = _wanderTarget.Normalized() * _wanderRadius;
 
-            var target = _owner.Transform.Xform(_wanderTarget + new Vector3(0.0f, 0.0f, WanderDistance));
+            var target = _owner.Transform.Xform(_wanderTarget + new Vector3(0.0f, 0.0f, _wanderDistance));
             return target - _owner.GlobalTranslation;
         }
+
+        // TODO: path follow (probably the only thing we actually need)
+
+        #endregion
     }
 }
