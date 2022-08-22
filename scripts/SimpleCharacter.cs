@@ -30,7 +30,7 @@ namespace pdxpartyparrot.ssjAug2022
         public Vector3 Heading
         {
             get => _heading;
-            protected set => _heading = value;
+            protected set => _heading = value.Normalized();
         }
 
         public bool IsInputAllowed { get; set; } = true;

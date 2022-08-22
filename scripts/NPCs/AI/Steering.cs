@@ -57,8 +57,6 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         public Steering(T owner)
         {
             _owner = owner;
-
-            _wanderTarget = _owner.GlobalTranslation;
         }
 
         #region Enable / Disable
