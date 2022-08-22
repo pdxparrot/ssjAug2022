@@ -65,7 +65,7 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _Process(float delta)
         {
-            _model.UpdateMotionBlend(Speed / MaxSpeed);
+            _model.UpdateMotionBlend(MaxSpeed > 0.0f ? Speed / MaxSpeed : 0.0f);
         }
 
         public override void _PhysicsProcess(float delta)
