@@ -108,7 +108,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             _enabledBehaviors &= ~SteeringBehavior.Pursuit;
         }
 
-        public void WanderOn(float wanderRadius = 100.0f, float wanderDistance = 200.0f, float wanderJitter = 80.0f)
+        public void WanderOn(float wanderRadius = 10.0f, float wanderDistance = 10.0f, float wanderJitter = 80.0f)
         {
             _wanderRadius = wanderRadius;
             _wanderDistance = wanderDistance;
@@ -221,10 +221,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
                 PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * jitter
             );
 
-            _wanderTarget = _wanderTarget.Normalized() * _wanderRadius;
+            var wanderTarget = _wanderTarget.Normalized();
+            _wanderTarget = wanderTarget * _wanderRadius;
 
-            var target = _owner.Transform.Xform(_wanderTarget + new Vector3(0.0f, 0.0f, _wanderDistance));
-            return (target - _owner.GlobalTranslation) * _owner.MaxSpeed;
+            var target = _wanderTarget + (wanderTarget * _wanderDistance);
+            return target;
         }
 
         // TODO: path follow (probably the only thing we actually need)

@@ -11,16 +11,6 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         [Export]
         private int _maxHealth = 1;
 
-        [Export]
-        private float _walkSpeed = 3.0f;
-
-        public float WalkSpeed => _walkSpeed;
-
-        [Export]
-        private float _chaseSpeed = 10.0f;
-
-        public float ChaseSpeed => _chaseSpeed;
-
         private int _currentHealth;
 
         public bool IsDead => _currentHealth <= 0;

@@ -54,8 +54,6 @@ namespace pdxpartyparrot.ssjAug2022.Player
         [Export]
         private float _dashModifier = 3.0f;
 
-        private float _normalSpeed;
-
         private Timer _dashTimer;
 
         private Timer _dashCooldown;
@@ -75,8 +73,6 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             _powerUnleashedTimer = GetNode<Timer>("Timers/Power Unleashed Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/Power Unleashed Cooldown");
-
-            _normalSpeed = MaxSpeed;
 
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
@@ -166,7 +162,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             IsInputAllowed = false;
 
-            MaxSpeed = _normalSpeed * _dashModifier;
+            MaxSpeed *= _dashModifier;
             Velocity = -Pivot.Transform.basis.z * MaxSpeed;
 
             _dashTimer.Start();
@@ -196,7 +192,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private void _on_Dash_Timer_timeout()
         {
-            MaxSpeed = _normalSpeed;
+            MaxSpeed /= _dashModifier;
             IsInputAllowed = true;
 
             _dashCooldown.Start();
