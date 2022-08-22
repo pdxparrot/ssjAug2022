@@ -9,6 +9,8 @@ namespace pdxpartyparrot.ssjAug2022
         [Export]
         private float _mass = 1.0f;
 
+        public float Mass => _mass;
+
         [Export]
         private float _maxSpeed = 14.0f;
 
