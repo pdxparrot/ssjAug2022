@@ -23,6 +23,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private ArriveDeceleration _arriveDeceleration = ArriveDeceleration.Normal;
 
+        private SimpleCharacter _pursuitTarget;
+
         public Steering(T owner)
         {
             _owner = owner;
@@ -39,7 +41,12 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
                 return Vector3.Zero;
             }
 
-            var desiredVelocity = (_target.Value - _owner.GlobalTranslation).Normalized() * _owner.Speed;
+            return Seek(_target.Value);
+        }
+
+        private Vector3 Seek(Vector3 target)
+        {
+            var desiredVelocity = (target - _owner.GlobalTranslation).Normalized() * _owner.Speed;
             return desiredVelocity - _owner.Velocity;
         }
 
@@ -61,6 +68,25 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
             var desiredVelocity = toTarget * speed / distance;
             return desiredVelocity - _owner.Velocity;
+        }
+
+        private Vector3 Pursuit()
+        {
+            if(_pursuitTarget == null) {
+                return Vector3.Zero;
+            }
+
+            var toEvader = _pursuitTarget.GlobalTranslation - _owner.GlobalTranslation;
+            float relativeHeading = _owner.Heading.Dot(_pursuitTarget.Heading);
+
+            // if the evader is ahead and facing us, we can just seek it
+            // acos(0.95) = 18 degrees
+            if(toEvader.Dot(_owner.Heading) > 0.0f && relativeHeading < -0.95f) {
+                return Seek(_pursuitTarget.GlobalTranslation);
+            }
+
+            float lookAheadTime = toEvader.Length() / (_owner.Speed + _pursuitTarget.Speed);
+            return Seek(_pursuitTarget.GlobalTranslation + _pursuitTarget.Velocity * lookAheadTime);
         }
     }
 }

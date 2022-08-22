@@ -15,7 +15,7 @@ namespace pdxpartyparrot.ssjAug2022
         public float Speed
         {
             get => _speed;
-            set => _speed = value;
+            protected set => _speed = value;
         }
 
         [Export]
@@ -27,10 +27,10 @@ namespace pdxpartyparrot.ssjAug2022
 
         private Vector3 _heading = Vector3.Zero;
 
-        protected Vector3 Heading
+        public Vector3 Heading
         {
             get => _heading;
-            set => _heading = value;
+            protected set => _heading = value;
         }
 
         public bool IsInputAllowed { get; set; } = true;
