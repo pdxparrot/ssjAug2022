@@ -1,5 +1,7 @@
 using Godot;
 
+using System;
+
 namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 {
     public abstract class StateMachine<T> : Node where T : SimpleNPC
@@ -40,6 +42,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             if(_currentState != null) {
                 _currentState.Execute(_owner, this);
             }
+        }
+
+        public bool IsInState(Type type)
+        {
+            return _currentState != null && _currentState.GetType() == type;
         }
 
         public void ChangeState(IState<T> newState)

@@ -15,6 +15,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public bool IsDead => _currentHealth <= 0;
 
+        [Export]
+        private float _idleLeashRange = 10.0f;
+
+        public float IdleLeashRange => _idleLeashRange;
+
+        public Vector3 HomeTranslation { get; private set; }
+
         private HumanStateMachine _stateMachine;
 
         public HumanSteering Steering { get; private set; }
@@ -26,6 +33,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             base._Ready();
 
             _currentHealth = _maxHealth;
+            HomeTranslation = Translation;
 
             Steering = GetNode<HumanSteering>("Steering");
 

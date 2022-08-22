@@ -14,8 +14,6 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
 
         public void Execute(Human owner, StateMachine<Human> stateMachine)
         {
-            //PlayerManager.Instance.Players.Values.NearestManhattan(owner.GlobalTranslation, out float distance);
-            // TODO: if player found in range, change to ChasePlayer state
         }
     }
 }
