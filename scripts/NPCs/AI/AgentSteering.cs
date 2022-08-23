@@ -7,7 +7,7 @@ using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 {
-    public abstract class Steering<T> : Node where T : SimpleNPC
+    public abstract class AgentSteering<T> : Node where T : SimpleNPC
     {
         private const float DecelerationTweaker = 0.3f;
 
@@ -41,6 +41,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             public SimpleCharacter target;
 
             public float maxSpeed;
+
+            internal ulong lastTargetUpdate;
         }
 
         public struct WanderParams
@@ -97,6 +99,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         {
             _seekParams = seekParams;
 
+            _owner.SetTarget(_seekParams.target);
+
             _enabledBehaviors |= SteeringBehavior.Seek;
         }
 
@@ -109,6 +113,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         {
             _arriveParams = arriveParams;
 
+            _owner.SetTarget(_arriveParams.target);
+
             _enabledBehaviors |= SteeringBehavior.Arrive;
         }
 
@@ -120,6 +126,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         public void PursuitOn(PursuitParams pursuitParams)
         {
             _pursuitParams = pursuitParams;
+
+            _owner.SetTarget(_pursuitParams.target.GlobalTranslation);
+            _pursuitParams.lastTargetUpdate = Time.GetTicksMsec();
 
             _enabledBehaviors |= SteeringBehavior.Pursuit;
         }
@@ -137,6 +146,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             double theta = PartyParrotManager.Instance.Random.NextSingle() * 2.0 * Math.PI;
             _wanderParams.target = new Vector3((float)Math.Cos(theta), 0.0f, (float)Math.Sin(theta)) * _wanderParams.radius;
 
+            // 0 jitter to get the world target we just calculated
+            var target = GetWanderTarget(0.0f);
+            _owner.SetTarget(target);
+
             _enabledBehaviors |= SteeringBehavior.Wander;
         }
 
@@ -152,79 +165,97 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         #endregion
 
-        // call each _PhysicsProcess and ApplyForce()
-        // can be useful to multiply by the owners mass as well
-        public Vector3 Calculate(float delta)
+        public void Update(float delta)
         {
-            var steeringForce = Vector3.Zero;
-
             if(On(SteeringBehavior.Seek)) {
-                steeringForce += Seek();
+                Seek();
             }
 
             if(On(SteeringBehavior.Arrive)) {
-                steeringForce += Arrive();
+                Arrive();
             }
 
             if(On(SteeringBehavior.Pursuit)) {
-                steeringForce += Pursuit();
+                Pursuit();
             }
 
             if(On(SteeringBehavior.Wander)) {
-                steeringForce += Wander(delta);
+                Wander(delta);
             }
-
-            return steeringForce;
         }
 
         #region Steering Behaviors
 
-        private Vector3 Seek()
+        // TODO: IsTargetReachable() will return false even if there is a reachable
+        // final location so we probably want to do something else to prevent
+        // getting stuck trying to reach something unreachable
+        // (go as far as we can down the path and then do something else)
+
+        private void Seek()
         {
-            return Seek(_seekParams.target, _seekParams.maxSpeed);
+            if(!_owner.IsTargetReachable() || _owner.IsTargetReached()) {
+                _owner.SetVelocity(Vector3.Zero);
+                return;
+            }
+
+            Seek(_owner.GetNextLocation(), _seekParams.maxSpeed);
         }
 
-        private Vector3 Seek(Vector3 target, float maxSpeed)
+        private void Seek(Vector3 target, float maxSpeed)
         {
             var desiredVelocity = (target - _owner.GlobalTranslation).Normalized() * maxSpeed;
-            return desiredVelocity - _owner.Velocity;
+            _owner.SetVelocity(desiredVelocity - _owner.Velocity);
         }
 
-        private Vector3 Arrive()
+        private void Arrive()
         {
-            var toTarget = _arriveParams.target - _owner.GlobalTranslation;
-
-            float distance = toTarget.Length();
-            if(distance <= 0.0f) {
-                return Vector3.Zero;
+            if(!_owner.IsTargetReachable() || _owner.IsTargetReached()) {
+                _owner.SetVelocity(Vector3.Zero);
+                return;
             }
+
+            var target = _owner.GetNextLocation();
+            var toTarget = target - _owner.GlobalTranslation;
+            float distance = toTarget.Length();
 
             float speed = distance / ((int)_arriveParams.deceleration * DecelerationTweaker);
             speed = Math.Min(speed, _arriveParams.maxSpeed);
 
             var desiredVelocity = toTarget * speed / distance;
-            return desiredVelocity - _owner.Velocity;
+            _owner.SetVelocity(desiredVelocity - _owner.Velocity);
         }
 
-        private Vector3 Pursuit()
+        private void Pursuit()
         {
-            var toEvader = _pursuitParams.target.GlobalTranslation - _owner.GlobalTranslation;
+            if((!_owner.IsTargetReachable() || _owner.IsTargetReached()) && _owner.IsNavigationFinished()) {
+                _owner.SetTarget(_pursuitParams.target.GlobalTranslation);
+                _pursuitParams.lastTargetUpdate = Time.GetTicksMsec();
+                return;
+            }
+
+            // spend a second seeking the last target
+            if(Time.GetTicksMsec() - _pursuitParams.lastTargetUpdate < 1000) {
+                Seek(_owner.GetNextLocation(), _seekParams.maxSpeed);
+                return;
+            }
+
+            var target = _owner.GetNextLocation();
+            var toEvader = target - _owner.GlobalTranslation;
 
             // if the evader is ahead and facing us, we can just seek it
             // acos(0.95) = 18 degrees
             float relativeHeading = _owner.Heading.Dot(_pursuitParams.target.Heading);
             if(toEvader.Dot(_owner.Heading) > 0.0f && relativeHeading < -0.95f) {
-                return Seek(_pursuitParams.target.GlobalTranslation, _pursuitParams.maxSpeed);
+                Seek(target, _pursuitParams.maxSpeed);
+                return;
             }
 
             float lookAheadTime = toEvader.Length() / (_pursuitParams.maxSpeed + _pursuitParams.target.MaxSpeed);
-            return Seek(_pursuitParams.target.GlobalTranslation + _pursuitParams.target.Velocity * lookAheadTime, _pursuitParams.maxSpeed);
+            Seek(target + _pursuitParams.target.Velocity * lookAheadTime, _pursuitParams.maxSpeed);
         }
 
-        private Vector3 Wander(float delta)
+        private Vector3 GetWanderTarget(float jitter)
         {
-            float jitter = _wanderParams.jitter * delta;
-
             // offset slightly on the circle
             _wanderParams.target += new Vector3(
                 PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * jitter,
@@ -237,11 +268,26 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             _wanderParams.target = wanderTarget * _wanderParams.radius;
 
             // project the circle in the heading direction
-            var target = _owner.GlobalTranslation + _wanderParams.target + (_owner.Heading * _wanderParams.distance);
-            return Seek(target, _wanderParams.maxSpeed);
+            return _owner.GlobalTranslation + _wanderParams.target + (_owner.Heading * _wanderParams.distance);
         }
 
-        // TODO: path follow
+        private void Wander(float delta)
+        {
+            // seek the target until we reach it
+            if(_owner.IsTargetReachable() && !_owner.IsTargetReached()) {
+                Seek(_owner.GetNextLocation(), _wanderParams.maxSpeed);
+                return;
+            }
+
+            /*if(!_owner.IsNavigationFinished()) {
+                return;
+            }*/
+
+            // update the target
+            float jitter = _wanderParams.jitter * delta;
+            var target = GetWanderTarget(jitter);
+            _owner.SetTarget(target);
+        }
 
         #endregion
     }

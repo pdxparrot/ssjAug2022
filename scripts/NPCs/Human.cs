@@ -54,7 +54,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         public override void _PhysicsProcess(float delta)
         {
             if(IsInputAllowed) {
-                ApplyForce(Steering.Calculate(delta) * Mass);
+                Steering.Update(delta);
             }
 
             base._PhysicsProcess(delta);

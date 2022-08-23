@@ -26,11 +26,14 @@ transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
 script = ExtResource( 3 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
+avoidance_enabled = true
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )
 
 [node name="Steering" type="Node" parent="."]
 script = ExtResource( 5 )
+
+[connection signal="velocity_computed" from="NavigationAgent" to="." method="_on_NavigationAgent_velocity_computed"]
 
 [editable path="Pivot/Model"]

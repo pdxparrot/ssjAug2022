@@ -29,6 +29,31 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             _agent.SetTargetLocation(target);
         }
 
+        public bool IsNavigationFinished()
+        {
+            return _agent.IsNavigationFinished();
+        }
+
+        public bool IsTargetReachable()
+        {
+            return _agent.IsTargetReachable();
+        }
+
+        public bool IsTargetReached()
+        {
+            return _agent.IsTargetReached();
+        }
+
+        public Vector3 GetNextLocation()
+        {
+            return _agent.GetNextLocation();
+        }
+
+        public void SetVelocity(Vector3 velocity)
+        {
+            _agent.SetVelocity(velocity);
+        }
+
         #region Spawn
 
         public override void OnSpawn(SpawnPoint spawnPoint)
@@ -50,6 +75,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             NPCManager.Instance.UnRegisterNPC(this);
 
             base.OnDeSpawn();
+        }
+
+        #endregion
+
+        #region Signal Handlers
+
+        protected void _on_NavigationAgent_velocity_computed(Vector3 safeVelocity)
+        {
+            //GD.Print($"velocity updated: {safeVelocity}");
+            Velocity = new Vector3(safeVelocity.x, 0.0f, safeVelocity.z);
         }
 
         #endregion
