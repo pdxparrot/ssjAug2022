@@ -10,6 +10,14 @@ namespace pdxpartyparrot.ssjAug2022
 
         private Label _fps;
 
+        private Label _staticMemory;
+
+        private Label _staticMemoryMax;
+
+        private Label _dynamicMemory;
+
+        private Label _dynamicMemoryMax;
+
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -17,7 +25,11 @@ namespace pdxpartyparrot.ssjAug2022
             base._Ready();
 
             _canvas = GetNode<CanvasLayer>("CanvasLayer");
-            _fps = GetNode<Label>("CanvasLayer/HBoxContainer/FPS");
+            _fps = GetNode<Label>("CanvasLayer/VBoxContainer/FPS/FPS");
+            _staticMemory = GetNode<Label>("CanvasLayer/VBoxContainer/Static Memory/Static Memory");
+            _staticMemoryMax = GetNode<Label>("CanvasLayer/VBoxContainer/Static Memory/Static Memory Max");
+            _dynamicMemory = GetNode<Label>("CanvasLayer/VBoxContainer/Dynamic Memory/Dynamic Memory");
+            _dynamicMemoryMax = GetNode<Label>("CanvasLayer/VBoxContainer/Dynamic Memory/Dynamic Memory Max");
 
             _canvas.Hide();
         }
@@ -28,7 +40,18 @@ namespace pdxpartyparrot.ssjAug2022
                 return;
             }
 
-            _fps.Text = $"{Engine.GetFramesPerSecond()}";
+            _fps.Text = $"{Performance.GetMonitor(Performance.Monitor.TimeFps)}";
+            //frame time = Performance.GetMonitor(Performance.Monitor.TimeProcess)
+            //physics time = Performance.GetMonitor(Performance.Monitor.TimePhysicsProcess)
+            //draw calls (3d) = Performance.GetMonitor(Performance.Monitor.RenderDrawCallsInFrame)
+            //drawcalls (2d) = Performance.GetMonitor(Performance.Monitor.Render2dDrawCallsInFrame)
+            _staticMemory.Text = $"{Performance.GetMonitor(Performance.Monitor.MemoryStatic) / 1048576.0f:0.00}MB";
+            _staticMemoryMax.Text = $"({Performance.GetMonitor(Performance.Monitor.MemoryStaticMax) / 1048576.0f:0.00}MB)";
+            _dynamicMemory.Text = $"({Performance.GetMonitor(Performance.Monitor.MemoryDynamic) / 1048576.0f:0.00}MB)";
+            _dynamicMemoryMax.Text = $"({Performance.GetMonitor(Performance.Monitor.MemoryDynamicMax) / 1048576.0f:0.00}MB)";
+            //video memory used = Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed)
+            //node count = Performance.GetMonitor(Performance.Monitor.ObjectNodeCount)
+            //orphaned node count = Performance.GetMonitor(Performance.Monitor.ObjectOrphanNodeCount)
         }
 
         public override void _UnhandledInput(InputEvent @event)
