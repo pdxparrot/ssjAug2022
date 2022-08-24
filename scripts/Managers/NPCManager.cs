@@ -64,7 +64,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         {
             GD.Print($"[NPCManager] Despawning {_npcs.Count} NPCs...");
 
-            SimpleNPC[] npcs = new SimpleNPC[_npcs.Count];
+            var npcs = new SimpleNPC[_npcs.Count];
             _npcs.CopyTo(npcs);
 
             foreach(var npc in npcs) {

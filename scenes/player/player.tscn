@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Player/Vampire.cs" type="Script" id=1]
 [ext_resource path="res://scenes/player/knight_anim_blend.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Model.cs" type="Script" id=3]
+[ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
@@ -36,7 +37,8 @@ script = ExtResource( 3 )
 parameters/Motion/blend_position = 0.932
 
 [node name="ClawAttack Hitbox" type="Area" parent="."]
-transform = Transform( 0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -2.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 2.5, -2.5 )
+script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="ClawAttack Hitbox"]
 shape = SubResource( 2 )
@@ -62,6 +64,8 @@ one_shot = true
 [node name="Dash Cooldown" type="Timer" parent="Timers"]
 one_shot = true
 
+[connection signal="area_entered" from="ClawAttack Hitbox" to="ClawAttack Hitbox" method="_on_ClawAttack_Hitbox_area_entered"]
+[connection signal="area_exited" from="ClawAttack Hitbox" to="ClawAttack Hitbox" method="_on_ClawAttack_Hitbox_area_exited"]
 [connection signal="timeout" from="Timers/Claw Timer" to="." method="_on_Claw_Timer_timeout"]
 [connection signal="timeout" from="Timers/Power Unleashed Timer" to="." method="_on_Power_Unleashed_Timer_timeout"]
 [connection signal="timeout" from="Timers/Dash Timer" to="." method="_on_Dash_Timer_timeout"]

@@ -1,12 +1,14 @@
 using Godot;
 
+using System;
 using System.Threading.Tasks;
 
+using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs
 {
-    public class Human : SimpleNPC
+    public class Human : SimpleNPC, IInteractable
     {
         [Export]
         private int _maxHealth = 1;
@@ -25,6 +27,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         private HumanStateMachine _stateMachine;
 
         public HumanSteering Steering { get; private set; }
+
+        public bool CanInteract => !IsDead;
+
+        public Type InteractableType => GetType();
 
         #region Godot Lifecycle
 

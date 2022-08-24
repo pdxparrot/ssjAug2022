@@ -1,9 +1,11 @@
 using Godot;
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Collections;
+using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.NPCs;
 using pdxpartyparrot.ssjAug2022.World;
@@ -26,6 +28,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         [Export]
         private int _clawAttackDamage = 1;
+
+        private Interactables.Interactables _clawAttackInteractables;
 
         // TODO: this would be better if it was driven by the animation
         private Timer _clawTimer;
@@ -70,6 +74,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             _clawTimer = GetNode<Timer>("Timers/Claw Timer");
             _clawCooldown = GetNode<Timer>("Timers/Claw Cooldown");
+            _clawAttackInteractables = GetNode<Interactables.Interactables>("ClawAttack Hitbox");
 
             _powerUnleashedTimer = GetNode<Timer>("Timers/Power Unleashed Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/Power Unleashed Cooldown");
@@ -124,9 +129,16 @@ namespace pdxpartyparrot.ssjAug2022.Player
             GD.Print("[Player] Claw attack!");
             Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
 
-            var enemy = (Human)NPCManager.Instance.NPCs.NearestManhattan(GlobalTranslation, out float distance);
-            if(enemy != null && distance <= _clawAttackRange) {
-                await enemy.DamageAsync(_clawAttackDamage);
+            var enemies = _clawAttackInteractables.GetInteractables<Human>();
+
+            // copy because we're going to modify the underlying collection
+            var humans = new Human[enemies.Count];
+            for(int idx = 0; idx < enemies.Count; ++idx) {
+                humans[idx] = (Human)enemies.ElementAt(idx);
+            }
+
+            foreach(var human in humans) {
+                await human.DamageAsync(_clawAttackDamage);
             }
 
             _clawTimer.Start();
