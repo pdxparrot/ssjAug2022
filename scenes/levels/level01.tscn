@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/world/ground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/world/props/floating_crystal.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scenes/world/spawnpoint.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/npcs/human.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/world/test_cube_l.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/world/floor.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ProceduralSky" id=1]
 sky_top_color = Color( 0, 0, 0, 1 )
@@ -32,6 +33,7 @@ vertices = PoolVector3Array( -29.5, 1.5, -20.75, -28.5, 1.5, -21, -28.5, 1.5, -2
 polygons = [ PoolIntArray( 1, 0, 2 ), PoolIntArray( 2, 0, 3 ), PoolIntArray( 5, 4, 6 ), PoolIntArray( 6, 4, 7 ), PoolIntArray( 9, 8, 10 ), PoolIntArray( 10, 8, 11 ), PoolIntArray( 13, 12, 14 ), PoolIntArray( 14, 12, 15 ), PoolIntArray( 18, 17, 16 ), PoolIntArray( 21, 20, 19 ), PoolIntArray( 25, 24, 26 ), PoolIntArray( 26, 24, 23 ), PoolIntArray( 26, 23, 22 ), PoolIntArray( 31, 30, 27 ), PoolIntArray( 27, 30, 28 ), PoolIntArray( 28, 30, 29 ), PoolIntArray( 33, 32, 34 ), PoolIntArray( 34, 32, 35 ), PoolIntArray( 37, 36, 38 ), PoolIntArray( 38, 36, 39 ), PoolIntArray( 40, 45, 41 ), PoolIntArray( 41, 45, 44 ), PoolIntArray( 41, 44, 42 ), PoolIntArray( 42, 44, 43 ), PoolIntArray( 47, 46, 48 ), PoolIntArray( 48, 46, 49 ), PoolIntArray( 51, 50, 52 ), PoolIntArray( 52, 50, 53 ), PoolIntArray( 56, 55, 54 ), PoolIntArray( 59, 58, 57 ), PoolIntArray( 64, 63, 60 ), PoolIntArray( 60, 63, 61 ), PoolIntArray( 61, 63, 62 ), PoolIntArray( 66, 65, 67 ), PoolIntArray( 67, 65, 68 ), PoolIntArray( 70, 69, 71 ), PoolIntArray( 71, 69, 72 ), PoolIntArray( 76, 75, 77 ), PoolIntArray( 77, 75, 74 ), PoolIntArray( 77, 74, 73 ), PoolIntArray( 82, 81, 78 ), PoolIntArray( 78, 81, 80 ), PoolIntArray( 78, 80, 79 ), PoolIntArray( 84, 83, 85 ), PoolIntArray( 85, 83, 86 ), PoolIntArray( 90, 89, 87 ), PoolIntArray( 87, 89, 88 ), PoolIntArray( 94, 93, 91 ), PoolIntArray( 91, 93, 92 ), PoolIntArray( 98, 97, 95 ), PoolIntArray( 95, 97, 96 ), PoolIntArray( 102, 101, 99 ), PoolIntArray( 99, 101, 100 ), PoolIntArray( 106, 105, 103 ), PoolIntArray( 103, 105, 104 ), PoolIntArray( 112, 111, 107 ), PoolIntArray( 107, 111, 110 ), PoolIntArray( 107, 110, 109 ), PoolIntArray( 107, 109, 108 ), PoolIntArray( 115, 114, 113 ), PoolIntArray( 118, 117, 116 ), PoolIntArray( 120, 119, 121 ), PoolIntArray( 121, 119, 122 ), PoolIntArray( 124, 123, 125 ), PoolIntArray( 125, 123, 126 ), PoolIntArray( 129, 128, 127 ), PoolIntArray( 132, 131, 130 ), PoolIntArray( 137, 136, 133 ), PoolIntArray( 133, 136, 134 ), PoolIntArray( 134, 136, 135 ), PoolIntArray( 139, 138, 140 ), PoolIntArray( 140, 138, 141 ), PoolIntArray( 143, 142, 144 ), PoolIntArray( 144, 142, 145 ), PoolIntArray( 149, 148, 150 ), PoolIntArray( 150, 148, 147 ), PoolIntArray( 150, 147, 146 ), PoolIntArray( 155, 154, 151 ), PoolIntArray( 151, 154, 152 ), PoolIntArray( 152, 154, 153 ), PoolIntArray( 157, 156, 158 ), PoolIntArray( 158, 156, 159 ), PoolIntArray( 161, 160, 162 ), PoolIntArray( 162, 160, 163 ), PoolIntArray( 166, 165, 164 ), PoolIntArray( 169, 168, 167 ), PoolIntArray( 171, 170, 172 ), PoolIntArray( 172, 170, 173 ), PoolIntArray( 175, 174, 176 ), PoolIntArray( 176, 174, 177 ), PoolIntArray( 182, 181, 178 ), PoolIntArray( 178, 181, 179 ), PoolIntArray( 179, 181, 180 ), PoolIntArray( 184, 183, 185 ), PoolIntArray( 185, 183, 186 ), PoolIntArray( 186, 183, 187 ), PoolIntArray( 189, 188, 190 ), PoolIntArray( 190, 188, 192 ), PoolIntArray( 190, 192, 191 ), PoolIntArray( 196, 195, 193 ), PoolIntArray( 193, 195, 194 ), PoolIntArray( 200, 199, 197 ), PoolIntArray( 197, 199, 198 ), PoolIntArray( 204, 203, 201 ), PoolIntArray( 201, 203, 202 ), PoolIntArray( 208, 207, 205 ), PoolIntArray( 205, 207, 206 ), PoolIntArray( 210, 209, 211 ), PoolIntArray( 211, 209, 212 ), PoolIntArray( 214, 213, 215 ), PoolIntArray( 215, 213, 216 ), PoolIntArray( 219, 218, 217 ), PoolIntArray( 221, 220, 222 ), PoolIntArray( 222, 220, 223 ), PoolIntArray( 225, 224, 226 ), PoolIntArray( 226, 224, 227 ) ]
 
 [node name="Main" type="Spatial"]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0 )
 script = ExtResource( 3 )
 _enemiesToSpawn = 5
 _enemySpawnTag = "human"
@@ -41,8 +43,8 @@ _humanScene = ExtResource( 5 )
 environment = SubResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.999967, -0.00694448, -0.00417352, 0.00785655, 0.705261, 0.708905, -0.00197956, -0.708914, 0.705292, 0, 10, 0 )
-light_color = Color( 0.92549, 0.215686, 0.101961, 1 )
+transform = Transform( 0.841204, -0.482065, 0.244928, 0.0590389, 0.532145, 0.844593, -0.537486, -0.696014, 0.476103, 0, 10, 0 )
+light_color = Color( 1, 0.635294, 0.576471, 1 )
 shadow_enabled = true
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="."]
@@ -63,16 +65,16 @@ transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -24, 2, 24 )
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 24, 2, -24 )
 
 [node name="floating_crystal1" parent="NavigationMeshInstance" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1.5, 0 )
 
 [node name="floating_crystal2" parent="NavigationMeshInstance" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -20 )
 
 [node name="floating_crystal3" parent="NavigationMeshInstance" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 20 )
 
 [node name="floating_crystal4" parent="NavigationMeshInstance" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.5, 0 )
 
 [node name="Player Spawn" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
@@ -95,3 +97,15 @@ _minXSpawnRange = 1.0
 _maxXSpawnRange = 10.0
 _minZSpawnRange = 1.0
 _maxZSpawnRange = 10.0
+
+[node name="Floor Tile 01" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0 )
+
+[node name="Floor Tile 02" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1.1, 0 )
+
+[node name="Floor Tile 03" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -20 )
+
+[node name="Floor Tile 04" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1.1, -20 )
