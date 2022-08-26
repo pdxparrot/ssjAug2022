@@ -33,8 +33,6 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public Type InteractableType => GetType();
 
-        public Vampire Target { get; private set; }
-
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -90,9 +88,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
                 return;
             }
 
-            GD.Print($"Vampire in range of {Id}");
-            Target = vampire;
-            _stateMachine.ChangeState(new States.ChasePlayer());
+            _stateMachine.ChangeState(new States.ChasePlayer {
+                Target = vampire,
+            });
         }
 
         #endregion
