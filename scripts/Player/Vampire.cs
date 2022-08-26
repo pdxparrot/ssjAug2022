@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Collections;
-using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.NPCs;
 using pdxpartyparrot.ssjAug2022.World;
@@ -160,6 +159,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
             GD.Print("[Player] Power unleashed!");
             //Model.TriggerOneShot("parameters/Power_UnleashedTrigger/active");
 
+            // TODO: this should use a hitbox with interactables
+            // instead of looping through every possible enemy
+
             var enemies = new List<SimpleNPC>();
             NPCManager.Instance.NPCs.WithinDistance(GlobalTranslation, _powerUnleashedRange, enemies);
 
@@ -190,11 +192,13 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #region Signal Handlers
 
+        // TODO: this isn't firing :(
         private void _on_Claw_Attack_damage()
         {
             GD.Print($"Claw attack damage");
         }
 
+        // TODO: this isn't firing :(
         private void _on_Claw_Attack_animation_finished()
         {
             GD.Print($"Claw attack finished");
