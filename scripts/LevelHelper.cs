@@ -47,7 +47,8 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _ExitTree()
         {
-            AudioManager.Instance.StopAllMusic();
+            // TODO: this fires after the main menu starts playing its music
+            //AudioManager.Instance.StopAllMusic();
 
             ViewerManager.Instance.ReleaseViewer(_viewer);
             _viewer = null;

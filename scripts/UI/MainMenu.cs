@@ -23,7 +23,8 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         public override void _ExitTree()
         {
-            AudioManager.Instance.StopAllMusic();
+            // TODO: this fires after the level starts playing its music
+            //AudioManager.Instance.StopAllMusic();
         }
 
         #endregion
