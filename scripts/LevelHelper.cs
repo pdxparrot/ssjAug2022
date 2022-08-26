@@ -11,6 +11,9 @@ namespace pdxpartyparrot.ssjAug2022
     public class LevelHelper : Node
     {
         [Export]
+        private AudioStream _music;
+
+        [Export]
         private int _enemiesToSpawn;
 
         [Export]
@@ -37,8 +40,15 @@ namespace pdxpartyparrot.ssjAug2022
             SpawnEnemies();
         }
 
+        public override void _EnterTree()
+        {
+            AudioManager.Instance.PlayMusic(_music);
+        }
+
         public override void _ExitTree()
         {
+            AudioManager.Instance.StopAllMusic();
+
             ViewerManager.Instance.ReleaseViewer(_viewer);
             _viewer = null;
 
