@@ -11,9 +11,6 @@ namespace pdxpartyparrot.ssjAug2022
     public class LevelHelper : Node
     {
         [Export]
-        private AudioStream _music;
-
-        [Export]
         private int _enemiesToSpawn;
 
         [Export]
@@ -22,12 +19,17 @@ namespace pdxpartyparrot.ssjAug2022
         [Export]
         private PackedScene _humanScene;
 
+        private AudioStreamPlayer _musicPlayer;
+
         private FollowCamera _viewer;
 
         #region Godot Lifecycle
 
         public override void _Ready()
         {
+            _musicPlayer = GetNode<AudioStreamPlayer>("Music");
+            _musicPlayer.Play();
+
             SpawnManager.Instance.Initialize();
 
             GameUIManager.Instance.ShowHUD();
@@ -40,16 +42,8 @@ namespace pdxpartyparrot.ssjAug2022
             SpawnEnemies();
         }
 
-        public override void _EnterTree()
-        {
-            AudioManager.Instance.PlayMusic(_music);
-        }
-
         public override void _ExitTree()
         {
-            // TODO: this fires after the main menu starts playing its music
-            //AudioManager.Instance.StopAllMusic();
-
             ViewerManager.Instance.ReleaseViewer(_viewer);
             _viewer = null;
 

@@ -7,24 +7,14 @@ namespace pdxpartyparrot.ssjAug2022.UI
     public class MainMenu : Control
     {
         // TODO: this belongs on the main menu state, not the UI
-        [Export]
-        private AudioStream _music;
+        private AudioStreamPlayer _musicPlayer;
 
         #region Godot Lifecycle
 
         public override void _Ready()
         {
-        }
-
-        public override void _EnterTree()
-        {
-            AudioManager.Instance.PlayMusic(_music);
-        }
-
-        public override void _ExitTree()
-        {
-            // TODO: this fires after the level starts playing its music
-            //AudioManager.Instance.StopAllMusic();
+            _musicPlayer = GetNode<AudioStreamPlayer>("Music");
+            _musicPlayer.Play();
         }
 
         #endregion

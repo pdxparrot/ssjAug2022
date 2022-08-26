@@ -11,5 +11,5 @@ dest_files=[ "res://.import/button-hover.mp3-5b795e731f00c10c203e70871d8ff243.mp
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

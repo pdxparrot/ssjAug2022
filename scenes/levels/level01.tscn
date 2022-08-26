@@ -36,7 +36,6 @@ polygons = [ PoolIntArray( 1, 0, 2 ), PoolIntArray( 2, 0, 3 ), PoolIntArray( 5, 
 [node name="Main" type="Spatial"]
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0 )
 script = ExtResource( 3 )
-_music = ExtResource( 8 )
 _enemiesToSpawn = 5
 _enemySpawnTag = "human"
 _humanScene = ExtResource( 5 )
@@ -111,3 +110,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -20 )
 
 [node name="Floor Tile 04" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1.1, -20 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
