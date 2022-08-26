@@ -24,7 +24,7 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0
 shape = SubResource( 1 )
 
 [node name="Hurtbox" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 2, 0 )
+transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Hurtbox"]
 shape = SubResource( 3 )
@@ -39,7 +39,7 @@ script = ExtResource( 3 )
 parameters/Motion/blend_position = 0.932
 
 [node name="ClawAttack Hitbox" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 2.5, -2.6 )
+transform = Transform( 1.5, 0, 0, 0, 1, 0, 0, 0, 2, 0, 2.5, -3 )
 script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="ClawAttack Hitbox"]
