@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.Player;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs
 {
@@ -31,6 +32,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         public bool CanInteract => !IsDead;
 
         public Type InteractableType => GetType();
+
+        public Vampire Target { get; private set; }
 
         #region Godot Lifecycle
 
@@ -78,5 +81,20 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
                 await GameManager.Instance.EnemyDefeatedAsync();
             }
         }
+
+        #region Signal Handlers
+
+        private void _on_DetectionBox_area_entered(Area other)
+        {
+            if(!(other.GetParent() is Vampire vampire)) {
+                return;
+            }
+
+            GD.Print($"Vampire in range of {Id}");
+            Target = vampire;
+            _stateMachine.ChangeState(new States.ChasePlayer());
+        }
+
+        #endregion
     }
 }

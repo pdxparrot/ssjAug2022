@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/NPCs/Human.cs" type="Script" id=1]
 [ext_resource path="res://scenes/npcs/knight_anim_blend.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@ height = 2.0
 
 [sub_resource type="BoxShape" id=2]
 
+[sub_resource type="CylinderShape" id=3]
+
 [node name="Main" type="KinematicBody"]
 script = ExtResource( 1 )
 _mass = 75.0
@@ -21,17 +23,23 @@ _maxSpeed = 10.0
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0 )
 shape = SubResource( 1 )
 
+[node name="Pivot" type="Spatial" parent="."]
+
+[node name="Model" parent="Pivot" instance=ExtResource( 2 )]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
+script = ExtResource( 3 )
+
 [node name="Hurtbox" type="Area" parent="."]
 transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Hurtbox"]
 shape = SubResource( 2 )
 
-[node name="Pivot" type="Spatial" parent="."]
+[node name="DetectionBox" type="Area" parent="."]
+transform = Transform( 10, 0, 0, 0, 2, 0, 0, 0, 10, 0, 2, 0 )
 
-[node name="Model" parent="Pivot" instance=ExtResource( 2 )]
-transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
-script = ExtResource( 3 )
+[node name="CollisionShape" type="CollisionShape" parent="DetectionBox"]
+shape = SubResource( 3 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
 avoidance_enabled = true
@@ -42,6 +50,7 @@ script = ExtResource( 4 )
 [node name="Steering" type="Node" parent="."]
 script = ExtResource( 5 )
 
+[connection signal="area_entered" from="DetectionBox" to="." method="_on_DetectionBox_area_entered"]
 [connection signal="velocity_computed" from="NavigationAgent" to="." method="_on_NavigationAgent_velocity_computed"]
 
 [editable path="Pivot/Model"]

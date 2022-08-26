@@ -149,12 +149,12 @@ namespace pdxpartyparrot.ssjAug2022.Interactables
 
         #region Signal Handlers
 
-        private void _on_ClawAttack_Hitbox_area_entered(Area other)
+        private void _on_area_entered(Area other)
         {
             AddInteractable(other);
         }
 
-        private void _on_ClawAttack_Hitbox_area_exited(Area other)
+        private void _on_area_exited(Area other)
         {
             RemoveInteractable(other);
         }
