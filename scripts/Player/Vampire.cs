@@ -23,9 +23,6 @@ namespace pdxpartyparrot.ssjAug2022.Player
         #region Claw Attack
 
         [Export]
-        private float _clawAttackRange = 5.0f;
-
-        [Export]
         private int _clawAttackDamage = 1;
 
         private Interactables.Interactables _clawAttackInteractables;
@@ -42,15 +39,14 @@ namespace pdxpartyparrot.ssjAug2022.Player
         #region Power Unleashed
 
         [Export]
-        private float _powerUnleashedRange = 5.0f;
-
-        [Export]
         private int _powerUnleashedDamage = 1;
 
         // TODO: this would be better if it was driven by the animation
         private Timer _powerUnleashedTimer;
 
         private Timer _powerUnleashedCooldown;
+
+        private Interactables.Interactables _powerUnleashedInteractables;
 
         #endregion
 
@@ -82,6 +78,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             _powerUnleashedTimer = GetNode<Timer>("Timers/Power Unleashed Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/Power Unleashed Cooldown");
+            _powerUnleashedInteractables = GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
 
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
@@ -159,14 +156,16 @@ namespace pdxpartyparrot.ssjAug2022.Player
             GD.Print("[Player] Power unleashed!");
             //Model.TriggerOneShot("parameters/Power_UnleashedTrigger/active");
 
-            // TODO: this should use a hitbox with interactables
-            // instead of looping through every possible enemy
+            var enemies = _powerUnleashedInteractables.GetInteractables<Human>();
 
-            var enemies = new List<SimpleNPC>();
-            NPCManager.Instance.NPCs.WithinDistance(GlobalTranslation, _powerUnleashedRange, enemies);
+            // copy because we're going to modify the underlying collection
+            var humans = new Human[enemies.Count];
+            for(int idx = 0; idx < enemies.Count; ++idx) {
+                humans[idx] = (Human)enemies.ElementAt(idx);
+            }
 
-            foreach(var enemy in enemies) {
-                await ((Human)enemy).DamageAsync(_powerUnleashedDamage);
+            foreach(var human in humans) {
+                await human.DamageAsync(_powerUnleashedDamage);
             }
 
             _powerUnleashedTimer.Start();
