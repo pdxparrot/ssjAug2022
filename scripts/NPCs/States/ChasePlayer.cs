@@ -25,7 +25,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
 
         public void Execute(Human owner, StateMachine<Human> stateMachine)
         {
-            // TODO: if target out of range, go back to idle
+            if(owner.GlobalTranslation.DistanceSquaredTo(Target.GlobalTranslation) > owner.TrackingRangeSquared) {
+                GD.Print($"[{owner.Id} lost my target");
+                stateMachine.ChangeState(new ReturnHome());
+                return;
+            }
 
             // TODO: if the player is in range, try to attack it
             // (should this be a new state?)

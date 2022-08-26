@@ -35,7 +35,7 @@ namespace pdxpartyparrot.ssjAug2022
 
         public float Speed => _velocity.Length();
 
-        public float HorizontalSpeed => new Vector3(_velocity.x, 0.0f, _velocity.y).Length();
+        public float HorizontalSpeed => new Vector3(_velocity.x, 0.0f, _velocity.z).Length();
 
         private Vector3 _heading;
 

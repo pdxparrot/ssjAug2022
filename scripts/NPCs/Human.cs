@@ -21,7 +21,12 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         [Export]
         private float _idleLeashRange = 10.0f;
 
-        public float IdleLeashRange => _idleLeashRange;
+        public float IdleLeashRangeSquared => _idleLeashRange * _idleLeashRange;
+
+        [Export]
+        private float _trackingRange = 20.0f;
+
+        public float TrackingRangeSquared => _trackingRange * _trackingRange;
 
         public Vector3 HomeTranslation { get; private set; }
 
