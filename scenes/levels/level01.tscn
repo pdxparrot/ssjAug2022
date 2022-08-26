@@ -77,13 +77,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 20 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.5, 0 )
 
 [node name="Player Spawn" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 _tags = PoolStringArray( "player" )
 
 [node name="Enemy Spawns" type="Spatial" parent="."]
 
 [node name="Enemy Spawn" parent="Enemy Spawns" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1, 0 )
 _tags = PoolStringArray( "human" )
 _minXSpawnRange = 1.0
 _maxXSpawnRange = 10.0
@@ -91,7 +91,7 @@ _minZSpawnRange = 1.0
 _maxZSpawnRange = 10.0
 
 [node name="Enemy Spawn2" parent="Enemy Spawns" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1, 0 )
 _tags = PoolStringArray( "human" )
 _minXSpawnRange = 1.0
 _maxXSpawnRange = 10.0

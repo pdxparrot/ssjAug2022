@@ -35,6 +35,8 @@ namespace pdxpartyparrot.ssjAug2022
 
         public float Speed => _velocity.Length();
 
+        public float HorizontalSpeed => new Vector3(_velocity.x, 0.0f, _velocity.y).Length();
+
         private Vector3 _heading;
 
         public Vector3 Heading => _heading;
@@ -65,7 +67,7 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _Process(float delta)
         {
-            _model.UpdateMotionBlend(MaxSpeed > 0.0f ? Speed / MaxSpeed : 0.0f);
+            _model.UpdateMotionBlend(MaxSpeed > 0.0f ? HorizontalSpeed / MaxSpeed : 0.0f);
         }
 
         public override void _PhysicsProcess(float delta)
