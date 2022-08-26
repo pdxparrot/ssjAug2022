@@ -36,6 +36,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private Timer _clawCooldown;
 
+        private AudioStreamPlayer _clawAttackAudioPlayer;
+
         #endregion
 
         #region Power Unleashed
@@ -62,6 +64,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private Timer _dashCooldown;
 
+        private AudioStreamPlayer _dashAudioPlayer;
+
         #endregion
 
         #region Godot Lifecycle
@@ -75,12 +79,14 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _clawTimer = GetNode<Timer>("Timers/Claw Timer");
             _clawCooldown = GetNode<Timer>("Timers/Claw Cooldown");
             _clawAttackInteractables = GetNode<Interactables.Interactables>("ClawAttack Hitbox");
+            _clawAttackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/ClawAttack");
 
             _powerUnleashedTimer = GetNode<Timer>("Timers/Power Unleashed Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/Power Unleashed Cooldown");
 
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
+            _dashAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Dash");
         }
 
         public override async void _Input(InputEvent @event)
@@ -128,6 +134,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             GD.Print("[Player] Claw attack!");
             Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
+            _clawAttackAudioPlayer.Play();
 
             var enemies = _clawAttackInteractables.GetInteractables<Human>();
 
@@ -171,6 +178,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             GD.Print("[Player] Dash!");
             //Model.TriggerOneShot("parameters/Dash_Trigger/active");
+            _dashAudioPlayer.Play();
 
             IsInputAllowed = false;
 

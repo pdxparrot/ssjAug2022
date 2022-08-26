@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Player/Vampire.cs" type="Script" id=1]
 [ext_resource path="res://scenes/player/knight_anim_blend.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Model.cs" type="Script" id=3]
 [ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=4]
+[ext_resource path="res://audio/player/SFX_PC_Dash_1.wav" type="AudioStream" id=5]
+[ext_resource path="res://audio/player/SFX_PC_ClawAttack_1.wav" type="AudioStream" id=6]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
@@ -63,6 +65,14 @@ one_shot = true
 
 [node name="Dash Cooldown" type="Timer" parent="Timers"]
 one_shot = true
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="ClawAttack" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 6 )
+
+[node name="Dash" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 5 )
 
 [connection signal="area_entered" from="ClawAttack Hitbox" to="ClawAttack Hitbox" method="_on_ClawAttack_Hitbox_area_entered"]
 [connection signal="area_exited" from="ClawAttack Hitbox" to="ClawAttack Hitbox" method="_on_ClawAttack_Hitbox_area_exited"]
