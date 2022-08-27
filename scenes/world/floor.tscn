@@ -7,6 +7,6 @@
 [node name="Spatial" type="Spatial"]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 20, 0, 0, 0, -8.74228e-07, 20, 0, -20, -8.74228e-07, 10, 0, 10 )
+transform = Transform( 60, 0, 0, 0, -2.62268e-06, 60, 0, -60, -2.62268e-06, 10, 0, 10 )
 mesh = SubResource( 1 )
 material/0 = ExtResource( 1 )
