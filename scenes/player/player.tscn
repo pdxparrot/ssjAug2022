@@ -56,9 +56,9 @@ script = ExtResource( 4 )
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/PowerUnleashed Hitbox"]
 shape = SubResource( 4 )
 
-[node name="3d_fx" type="Spatial" parent="Pivot"]
+[node name="PowerUnleashed VFX" type="Spatial" parent="Pivot"]
 
-[node name="power_unleased" parent="Pivot/3d_fx" instance=ExtResource( 7 )]
+[node name="power_unleased" parent="Pivot/PowerUnleashed VFX" instance=ExtResource( 7 )]
 
 [node name="Timers" type="Node" parent="."]
 
