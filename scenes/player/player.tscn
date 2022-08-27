@@ -56,17 +56,22 @@ shape = SubResource( 4 )
 
 [node name="Timers" type="Node" parent="."]
 
-[node name="Claw Timer" type="Timer" parent="Timers"]
+[node name="ClawAttack Animation Timer" type="Timer" parent="Timers"]
 wait_time = 0.63
 one_shot = true
 
-[node name="Claw Cooldown" type="Timer" parent="Timers"]
+[node name="ClawAttack Cooldown" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="Power Unleashed Timer" type="Timer" parent="Timers"]
+[node name="PowerUnleashed Delay Timer" type="Timer" parent="Timers"]
+wait_time = 0.5
 one_shot = true
 
-[node name="Power Unleashed Cooldown" type="Timer" parent="Timers"]
+[node name="PowerUnleashed Scale Timer" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
+
+[node name="PowerUnleashed Cooldown" type="Timer" parent="Timers"]
 wait_time = 3.0
 one_shot = true
 
@@ -91,8 +96,9 @@ volume_db = -8.0
 [connection signal="area_exited" from="Pivot/ClawAttack Hitbox" to="Pivot/ClawAttack Hitbox" method="_on_area_exited"]
 [connection signal="area_entered" from="Pivot/PowerUnleashed Hitbox" to="Pivot/PowerUnleashed Hitbox" method="_on_area_entered"]
 [connection signal="area_exited" from="Pivot/PowerUnleashed Hitbox" to="Pivot/PowerUnleashed Hitbox" method="_on_area_exited"]
-[connection signal="timeout" from="Timers/Claw Timer" to="." method="_on_Claw_Timer_timeout"]
-[connection signal="timeout" from="Timers/Power Unleashed Timer" to="." method="_on_Power_Unleashed_Timer_timeout"]
+[connection signal="timeout" from="Timers/ClawAttack Animation Timer" to="." method="_on_ClawAttack_Animation_Timer_timeout"]
+[connection signal="timeout" from="Timers/PowerUnleashed Delay Timer" to="." method="_on_PowerUnleashed_Delay_Timer_timeout"]
+[connection signal="timeout" from="Timers/PowerUnleashed Scale Timer" to="." method="_on_PowerUnleashed_Scale_Timer_timeout"]
 [connection signal="timeout" from="Timers/Dash Timer" to="." method="_on_Dash_Timer_timeout"]
 
 [editable path="Pivot/Model"]
