@@ -43,7 +43,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public void DeSpawnPlayer(SimplePlayer player)
         {
-            GD.Print($"[PlayerManager] Despawning player {player.ClientId}");
+            GD.Print($"[PlayerManager] Despawning player {player.Name}");
 
             player.OnDeSpawn();
 
@@ -63,7 +63,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public void DestroyPlayer(SimplePlayer player, bool remove = true)
         {
-            GD.Print($"[PlayerManager] Destroying player {player.ClientId}");
+            GD.Print($"[PlayerManager] Destroying player {player.Name}");
 
             if(remove) {
                 _players.Remove(player.ClientId);

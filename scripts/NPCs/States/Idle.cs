@@ -21,7 +21,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
 
         public void Execute(Human owner, StateMachine<Human> stateMachine)
         {
-            if(owner.Translation.DistanceSquaredTo(owner.HomeTranslation) > owner.IdleLeashRangeSquared) {
+            float homeDistance = owner.Translation.DistanceSquaredTo(owner.HomeTranslation);
+            if(homeDistance > owner.IdleLeashRangeSquared) {
                 stateMachine.ChangeState(new ReturnHome());
             }
         }

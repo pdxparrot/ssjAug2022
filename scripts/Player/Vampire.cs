@@ -1,15 +1,17 @@
 using Godot;
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
+using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.NPCs;
 using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022.Player
 {
-    public class Vampire : SimplePlayer
+    public class Vampire : SimplePlayer, IInteractable
     {
         [Export]
         private int _maxHealth = 10;
@@ -72,6 +74,10 @@ namespace pdxpartyparrot.ssjAug2022.Player
         private AudioStreamPlayer _dashAudioPlayer;
 
         #endregion
+
+        public bool CanInteract => !IsDead;
+
+        public Type InteractableType => GetType();
 
         #region Godot Lifecycle
 
@@ -177,7 +183,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
                 return;
             }
 
-            GD.Print("[Player] Claw attack!");
+            GD.Print($"[{Name}] Claw attack!");
             Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
             _clawAttackAudioPlayer.Play();
 
@@ -195,7 +201,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
                 return;
             }
 
-            GD.Print("[Player] Power unleashed!");
+            GD.Print($"[{Name}] Power unleashed!");
             //Model.TriggerOneShot("parameters/Power_UnleashedTrigger/active");
 
             _powerUnleashedDelayTimer.Start();
@@ -207,7 +213,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
                 return;
             }
 
-            GD.Print("[Player] Dash!");
+            GD.Print($"[{Name}] Dash!");
             //Model.TriggerOneShot("parameters/Dash_Trigger/active");
             _dashAudioPlayer.Play();
 

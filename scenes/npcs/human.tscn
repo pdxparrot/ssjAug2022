@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/NPCs/Human.cs" type="Script" id=1]
 [ext_resource path="res://art/3d/knight_anim_blend.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Model.cs" type="Script" id=3]
 [ext_resource path="res://scripts/NPCs/HumanStateMachine.cs" type="Script" id=4]
 [ext_resource path="res://scripts/NPCs/HumanSteering.cs" type="Script" id=5]
+[ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=6]
+[ext_resource path="res://audio/player/SFX_PC_ClawAttack_1.wav" type="AudioStream" id=7]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
@@ -13,6 +15,8 @@ height = 2.0
 [sub_resource type="BoxShape" id=2]
 
 [sub_resource type="CylinderShape" id=3]
+
+[sub_resource type="BoxShape" id=4]
 
 [node name="Main" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -44,6 +48,14 @@ monitorable = false
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/DetectionBox"]
 shape = SubResource( 3 )
 
+[node name="Attack Hitbox" type="Area" parent="Pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 2, -3 )
+monitorable = false
+script = ExtResource( 6 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Pivot/Attack Hitbox"]
+shape = SubResource( 4 )
+
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
 avoidance_enabled = true
 
@@ -53,7 +65,25 @@ script = ExtResource( 4 )
 [node name="Steering" type="Node" parent="."]
 script = ExtResource( 5 )
 
+[node name="Timers" type="Node" parent="."]
+
+[node name="Attack Animation Timer" type="Timer" parent="Timers"]
+wait_time = 0.63
+one_shot = true
+
+[node name="Attack Cooldown" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Attack" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 7 )
+volume_db = -12.0
+
 [connection signal="area_entered" from="Pivot/DetectionBox" to="." method="_on_DetectionBox_area_entered"]
+[connection signal="area_entered" from="Pivot/Attack Hitbox" to="Pivot/Attack Hitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Pivot/Attack Hitbox" to="Pivot/Attack Hitbox" method="_on_area_exited"]
 [connection signal="velocity_computed" from="NavigationAgent" to="." method="_on_NavigationAgent_velocity_computed"]
+[connection signal="timeout" from="Timers/Attack Animation Timer" to="." method="_on_Attack_Animation_Timer_timeout"]
 
 [editable path="Pivot/Model"]

@@ -1,6 +1,7 @@
 using Godot;
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Interactables;
@@ -33,6 +34,27 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public float TrackingRangeSquared => _trackingRange * _trackingRange;
 
+        [Export]
+        private float _attackRange = 4.0f;
+
+        public float AttackRangeSquared => _attackRange * _attackRange;
+
+        #region Attack
+
+        [Export]
+        private int _attackDamage = 1;
+
+        private Interactables.Interactables _attackInteractables;
+
+        // TODO: this would be better if it was driven by the animation
+        private Timer _attackAnimationTimer;
+
+        private Timer _attackCooldown;
+
+        private AudioStreamPlayer _attackAudioPlayer;
+
+        #endregion
+
         public Vector3 HomeTranslation { get; private set; }
 
         private HumanStateMachine _stateMachine;
@@ -51,6 +73,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
             _currentHealth = _maxHealth;
             HomeTranslation = Translation;
+
+            _attackAnimationTimer = GetNode<Timer>("Timers/Attack Animation Timer");
+            _attackCooldown = GetNode<Timer>("Timers/Attack Cooldown");
+            _attackInteractables = Pivot.GetNode<Interactables.Interactables>("Attack Hitbox");
+            _attackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Attack");
 
             Steering = GetNode<HumanSteering>("Steering");
 
@@ -90,7 +117,47 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             }
         }
 
+        private async Task DamageInteractablePlayersAsync(Interactables.Interactables interactables, int damage)
+        {
+            var players = interactables.GetInteractables<Vampire>();
+
+            // copy because we're going to modify the underlying collection
+            var vampires = new Vampire[players.Count];
+            for(int idx = 0; idx < players.Count; ++idx) {
+                vampires[idx] = (Vampire)players.ElementAt(idx);
+            }
+
+            foreach(var vampire in vampires) {
+                await vampire.DamageAsync(damage).ConfigureAwait(false);
+            }
+        }
+
+        private async Task DoAttackDamageAsync()
+        {
+            await DamageInteractablePlayersAsync(_attackInteractables, _attackDamage).ConfigureAwait(false);
+        }
+
+        public void Attack(Vampire target)
+        {
+            if(!_attackAnimationTimer.IsStopped() || !_attackCooldown.IsStopped()) {
+                return;
+            }
+
+            GD.Print($"[{Id}] Attack!");
+            Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
+            _attackAudioPlayer.Play();
+
+            _attackAnimationTimer.Start();
+        }
+
         #region Signal Handlers
+
+        private async void _on_Attack_Animation_Timer_timeout()
+        {
+            await DoAttackDamageAsync().ConfigureAwait(false);
+
+            _attackCooldown.Start();
+        }
 
         private void _on_DetectionBox_area_entered(Area other)
         {
@@ -98,6 +165,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
                 return;
             }
 
+            // TODO: it would be better if this was done
+            // in the Global state so the AI is contained
             _stateMachine.ChangeState(new States.ChasePlayer {
                 Target = vampire,
             });
