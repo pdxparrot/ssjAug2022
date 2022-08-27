@@ -19,6 +19,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         public bool IsDead => _currentHealth <= 0;
 
         [Export]
+        private float _wanderSpeed = 5.0f;
+
+        public float WanderSpeed => _wanderSpeed;
+
+        [Export]
         private float _idleLeashRange = 10.0f;
 
         public float IdleLeashRangeSquared => _idleLeashRange * _idleLeashRange;

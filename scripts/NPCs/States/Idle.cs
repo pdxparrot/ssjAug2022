@@ -10,7 +10,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
                 radius = 5.0f,
                 distance = 10.0f,
                 jitter = 50.0f,
-                maxSpeed = owner.MaxSpeed,
+                maxSpeed = owner.WanderSpeed,
             });
         }
 

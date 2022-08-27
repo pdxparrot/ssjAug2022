@@ -8,7 +8,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
         {
             owner.Steering.SeekOn(new HumanSteering.SeekParams {
                 target = owner.HomeTranslation,
-                maxSpeed = owner.MaxSpeed,
+                maxSpeed = owner.WanderSpeed,
             });
         }
 

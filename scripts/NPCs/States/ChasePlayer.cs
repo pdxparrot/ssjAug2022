@@ -26,7 +26,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
         public void Execute(Human owner, StateMachine<Human> stateMachine)
         {
             if(owner.GlobalTranslation.DistanceSquaredTo(Target.GlobalTranslation) > owner.TrackingRangeSquared) {
-                GD.Print($"[{owner.Id} lost my target");
+                //GD.Print($"[{owner.Id} lost my target");
                 stateMachine.ChangeState(new ReturnHome());
                 return;
             }

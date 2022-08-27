@@ -204,7 +204,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         private void Seek(Vector3 target, float maxSpeed)
         {
             var desiredVelocity = (target - _owner.GlobalTranslation).Normalized() * maxSpeed;
-            _owner.SetVelocity(desiredVelocity - _owner.Velocity);
+            _owner.SetVelocity(desiredVelocity);
         }
 
         private void Arrive()
@@ -222,7 +222,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             speed = Math.Min(speed, _arriveParams.maxSpeed);
 
             var desiredVelocity = toTarget * speed / distance;
-            _owner.SetVelocity(desiredVelocity - _owner.Velocity);
+            _owner.SetVelocity(desiredVelocity);
         }
 
         private void Pursuit()
