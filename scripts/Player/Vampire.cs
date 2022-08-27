@@ -44,6 +44,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private Interactables.Interactables _powerUnleashedInteractables;
 
+        private VFX _powerUnleashedVFX;
+
         // TODO: this would be better if it was driven by the animation
         private Timer _powerUnleashedDelayTimer;
 
@@ -88,6 +90,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _powerUnleashedScaleTimer = GetNode<Timer>("Timers/PowerUnleashed Scale Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/PowerUnleashed Cooldown");
             _powerUnleashedInteractables = Pivot.GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
+            _powerUnleashedVFX = Pivot.GetNode<VFX>("PowerUnleashed VFX");
             _powerUnleashedInitialScale = _powerUnleashedInteractables.Scale;
             _powerUnleashedMaxScale = _powerUnleashedInitialScale * _powerUnleashedScale;
 
@@ -196,6 +199,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
             //Model.TriggerOneShot("parameters/Power_UnleashedTrigger/active");
 
             _powerUnleashedDelayTimer.Start();
+
+            _powerUnleashedVFX.Play("power_unleashed");
         }
 
         public void Dash()
