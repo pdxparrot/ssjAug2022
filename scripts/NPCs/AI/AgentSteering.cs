@@ -193,7 +193,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private void Seek()
         {
-            if(!_owner.IsTargetReachable() || _owner.IsTargetReached()) {
+            if(!_owner.IsTargetReachable() || _owner.IsTargetReached() /*|| !_owner.IsNavigationFinished()*/) {
                 _owner.SetVelocity(Vector3.Zero);
                 return;
             }
@@ -209,7 +209,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private void Arrive()
         {
-            if(!_owner.IsTargetReachable() || _owner.IsTargetReached()) {
+            if(!_owner.IsTargetReachable() || _owner.IsTargetReached() /*|| !_owner.IsNavigationFinished()*/) {
                 _owner.SetVelocity(Vector3.Zero);
                 return;
             }
@@ -227,30 +227,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private void Pursuit()
         {
-            if((!_owner.IsTargetReachable() || _owner.IsTargetReached()) && _owner.IsNavigationFinished()) {
+            if(!_owner.IsTargetReachable() || _owner.IsTargetReached() || Time.GetTicksMsec() - _pursuitParams.lastTargetUpdate > 500) {
                 _owner.SetTarget(_pursuitParams.target.GlobalTranslation);
                 _pursuitParams.lastTargetUpdate = Time.GetTicksMsec();
                 return;
             }
 
-            // spend a second seeking the last target
-            if(Time.GetTicksMsec() - _pursuitParams.lastTargetUpdate < 1000) {
-                Seek(_owner.GetNextLocation(), _seekParams.maxSpeed);
-                return;
-            }
-
             var target = _owner.GetNextLocation();
-            var toEvader = target - _owner.GlobalTranslation;
+            var toTarget = target - _owner.GlobalTranslation;
 
-            // if the evader is ahead and facing us, we can just seek it
-            // acos(0.95) = 18 degrees
-            float relativeHeading = _owner.Heading.Dot(_pursuitParams.target.Heading);
-            if(toEvader.Dot(_owner.Heading) > 0.0f && relativeHeading < -0.95f) {
-                Seek(target, _pursuitParams.maxSpeed);
-                return;
-            }
-
-            float lookAheadTime = toEvader.Length() / (_pursuitParams.maxSpeed + _pursuitParams.target.MaxSpeed);
+            float lookAheadTime = toTarget.Length() / (_pursuitParams.maxSpeed + _pursuitParams.target.MaxSpeed);
             Seek(target + _pursuitParams.target.Velocity * lookAheadTime, _pursuitParams.maxSpeed);
         }
 
@@ -273,15 +259,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private void Wander(float delta)
         {
+            /*if(!_owner.IsNavigationFinished()) {
+                _owner.SetVelocity(Vector3.Zero);
+                return;
+            }*/
+
             // seek the target until we reach it
             if(_owner.IsTargetReachable() && !_owner.IsTargetReached()) {
                 Seek(_owner.GetNextLocation(), _wanderParams.maxSpeed);
                 return;
             }
-
-            /*if(!_owner.IsNavigationFinished()) {
-                return;
-            }*/
 
             // update the target
             float jitter = _wanderParams.jitter * delta;
