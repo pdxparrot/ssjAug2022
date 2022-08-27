@@ -199,8 +199,6 @@ namespace pdxpartyparrot.ssjAug2022.Player
             //Model.TriggerOneShot("parameters/Power_UnleashedTrigger/active");
 
             _powerUnleashedDelayTimer.Start();
-
-            _powerUnleashedVFX.Play("power_unleashed");
         }
 
         public void Dash()
@@ -232,6 +230,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private void _on_PowerUnleashed_Delay_Timer_timeout()
         {
+            _powerUnleashedVFX.Play("power_unleashed");
+
             _powerUnleashedScaleTimer.Start();
         }
 
