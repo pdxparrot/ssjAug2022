@@ -73,12 +73,12 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             _clawTimer = GetNode<Timer>("Timers/Claw Timer");
             _clawCooldown = GetNode<Timer>("Timers/Claw Cooldown");
-            _clawAttackInteractables = GetNode<Interactables.Interactables>("ClawAttack Hitbox");
+            _clawAttackInteractables = Pivot.GetNode<Interactables.Interactables>("ClawAttack Hitbox");
             _clawAttackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/ClawAttack");
 
             _powerUnleashedTimer = GetNode<Timer>("Timers/Power Unleashed Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/Power Unleashed Cooldown");
-            _powerUnleashedInteractables = GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
+            _powerUnleashedInteractables = Pivot.GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
 
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");

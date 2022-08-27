@@ -29,16 +29,18 @@ shape = SubResource( 1 )
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
 script = ExtResource( 3 )
 
-[node name="Hurtbox" type="Area" parent="."]
+[node name="Hurtbox" type="Area" parent="Pivot"]
 transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )
+monitoring = false
 
-[node name="CollisionShape" type="CollisionShape" parent="Hurtbox"]
+[node name="CollisionShape" type="CollisionShape" parent="Pivot/Hurtbox"]
 shape = SubResource( 2 )
 
-[node name="DetectionBox" type="Area" parent="."]
+[node name="DetectionBox" type="Area" parent="Pivot"]
 transform = Transform( 10, 0, 0, 0, 2, 0, 0, 0, 10, 0, 2, 0 )
+monitorable = false
 
-[node name="CollisionShape" type="CollisionShape" parent="DetectionBox"]
+[node name="CollisionShape" type="CollisionShape" parent="Pivot/DetectionBox"]
 shape = SubResource( 3 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
@@ -50,7 +52,7 @@ script = ExtResource( 4 )
 [node name="Steering" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[connection signal="area_entered" from="DetectionBox" to="." method="_on_DetectionBox_area_entered"]
+[connection signal="area_entered" from="Pivot/DetectionBox" to="." method="_on_DetectionBox_area_entered"]
 [connection signal="velocity_computed" from="NavigationAgent" to="." method="_on_NavigationAgent_velocity_computed"]
 
 [editable path="Pivot/Model"]

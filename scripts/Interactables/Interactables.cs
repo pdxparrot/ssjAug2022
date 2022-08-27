@@ -123,7 +123,7 @@ namespace pdxpartyparrot.ssjAug2022.Interactables
 
         protected void AddInteractable(Area other)
         {
-            if(!(other.GetParent() is IInteractable interactable)) {
+            if(!(other.Owner is IInteractable interactable)) {
                 return;
             }
 
@@ -136,7 +136,7 @@ namespace pdxpartyparrot.ssjAug2022.Interactables
 
         protected void RemoveInteractable(Area other)
         {
-            if(!(other.GetParent() is IInteractable interactable)) {
+            if(!(other.Owner is IInteractable interactable)) {
                 return;
             }
 

@@ -89,7 +89,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         private void _on_DetectionBox_area_entered(Area other)
         {
-            if(!(other.GetParent() is Vampire vampire)) {
+            if(!(other.Owner is Vampire vampire)) {
                 return;
             }
 

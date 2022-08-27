@@ -31,24 +31,27 @@ shape = SubResource( 1 )
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
 script = ExtResource( 3 )
 
-[node name="Hurtbox" type="Area" parent="."]
+[node name="Hurtbox" type="Area" parent="Pivot"]
 transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )
+monitoring = false
 
-[node name="CollisionShape" type="CollisionShape" parent="Hurtbox"]
+[node name="CollisionShape" type="CollisionShape" parent="Pivot/Hurtbox"]
 shape = SubResource( 3 )
 
-[node name="ClawAttack Hitbox" type="Area" parent="."]
-transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, -3 )
+[node name="ClawAttack Hitbox" type="Area" parent="Pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 2, -3 )
+monitorable = false
 script = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="ClawAttack Hitbox"]
+[node name="CollisionShape" type="CollisionShape" parent="Pivot/ClawAttack Hitbox"]
 shape = SubResource( 2 )
 
-[node name="PowerUnleashed Hitbox" type="Area" parent="."]
+[node name="PowerUnleashed Hitbox" type="Area" parent="Pivot"]
 transform = Transform( 5, 0, 0, 0, 2, 0, 0, 0, 5, 0, 2, 0 )
+monitorable = false
 script = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="PowerUnleashed Hitbox"]
+[node name="CollisionShape" type="CollisionShape" parent="Pivot/PowerUnleashed Hitbox"]
 shape = SubResource( 4 )
 
 [node name="Timers" type="Node" parent="."]
@@ -82,10 +85,10 @@ volume_db = -12.0
 stream = ExtResource( 5 )
 volume_db = -8.0
 
-[connection signal="area_entered" from="ClawAttack Hitbox" to="ClawAttack Hitbox" method="_on_area_entered"]
-[connection signal="area_exited" from="ClawAttack Hitbox" to="ClawAttack Hitbox" method="_on_area_exited"]
-[connection signal="area_entered" from="PowerUnleashed Hitbox" to="PowerUnleashed Hitbox" method="_on_area_entered"]
-[connection signal="area_exited" from="PowerUnleashed Hitbox" to="PowerUnleashed Hitbox" method="_on_area_exited"]
+[connection signal="area_entered" from="Pivot/ClawAttack Hitbox" to="Pivot/ClawAttack Hitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Pivot/ClawAttack Hitbox" to="Pivot/ClawAttack Hitbox" method="_on_area_exited"]
+[connection signal="area_entered" from="Pivot/PowerUnleashed Hitbox" to="Pivot/PowerUnleashed Hitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Pivot/PowerUnleashed Hitbox" to="Pivot/PowerUnleashed Hitbox" method="_on_area_exited"]
 [connection signal="timeout" from="Timers/Claw Timer" to="." method="_on_Claw_Timer_timeout"]
 [connection signal="timeout" from="Timers/Power Unleashed Timer" to="." method="_on_Power_Unleashed_Timer_timeout"]
 [connection signal="timeout" from="Timers/Dash Timer" to="." method="_on_Dash_Timer_timeout"]
