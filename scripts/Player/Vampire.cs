@@ -54,6 +54,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private Vector3 _powerUnleashedInitialScale;
 
+        private Vector3 _powerUnleashedMaxScale;
+
         #endregion
 
         #region Dash
@@ -87,6 +89,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _powerUnleashedCooldown = GetNode<Timer>("Timers/PowerUnleashed Cooldown");
             _powerUnleashedInteractables = Pivot.GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
             _powerUnleashedInitialScale = _powerUnleashedInteractables.Scale;
+            _powerUnleashedMaxScale = _powerUnleashedInitialScale * _powerUnleashedScale;
 
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
@@ -114,8 +117,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             if(!_powerUnleashedScaleTimer.IsStopped()) {
                 float pct = 1.0f - (_powerUnleashedScaleTimer.TimeLeft / _powerUnleashedScaleTimer.WaitTime);
-                var scale = _powerUnleashedInitialScale + (_powerUnleashedInitialScale * _powerUnleashedScale * pct);
-                scale.y = 1.0f;
+                var scale = _powerUnleashedInitialScale + (_powerUnleashedMaxScale - _powerUnleashedInitialScale) * pct;
+                scale.y = _powerUnleashedInitialScale.y;
                 _powerUnleashedInteractables.Scale = scale;
 
                 // TODO: we should pulse at a slower rate than every frame
