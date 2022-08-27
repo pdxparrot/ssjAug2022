@@ -26,9 +26,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
         private Interactables.Interactables _clawAttackInteractables;
 
         // TODO: this would be better if it was driven by the animation
-        private Timer _clawTimer;
+        private Timer _clawAttackAnimationTimer;
 
-        private Timer _clawCooldown;
+        private Timer _clawAttackCooldown;
 
         private AudioStreamPlayer _clawAttackAudioPlayer;
 
@@ -39,12 +39,20 @@ namespace pdxpartyparrot.ssjAug2022.Player
         [Export]
         private int _powerUnleashedDamage = 1;
 
+        [Export]
+        private float _powerUnleashedScale = 1.5f;
+
+        private Interactables.Interactables _powerUnleashedInteractables;
+
         // TODO: this would be better if it was driven by the animation
-        private Timer _powerUnleashedTimer;
+        private Timer _powerUnleashedDelayTimer;
+
+        // TODO: this would be better if it was driven by the animation
+        private Timer _powerUnleashedScaleTimer;
 
         private Timer _powerUnleashedCooldown;
 
-        private Interactables.Interactables _powerUnleashedInteractables;
+        private Vector3 _powerUnleashedInitialSize;
 
         #endregion
 
@@ -69,13 +77,14 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             _currentHealth = _maxHealth;
 
-            _clawTimer = GetNode<Timer>("Timers/Claw Timer");
-            _clawCooldown = GetNode<Timer>("Timers/Claw Cooldown");
+            _clawAttackAnimationTimer = GetNode<Timer>("Timers/ClawAttack Animation Timer");
+            _clawAttackCooldown = GetNode<Timer>("Timers/ClawAttack Cooldown");
             _clawAttackInteractables = Pivot.GetNode<Interactables.Interactables>("ClawAttack Hitbox");
             _clawAttackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/ClawAttack");
 
-            _powerUnleashedTimer = GetNode<Timer>("Timers/Power Unleashed Timer");
-            _powerUnleashedCooldown = GetNode<Timer>("Timers/Power Unleashed Cooldown");
+            _powerUnleashedDelayTimer = GetNode<Timer>("Timers/PowerUnleashed Delay Timer");
+            _powerUnleashedScaleTimer = GetNode<Timer>("Timers/PowerUnleashed Scale Timer");
+            _powerUnleashedCooldown = GetNode<Timer>("Timers/PowerUnleashed Cooldown");
             _powerUnleashedInteractables = Pivot.GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
 
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
@@ -83,7 +92,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _dashAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Dash");
         }
 
-        public override async void _Input(InputEvent @event)
+        public override void _Input(InputEvent @event)
         {
             if(!IsInputAllowed) {
                 return;
@@ -92,7 +101,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             if(@event.IsActionPressed("claw_attack")) {
                 ClawAttack();
             } else if(@event.IsAction("power_unleashed")) {
-                await PowerUnleashedAsync().ConfigureAwait(false);
+                PowerUnleashed();
             } else if(@event.IsActionPressed("dash")) {
                 Dash();
             }
@@ -142,7 +151,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void ClawAttack()
         {
-            if(!_clawTimer.IsStopped() || !_clawCooldown.IsStopped()) {
+            if(!_clawAttackAnimationTimer.IsStopped() || !_clawAttackCooldown.IsStopped()) {
                 return;
             }
 
@@ -150,7 +159,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
             _clawAttackAudioPlayer.Play();
 
-            _clawTimer.Start();
+            _clawAttackAnimationTimer.Start();
         }
 
         private async Task DoPowerUnleashedDamageAsync()
@@ -158,18 +167,16 @@ namespace pdxpartyparrot.ssjAug2022.Player
             await DamageInteractableEnemeiesAsync(_powerUnleashedInteractables, _powerUnleashedDamage).ConfigureAwait(false);
         }
 
-        public async Task PowerUnleashedAsync()
+        public void PowerUnleashed()
         {
-            if(!_powerUnleashedTimer.IsStopped() || !_powerUnleashedCooldown.IsStopped()) {
+            if(!_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped() || !_powerUnleashedCooldown.IsStopped()) {
                 return;
             }
 
             GD.Print("[Player] Power unleashed!");
             //Model.TriggerOneShot("parameters/Power_UnleashedTrigger/active");
 
-            _powerUnleashedTimer.Start();
-
-            await DoPowerUnleashedDamageAsync().ConfigureAwait(false);
+            _powerUnleashedDelayTimer.Start();
         }
 
         public void Dash()
@@ -192,26 +199,21 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #region Signal Handlers
 
-        // TODO: this isn't firing :(
-        private void _on_Claw_Attack_damage()
-        {
-            GD.Print($"Claw attack damage");
-        }
-
-        // TODO: this isn't firing :(
-        private void _on_Claw_Attack_animation_finished()
-        {
-            GD.Print($"Claw attack finished");
-        }
-
-        private async void _on_Claw_Timer_timeout()
+        private async void _on_ClawAttack_Animation_Timer_timeout()
         {
             await DoClawAttackDamageAsync().ConfigureAwait(false);
 
-            _clawCooldown.Start();
+            _clawAttackCooldown.Start();
         }
 
-        private void _on_Power_Unleashed_Timer_timeout()
+        private async Task _on_PowerUnleashed_Delay_Timer_timeout()
+        {
+            _powerUnleashedScaleTimer.Start();
+
+            await DoPowerUnleashedDamageAsync().ConfigureAwait(false);
+        }
+
+        private void _on_PowerUnleashed_Scale_Timer_timeout()
         {
             _powerUnleashedCooldown.Start();
         }
