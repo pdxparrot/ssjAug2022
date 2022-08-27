@@ -1,10 +1,8 @@
 using Godot;
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using pdxpartyparrot.ssjAug2022.Collections;
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.NPCs;
 using pdxpartyparrot.ssjAug2022.World;
@@ -92,9 +90,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
             }
 
             if(@event.IsActionPressed("claw_attack")) {
-                await ClawAttackAsync();
+                ClawAttack();
             } else if(@event.IsAction("power_unleashed")) {
-                await PowerUnleashedAsync();
+                await PowerUnleashedAsync().ConfigureAwait(false);
             } else if(@event.IsActionPressed("dash")) {
                 Dash();
             }
@@ -122,7 +120,27 @@ namespace pdxpartyparrot.ssjAug2022.Player
             }
         }
 
-        public async Task ClawAttackAsync()
+        private async Task DamageInteractableEnemeiesAsync(Interactables.Interactables interactables, int damage)
+        {
+            var enemies = interactables.GetInteractables<Human>();
+
+            // copy because we're going to modify the underlying collection
+            var humans = new Human[enemies.Count];
+            for(int idx = 0; idx < enemies.Count; ++idx) {
+                humans[idx] = (Human)enemies.ElementAt(idx);
+            }
+
+            foreach(var human in humans) {
+                await human.DamageAsync(damage).ConfigureAwait(false);
+            }
+        }
+
+        private async Task DoClawAttackDamageAsync()
+        {
+            await DamageInteractableEnemeiesAsync(_clawAttackInteractables, _clawAttackDamage).ConfigureAwait(false);
+        }
+
+        public void ClawAttack()
         {
             if(!_clawTimer.IsStopped() || !_clawCooldown.IsStopped()) {
                 return;
@@ -132,19 +150,12 @@ namespace pdxpartyparrot.ssjAug2022.Player
             Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
             _clawAttackAudioPlayer.Play();
 
-            var enemies = _clawAttackInteractables.GetInteractables<Human>();
-
-            // copy because we're going to modify the underlying collection
-            var humans = new Human[enemies.Count];
-            for(int idx = 0; idx < enemies.Count; ++idx) {
-                humans[idx] = (Human)enemies.ElementAt(idx);
-            }
-
-            foreach(var human in humans) {
-                await human.DamageAsync(_clawAttackDamage);
-            }
-
             _clawTimer.Start();
+        }
+
+        private async Task DoPowerUnleashedDamageAsync()
+        {
+            await DamageInteractableEnemeiesAsync(_powerUnleashedInteractables, _powerUnleashedDamage).ConfigureAwait(false);
         }
 
         public async Task PowerUnleashedAsync()
@@ -156,19 +167,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
             GD.Print("[Player] Power unleashed!");
             //Model.TriggerOneShot("parameters/Power_UnleashedTrigger/active");
 
-            var enemies = _powerUnleashedInteractables.GetInteractables<Human>();
-
-            // copy because we're going to modify the underlying collection
-            var humans = new Human[enemies.Count];
-            for(int idx = 0; idx < enemies.Count; ++idx) {
-                humans[idx] = (Human)enemies.ElementAt(idx);
-            }
-
-            foreach(var human in humans) {
-                await human.DamageAsync(_powerUnleashedDamage);
-            }
-
             _powerUnleashedTimer.Start();
+
+            await DoPowerUnleashedDamageAsync().ConfigureAwait(false);
         }
 
         public void Dash()
@@ -203,8 +204,10 @@ namespace pdxpartyparrot.ssjAug2022.Player
             GD.Print($"Claw attack finished");
         }
 
-        private void _on_Claw_Timer_timeout()
+        private async void _on_Claw_Timer_timeout()
         {
+            await DoClawAttackDamageAsync().ConfigureAwait(false);
+
             _clawCooldown.Start();
         }
 
