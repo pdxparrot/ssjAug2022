@@ -52,7 +52,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private Timer _powerUnleashedCooldown;
 
-        private Vector3 _powerUnleashedInitialSize;
+        private Vector3 _powerUnleashedInitialScale;
 
         #endregion
 
@@ -86,6 +86,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _powerUnleashedScaleTimer = GetNode<Timer>("Timers/PowerUnleashed Scale Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/PowerUnleashed Cooldown");
             _powerUnleashedInteractables = Pivot.GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
+            _powerUnleashedInitialScale = _powerUnleashedInteractables.Scale;
 
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
@@ -104,6 +105,21 @@ namespace pdxpartyparrot.ssjAug2022.Player
                 PowerUnleashed();
             } else if(@event.IsActionPressed("dash")) {
                 Dash();
+            }
+        }
+
+        public override async void _Process(float delta)
+        {
+            base._Process(delta);
+
+            if(!_powerUnleashedScaleTimer.IsStopped()) {
+                float pct = 1.0f - (_powerUnleashedScaleTimer.TimeLeft / _powerUnleashedScaleTimer.WaitTime);
+                var scale = _powerUnleashedInitialScale + (_powerUnleashedInitialScale * _powerUnleashedScale * pct);
+                scale.y = 1.0f;
+                _powerUnleashedInteractables.Scale = scale;
+
+                // TODO: we should pulse at a slower rate than every frame
+                await DoPowerUnleashedDamageAsync().ConfigureAwait(false);
             }
         }
 
@@ -206,15 +222,15 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _clawAttackCooldown.Start();
         }
 
-        private async Task _on_PowerUnleashed_Delay_Timer_timeout()
+        private void _on_PowerUnleashed_Delay_Timer_timeout()
         {
             _powerUnleashedScaleTimer.Start();
-
-            await DoPowerUnleashedDamageAsync().ConfigureAwait(false);
         }
 
         private void _on_PowerUnleashed_Scale_Timer_timeout()
         {
+            _powerUnleashedInteractables.Scale = _powerUnleashedInitialScale;
+
             _powerUnleashedCooldown.Start();
         }
 
