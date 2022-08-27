@@ -18,7 +18,7 @@ height = 2.0
 
 [sub_resource type="BoxShape" id=4]
 
-[node name="Main2" type="KinematicBody"]
+[node name="Main" type="KinematicBody"]
 script = ExtResource( 1 )
 _mass = 75.0
 _maxSpeed = 10.0
