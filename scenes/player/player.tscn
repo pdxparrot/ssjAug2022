@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/Player/Vampire.cs" type="Script" id=1]
 [ext_resource path="res://art/3d/knight_anim_blend.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=4]
 [ext_resource path="res://audio/player/SFX_PC_Dash_1.wav" type="AudioStream" id=5]
 [ext_resource path="res://audio/player/SFX_PC_ClawAttack_1.wav" type="AudioStream" id=6]
+[ext_resource path="res://art/3d/3d_fx/power_unleased.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
@@ -20,6 +21,8 @@ height = 2.0
 [node name="Main" type="KinematicBody"]
 script = ExtResource( 1 )
 _mass = 50.0
+_powerUnleashedDamage = 10
+_powerUnleashedScale = 1.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0 )
@@ -54,6 +57,10 @@ script = ExtResource( 4 )
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/PowerUnleashed Hitbox"]
 shape = SubResource( 4 )
 
+[node name="3d_fx" type="Spatial" parent="Pivot"]
+
+[node name="power_unleased" parent="Pivot/3d_fx" instance=ExtResource( 7 )]
+
 [node name="Timers" type="Node" parent="."]
 
 [node name="ClawAttack Animation Timer" type="Timer" parent="Timers"]
@@ -64,11 +71,11 @@ one_shot = true
 one_shot = true
 
 [node name="PowerUnleashed Delay Timer" type="Timer" parent="Timers"]
-wait_time = 0.5
+wait_time = 0.15
 one_shot = true
 
 [node name="PowerUnleashed Scale Timer" type="Timer" parent="Timers"]
-wait_time = 0.5
+wait_time = 0.3
 one_shot = true
 
 [node name="PowerUnleashed Cooldown" type="Timer" parent="Timers"]
@@ -80,6 +87,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="Dash Cooldown" type="Timer" parent="Timers"]
+wait_time = 0.25
 one_shot = true
 
 [node name="SFX" type="Node" parent="."]
