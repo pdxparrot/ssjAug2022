@@ -21,6 +21,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
 
         public void Exit(Human owner, StateMachine<Human> stateMachine)
         {
+            owner.Steering.PursuitOff();
         }
 
         public void Execute(Human owner, StateMachine<Human> stateMachine)
