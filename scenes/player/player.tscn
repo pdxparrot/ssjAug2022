@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Player/Vampire.cs" type="Script" id=1]
-[ext_resource path="res://scenes/player/knight_anim_blend.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scripts/Model.cs" type="Script" id=3]
+[ext_resource path="res://art/3d/knight_anim_blend.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=4]
 [ext_resource path="res://audio/player/SFX_PC_Dash_1.wav" type="AudioStream" id=5]
 [ext_resource path="res://audio/player/SFX_PC_ClawAttack_1.wav" type="AudioStream" id=6]
@@ -29,10 +28,6 @@ shape = SubResource( 1 )
 
 [node name="Model" parent="Pivot" instance=ExtResource( 2 )]
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
-script = ExtResource( 3 )
-
-[node name="AnimationTree" parent="Pivot/Model" index="2"]
-parameters/Motion/blend_position = 0.932
 
 [node name="Hurtbox" type="Area" parent="."]
 transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )
