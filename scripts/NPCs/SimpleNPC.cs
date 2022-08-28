@@ -83,7 +83,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         protected void _on_NavigationAgent_velocity_computed(Vector3 safeVelocity)
         {
-            //GD.Print($"velocity updated: {safeVelocity}");
+            //GD.Print($"[{Id}] velocity updated: {safeVelocity}");
             Velocity = new Vector3(safeVelocity.x, 0.0f, safeVelocity.z);
         }
 

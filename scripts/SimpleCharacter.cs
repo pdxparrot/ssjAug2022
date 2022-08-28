@@ -41,8 +41,6 @@ namespace pdxpartyparrot.ssjAug2022
 
         public Vector3 Heading => _heading;
 
-        public bool IsInputAllowed { get; set; } = true;
-
         private float _gravity;
 
         private Spatial _pivot;

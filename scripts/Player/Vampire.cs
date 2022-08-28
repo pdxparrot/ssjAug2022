@@ -2,7 +2,6 @@ using Godot;
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
@@ -75,9 +74,13 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #endregion
 
+        private Timer _deathTimer;
+
         public bool CanInteract => !IsDead;
 
         public Type InteractableType => GetType();
+
+        private bool IsInputAllowed => !IsDead && !GameManager.Instance.IsGameOver && _dashTimer.IsStopped();
 
         #region Godot Lifecycle
 
@@ -103,6 +106,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
             _dashAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Dash");
+
+            _deathTimer = GetNode<Timer>("Timers/Death Timer");
         }
 
         public override void _Input(InputEvent @event)
@@ -120,7 +125,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             }
         }
 
-        public override async void _Process(float delta)
+        public override void _Process(float delta)
         {
             base._Process(delta);
 
@@ -131,7 +136,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
                 _powerUnleashedInteractables.Scale = scale;
 
                 // TODO: we should pulse at a slower rate than every frame
-                await DoPowerUnleashedDamageAsync().ConfigureAwait(false);
+                DoPowerUnleashedDamage();
             }
         }
 
@@ -147,17 +152,17 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #endregion
 
-        public async Task DamageAsync(int amount)
+        public void Damage(int amount)
         {
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
             GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
 
             if(IsDead) {
-                await GameManager.Instance.GameOverAsync().ConfigureAwait(false);
+                _deathTimer.Start();
             }
         }
 
-        private async Task DamageInteractableEnemeiesAsync(Interactables.Interactables interactables, int damage)
+        private void DamageInteractableEnemeies(Interactables.Interactables interactables, int damage)
         {
             var enemies = interactables.GetInteractables<Human>();
 
@@ -168,13 +173,13 @@ namespace pdxpartyparrot.ssjAug2022.Player
             }
 
             foreach(var human in humans) {
-                await human.DamageAsync(damage).ConfigureAwait(false);
+                human.Damage(damage);
             }
         }
 
-        private async Task DoClawAttackDamageAsync()
+        private void DoClawAttackDamage()
         {
-            await DamageInteractableEnemeiesAsync(_clawAttackInteractables, _clawAttackDamage).ConfigureAwait(false);
+            DamageInteractableEnemeies(_clawAttackInteractables, _clawAttackDamage);
         }
 
         public void ClawAttack()
@@ -190,9 +195,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _clawAttackAnimationTimer.Start();
         }
 
-        private async Task DoPowerUnleashedDamageAsync()
+        private void DoPowerUnleashedDamage()
         {
-            await DamageInteractableEnemeiesAsync(_powerUnleashedInteractables, _powerUnleashedDamage).ConfigureAwait(false);
+            DamageInteractableEnemeies(_powerUnleashedInteractables, _powerUnleashedDamage);
         }
 
         public void PowerUnleashed()
@@ -217,8 +222,6 @@ namespace pdxpartyparrot.ssjAug2022.Player
             //Model.TriggerOneShot("parameters/Dash_Trigger/active");
             _dashAudioPlayer.Play();
 
-            IsInputAllowed = false;
-
             MaxSpeed *= _dashModifier;
             Velocity = -Pivot.Transform.basis.z * MaxSpeed;
 
@@ -227,9 +230,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #region Signal Handlers
 
-        private async void _on_ClawAttack_Animation_Timer_timeout()
+        private void _on_ClawAttack_Animation_Timer_timeout()
         {
-            await DoClawAttackDamageAsync().ConfigureAwait(false);
+            DoClawAttackDamage();
 
             _clawAttackCooldown.Start();
         }
@@ -251,9 +254,15 @@ namespace pdxpartyparrot.ssjAug2022.Player
         private void _on_Dash_Timer_timeout()
         {
             MaxSpeed /= _dashModifier;
-            IsInputAllowed = true;
 
             _dashCooldown.Start();
+        }
+
+        private async void _on_Death_Timer_timeout()
+        {
+            GD.Print($"[{Name}] died!");
+
+            await GameManager.Instance.GameOverAsync().ConfigureAwait(false);
         }
 
         #endregion

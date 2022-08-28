@@ -2,7 +2,6 @@ using Godot;
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
@@ -55,6 +54,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         #endregion
 
+        private Timer _deathTimer;
+
         public Vector3 HomeTranslation { get; private set; }
 
         private HumanStateMachine _stateMachine;
@@ -79,6 +80,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             _attackInteractables = Pivot.GetNode<Interactables.Interactables>("Attack Hitbox");
             _attackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Attack");
 
+            _deathTimer = GetNode<Timer>("Timers/Death Timer");
+
             Steering = GetNode<HumanSteering>("Steering");
 
             _stateMachine = GetNode<HumanStateMachine>("StateMachine");
@@ -97,7 +100,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public override void _PhysicsProcess(float delta)
         {
-            if(IsInputAllowed) {
+            if(!IsDead) {
                 Steering.Update(delta);
             }
 
@@ -106,18 +109,19 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         #endregion
 
-        public async Task DamageAsync(int amount)
+        public void Damage(int amount)
         {
-            _currentHealth = Mathf.Max(_currentHealth - amount, 0);
-
             if(IsDead) {
-                NPCManager.Instance.DeSpawnNPC(this, true);
+                return;
+            }
 
-                await GameManager.Instance.EnemyDefeatedAsync().ConfigureAwait(false);
+            _currentHealth = Mathf.Max(_currentHealth - amount, 0);
+            if(IsDead) {
+                _deathTimer.Start();
             }
         }
 
-        private async Task DamageInteractablePlayersAsync(Interactables.Interactables interactables, int damage)
+        private void DamageInteractablePlayers(Interactables.Interactables interactables, int damage)
         {
             var players = interactables.GetInteractables<Vampire>();
 
@@ -128,18 +132,18 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             }
 
             foreach(var vampire in vampires) {
-                await vampire.DamageAsync(damage).ConfigureAwait(false);
+                vampire.Damage(damage);
             }
         }
 
-        private async Task DoAttackDamageAsync()
+        private void DoAttackDamage()
         {
-            await DamageInteractablePlayersAsync(_attackInteractables, _attackDamage).ConfigureAwait(false);
+            DamageInteractablePlayers(_attackInteractables, _attackDamage);
         }
 
         public void Attack(Vampire target)
         {
-            if(!_attackAnimationTimer.IsStopped() || !_attackCooldown.IsStopped()) {
+            if(IsDead || !_attackAnimationTimer.IsStopped() || !_attackCooldown.IsStopped()) {
                 return;
             }
 
@@ -152,9 +156,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         #region Signal Handlers
 
-        private async void _on_Attack_Animation_Timer_timeout()
+        private void _on_Attack_Animation_Timer_timeout()
         {
-            await DoAttackDamageAsync().ConfigureAwait(false);
+            DoAttackDamage();
 
             _attackCooldown.Start();
         }
@@ -170,6 +174,15 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             _stateMachine.ChangeState(new States.ChasePlayer {
                 Target = vampire,
             });
+        }
+
+        private async void _on_Death_Timer_timeout()
+        {
+            GD.Print($"[{Id}] died!");
+
+            NPCManager.Instance.DeSpawnNPC(this, true);
+
+            await GameManager.Instance.EnemyDefeatedAsync().ConfigureAwait(false);
         }
 
         #endregion

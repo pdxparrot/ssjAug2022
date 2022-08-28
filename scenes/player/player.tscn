@@ -91,6 +91,10 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
+[node name="Death Timer" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
+
 [node name="SFX" type="Node" parent="."]
 
 [node name="ClawAttack" type="AudioStreamPlayer" parent="SFX"]
@@ -109,6 +113,7 @@ volume_db = -8.0
 [connection signal="timeout" from="Timers/PowerUnleashed Delay Timer" to="." method="_on_PowerUnleashed_Delay_Timer_timeout"]
 [connection signal="timeout" from="Timers/PowerUnleashed Scale Timer" to="." method="_on_PowerUnleashed_Scale_Timer_timeout"]
 [connection signal="timeout" from="Timers/Dash Timer" to="." method="_on_Dash_Timer_timeout"]
+[connection signal="timeout" from="Timers/Death Timer" to="." method="_on_Death_Timer_timeout"]
 
 [editable path="Pivot/Model"]
 [editable path="Pivot/PowerUnleashed VFX"]

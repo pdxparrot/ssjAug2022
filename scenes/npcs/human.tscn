@@ -75,6 +75,9 @@ one_shot = true
 [node name="Attack Cooldown" type="Timer" parent="Timers"]
 one_shot = true
 
+[node name="Death Timer" type="Timer" parent="Timers"]
+one_shot = true
+
 [node name="SFX" type="Node" parent="."]
 
 [node name="Attack" type="AudioStreamPlayer" parent="SFX"]
@@ -86,5 +89,6 @@ volume_db = -12.0
 [connection signal="area_exited" from="Pivot/Attack Hitbox" to="Pivot/Attack Hitbox" method="_on_area_exited"]
 [connection signal="velocity_computed" from="NavigationAgent" to="." method="_on_NavigationAgent_velocity_computed"]
 [connection signal="timeout" from="Timers/Attack Animation Timer" to="." method="_on_Attack_Animation_Timer_timeout"]
+[connection signal="timeout" from="Timers/Death Timer" to="." method="_on_Death_Timer_timeout"]
 
 [editable path="Pivot/Model"]
