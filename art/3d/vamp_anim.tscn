@@ -40,25 +40,22 @@ animation = "death"
 animation = "power_unleash"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=13]
-advance_condition = "claw_attack"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=14]
-advance_condition = "power_unleash"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=15]
-advance_condition = "dash"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=16]
-advance_condition = "is_dead"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=17]
-advance_condition = "is_moving"
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=18]
-advance_condition = "is_moving"
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=19]
-advance_condition = "is_moving"
 
 [sub_resource type="AnimationNodeStateMachine" id=7]
 states/Movement/node = SubResource( 2 )
@@ -87,9 +84,4 @@ tree_root = SubResource( 7 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 8 )
-parameters/conditions/claw_attack = false
-parameters/conditions/dash = false
-parameters/conditions/is_dead = false
-parameters/conditions/is_moving = true
-parameters/conditions/power_unleash = false
 parameters/Movement/BlendSpace1D/blend_position = 0.8

@@ -34,6 +34,10 @@ shape = SubResource( 1 )
 [node name="Model" parent="Pivot" instance=ExtResource( 2 )]
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
 script = ExtResource( 3 )
+_motionBlendPath = "parameters/Motion/blend_position"
+
+[node name="AnimationTree" parent="Pivot/Model" index="2"]
+"parameters/Output Blend/blend_amount" = 1.0
 
 [node name="Hurtbox" type="Area" parent="Pivot"]
 transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )
