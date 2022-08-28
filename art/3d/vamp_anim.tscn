@@ -72,7 +72,7 @@ states/death/position = Vector2( 280, 351 )
 states/power_unleash/node = SubResource( 6 )
 states/power_unleash/position = Vector2( 426, 152 )
 transitions = [ "Movement", "claw_attack", SubResource( 13 ), "Movement", "power_unleash", SubResource( 14 ), "Movement", "dash", SubResource( 15 ), "Movement", "death", SubResource( 16 ), "claw_attack", "Movement", SubResource( 17 ), "power_unleash", "Movement", SubResource( 18 ), "dash", "Movement", SubResource( 19 ) ]
-graph_offset = Vector2( -126, 103 )
+start_node = "Movement"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=8]
 
