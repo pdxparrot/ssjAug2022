@@ -158,7 +158,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
 
             if(IsDead) {
-                Model.Travel("death");
+                Model.ChangeState("death");
 
                 _deathTimer.Start();
             }
@@ -191,7 +191,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             }
 
             GD.Print($"[{Name}] Claw attack!");
-            Model.Travel("claw_attack");
+            Model.ChangeState("claw_attack");
             _clawAttackAudioPlayer.Play();
 
             _clawAttackAnimationTimer.Start();
@@ -209,7 +209,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             }
 
             GD.Print($"[{Name}] Power unleashed!");
-            Model.Travel("power_unleash");
+            Model.ChangeState("power_unleash");
 
             _powerUnleashedDelayTimer.Start();
         }
@@ -221,7 +221,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             }
 
             GD.Print($"[{Name}] Dash!");
-            Model.Travel("dash");
+            Model.ChangeState("dash");
             _dashAudioPlayer.Play();
 
             MaxSpeed *= _dashModifier;
@@ -257,7 +257,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
         {
             MaxSpeed /= _dashModifier;
 
-            Model.Travel("Movement");
+            Model.ChangeState("Movement");
 
             _dashCooldown.Start();
         }

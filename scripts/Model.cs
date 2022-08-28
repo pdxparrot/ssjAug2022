@@ -35,7 +35,7 @@ namespace pdxpartyparrot.ssjAug2022
             _animationTree.Set(property, true);
         }
 
-        public void Travel(string toNode)
+        public void ChangeState(string toNode)
         {
             if(_animationStateMachine != null) {
                 _animationStateMachine.Travel(toNode);
