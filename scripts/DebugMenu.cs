@@ -25,11 +25,12 @@ namespace pdxpartyparrot.ssjAug2022
             base._Ready();
 
             _canvas = GetNode<CanvasLayer>("CanvasLayer");
-            _fps = GetNode<Label>("CanvasLayer/VBoxContainer/FPS/FPS");
-            _staticMemory = GetNode<Label>("CanvasLayer/VBoxContainer/Static Memory/Static Memory");
-            _staticMemoryMax = GetNode<Label>("CanvasLayer/VBoxContainer/Static Memory/Static Memory Max");
-            _dynamicMemory = GetNode<Label>("CanvasLayer/VBoxContainer/Dynamic Memory/Dynamic Memory");
-            _dynamicMemoryMax = GetNode<Label>("CanvasLayer/VBoxContainer/Dynamic Memory/Dynamic Memory Max");
+
+            _fps = _canvas.GetNode<Label>("VBoxContainer/FPS/FPS");
+            _staticMemory = _canvas.GetNode<Label>("VBoxContainer/Static Memory/Static Memory");
+            _staticMemoryMax = _canvas.GetNode<Label>("VBoxContainer/Static Memory/Static Memory Max");
+            _dynamicMemory = _canvas.GetNode<Label>("VBoxContainer/Dynamic Memory/Dynamic Memory");
+            _dynamicMemoryMax = _canvas.GetNode<Label>("VBoxContainer/Dynamic Memory/Dynamic Memory Max");
 
             _canvas.Hide();
         }
