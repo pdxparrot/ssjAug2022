@@ -36,7 +36,7 @@ shape = SubResource( 1 )
 [node name="Pivot" type="Spatial" parent="."]
 
 [node name="Model" parent="Pivot" instance=ExtResource( 2 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+transform = Transform( 1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0 )
 script = ExtResource( 3 )
 _motionBlendPath = "parameters/Movement/blend_position"
 
