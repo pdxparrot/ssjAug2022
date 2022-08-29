@@ -36,9 +36,6 @@ transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
 script = ExtResource( 3 )
 _motionBlendPath = "parameters/Motion/blend_position"
 
-[node name="AnimationTree" parent="Pivot/Model" index="2"]
-"parameters/Output Blend/blend_amount" = 1.0
-
 [node name="Hurtbox" type="Area" parent="Pivot"]
 transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )
 monitoring = false
@@ -73,6 +70,10 @@ script = ExtResource( 5 )
 [node name="Timers" type="Node" parent="."]
 
 [node name="Attack Animation Timer" type="Timer" parent="Timers"]
+wait_time = 1.5
+one_shot = true
+
+[node name="Attack Damage Timer" type="Timer" parent="Timers"]
 wait_time = 0.63
 one_shot = true
 
@@ -80,6 +81,7 @@ one_shot = true
 one_shot = true
 
 [node name="Death Timer" type="Timer" parent="Timers"]
+wait_time = 2.0
 one_shot = true
 
 [node name="SFX" type="Node" parent="."]
@@ -93,6 +95,7 @@ volume_db = -12.0
 [connection signal="area_exited" from="Pivot/Attack Hitbox" to="Pivot/Attack Hitbox" method="_on_area_exited"]
 [connection signal="velocity_computed" from="NavigationAgent" to="." method="_on_NavigationAgent_velocity_computed"]
 [connection signal="timeout" from="Timers/Attack Animation Timer" to="." method="_on_Attack_Animation_Timer_timeout"]
+[connection signal="timeout" from="Timers/Attack Damage Timer" to="." method="_on_Attack_Damage_Timer_timeout"]
 [connection signal="timeout" from="Timers/Death Timer" to="." method="_on_Death_Timer_timeout"]
 
 [editable path="Pivot/Model"]

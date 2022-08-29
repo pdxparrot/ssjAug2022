@@ -48,6 +48,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         // TODO: this would be better if it was driven by the animation
         private Timer _attackAnimationTimer;
 
+        // TODO: this would be better if it was driven by the animation
+        private Timer _attackDamageTimer;
+
         private Timer _attackCooldown;
 
         private AudioStreamPlayer _attackAudioPlayer;
@@ -66,6 +69,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public Type InteractableType => GetType();
 
+        private bool IsGlobalCooldown => !_attackAnimationTimer.IsStopped();
+
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -76,6 +81,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             HomeTranslation = Translation;
 
             _attackAnimationTimer = GetNode<Timer>("Timers/Attack Animation Timer");
+            _attackDamageTimer = GetNode<Timer>("Timers/Attack Damage Timer");
             _attackCooldown = GetNode<Timer>("Timers/Attack Cooldown");
             _attackInteractables = Pivot.GetNode<Interactables.Interactables>("Attack Hitbox");
             _attackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Attack");
@@ -143,7 +149,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public void Attack(Vampire target)
         {
-            if(IsDead || !_attackAnimationTimer.IsStopped() || !_attackCooldown.IsStopped()) {
+            if(IsDead || IsGlobalCooldown || !_attackCooldown.IsStopped()) {
                 return;
             }
 
@@ -152,15 +158,19 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             _attackAudioPlayer.Play();
 
             _attackAnimationTimer.Start();
+            _attackDamageTimer.Start();
         }
 
         #region Signal Handlers
 
         private void _on_Attack_Animation_Timer_timeout()
         {
-            DoAttackDamage();
-
             _attackCooldown.Start();
+        }
+
+        private void _on_Attack_Damage_Timer_timeout()
+        {
+            DoAttackDamage();
         }
 
         private void _on_DetectionBox_area_entered(Area other)
