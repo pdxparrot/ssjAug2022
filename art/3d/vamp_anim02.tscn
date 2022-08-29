@@ -3465,10 +3465,13 @@ animation = "death"
 animation = "power_unleash"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=21]
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=22]
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=23]
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=24]
 
@@ -3495,7 +3498,7 @@ states/power_unleash/node = SubResource( 20 )
 states/power_unleash/position = Vector2( 647, 43 )
 transitions = [ "Movement", "claw_attack", SubResource( 21 ), "Movement", "power_unleash", SubResource( 22 ), "Movement", "dash", SubResource( 23 ), "dash", "Movement", SubResource( 24 ), "power_unleash", "Movement", SubResource( 25 ), "claw_attack", "Movement", SubResource( 26 ), "Movement", "death", SubResource( 27 ) ]
 start_node = "Movement"
-graph_offset = Vector2( 71, -36 )
+graph_offset = Vector2( 64, -9 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
@@ -3505,6 +3508,7 @@ graph_offset = Vector2( 71, -36 )
 transform = Transform( 0.01, 0, 0, 0, -1.19209e-09, -0.01, 0, 0.01, -1.19209e-09, 0, 0, 0 )
 
 [node name="Skeleton" type="Skeleton" parent="Armature"]
+transform = Transform( 1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0 )
 bones/0/name = "mixamorig_Hips"
 bones/0/parent = -1
 bones/0/rest = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 4.76057, -211.324 )
@@ -3850,4 +3854,4 @@ tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 12 )
-parameters/Movement/blend_position = 1.0
+parameters/Movement/blend_position = 0.2
