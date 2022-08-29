@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/Player/Vampire.cs" type="Script" id=1]
 [ext_resource path="res://art/3d/vamp_anim02.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
 height = 2.0
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
 
 [sub_resource type="BoxShape" id=3]
 
@@ -35,6 +37,10 @@ shape = SubResource( 1 )
 [node name="Model" parent="Pivot" instance=ExtResource( 2 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 script = ExtResource( 3 )
+_motionBlendPath = "parameters/Movement/blend_position"
+
+[node name="AnimationTree" parent="Pivot/Model" index="2"]
+parameters/playback = SubResource( 5 )
 
 [node name="Hurtbox" type="Area" parent="Pivot"]
 transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )
@@ -115,4 +121,5 @@ volume_db = -8.0
 [connection signal="timeout" from="Timers/Dash Timer" to="." method="_on_Dash_Timer_timeout"]
 [connection signal="timeout" from="Timers/Death Timer" to="." method="_on_Death_Timer_timeout"]
 
+[editable path="Pivot/Model"]
 [editable path="Pivot/PowerUnleashed VFX"]
