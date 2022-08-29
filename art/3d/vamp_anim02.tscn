@@ -3467,9 +3467,11 @@ animation = "power_unleash"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=21]
 xfade_time = 0.2
+priority = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=22]
 xfade_time = 0.2
+priority = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=23]
 xfade_time = 0.2
@@ -3499,7 +3501,7 @@ states/power_unleash/node = SubResource( 20 )
 states/power_unleash/position = Vector2( 647, 43 )
 transitions = [ "Movement", "claw_attack", SubResource( 21 ), "Movement", "power_unleash", SubResource( 22 ), "Movement", "dash", SubResource( 23 ), "dash", "Movement", SubResource( 24 ), "power_unleash", "Movement", SubResource( 25 ), "claw_attack", "Movement", SubResource( 26 ), "Movement", "death", SubResource( 27 ) ]
 start_node = "Movement"
-graph_offset = Vector2( 64, -9 )
+graph_offset = Vector2( 138, -8 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
