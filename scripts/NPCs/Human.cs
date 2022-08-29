@@ -170,6 +170,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             _attackDamageTimer.Start();
         }
 
+        protected override void UpdateVelocity(Vector3 velocity)
+        {
+            if(!IsDead) {
+                base.UpdateVelocity(velocity);
+            }
+        }
+
         #region Signal Handlers
 
         private void _on_Attack_Animation_Timer_timeout()

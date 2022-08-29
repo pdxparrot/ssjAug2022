@@ -63,6 +63,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             _agent.SetVelocity(velocity);
         }
 
+        protected virtual void UpdateVelocity(Vector3 velocity)
+        {
+            Velocity = velocity;
+        }
+
         #endregion
 
         #region Spawn
@@ -95,7 +100,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         protected void _on_NavigationAgent_velocity_computed(Vector3 safeVelocity)
         {
             //GD.Print($"[{Id}] velocity updated: {safeVelocity}");
-            Velocity = new Vector3(safeVelocity.x, Velocity.y, safeVelocity.z);
+            UpdateVelocity(new Vector3(safeVelocity.x, Velocity.y, safeVelocity.z));
         }
 
         #endregion
