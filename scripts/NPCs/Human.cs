@@ -55,6 +55,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         private AudioStreamPlayer _attackAudioPlayer;
 
+        private AudioStreamPlayer _deathAudioPlayer;
+
         #endregion
 
         private Timer _deathTimer;
@@ -87,6 +89,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             _attackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Attack");
 
             _deathTimer = GetNode<Timer>("Timers/Death Timer");
+            _deathAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Death");
 
             Steering = GetNode<HumanSteering>("Steering");
 
@@ -120,6 +123,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             _stateMachine.ChangeState(new States.Dead());
 
             Stop();
+
+            _deathAudioPlayer.Play();
 
             _deathTimer.Start();
         }
