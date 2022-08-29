@@ -82,6 +82,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private bool IsInputAllowed => !IsDead && !GameManager.Instance.IsGameOver && _dashTimer.IsStopped();
 
+        private bool IsGlobalCooldown => !_clawAttackAnimationTimer.IsStopped() || !_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped() || !_dashTimer.IsStopped();
+
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -186,7 +188,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void ClawAttack()
         {
-            if(!_clawAttackAnimationTimer.IsStopped() || !_clawAttackCooldown.IsStopped()) {
+            if(IsGlobalCooldown || !_clawAttackCooldown.IsStopped()) {
                 return;
             }
 
@@ -204,7 +206,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void PowerUnleashed()
         {
-            if(!_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped() || !_powerUnleashedCooldown.IsStopped()) {
+            if(IsGlobalCooldown || !_powerUnleashedCooldown.IsStopped()) {
                 return;
             }
 
@@ -216,7 +218,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void Dash()
         {
-            if(!_dashTimer.IsStopped() || !_dashCooldown.IsStopped()) {
+            if(IsGlobalCooldown || !_dashCooldown.IsStopped()) {
                 return;
             }
 
