@@ -6,8 +6,8 @@
 [ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=4]
 [ext_resource path="res://audio/player/SFX_PC_Dash_1.wav" type="AudioStream" id=5]
 [ext_resource path="res://audio/player/SFX_PC_ClawAttack_1.wav" type="AudioStream" id=6]
-[ext_resource path="res://art/3d/3d_fx/power_unleased.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scripts/VFX.cs" type="Script" id=8]
+[ext_resource path="res://art/3d/3d_fx/power_unleased02.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
@@ -27,6 +27,7 @@ _mass = 50.0
 _maxHealth = 100
 _clawAttackDamage = 3
 _powerUnleashedDamage = 10
+_powerUnleashedScale = 6.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0 )
@@ -58,14 +59,15 @@ script = ExtResource( 4 )
 shape = SubResource( 2 )
 
 [node name="PowerUnleashed Hitbox" type="Area" parent="Pivot"]
-transform = Transform( 5, 0, 0, 0, 2, 0, 0, 0, 5, 0, 2, 0 )
+transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 2, 0 )
 monitorable = false
 script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/PowerUnleashed Hitbox"]
 shape = SubResource( 4 )
 
-[node name="PowerUnleashed VFX" parent="Pivot" instance=ExtResource( 7 )]
+[node name="PowerUnleashed VFX" parent="Pivot" instance=ExtResource( 9 )]
+transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
 script = ExtResource( 8 )
 
 [node name="Timers" type="Node" parent="."]
@@ -82,7 +84,7 @@ wait_time = 0.15
 one_shot = true
 
 [node name="PowerUnleashed Scale Timer" type="Timer" parent="Timers"]
-wait_time = 2.0
+wait_time = 0.5
 one_shot = true
 
 [node name="PowerUnleashed Cooldown" type="Timer" parent="Timers"]
@@ -122,4 +124,3 @@ volume_db = -8.0
 [connection signal="timeout" from="Timers/Death Timer" to="." method="_on_Death_Timer_timeout"]
 
 [editable path="Pivot/Model"]
-[editable path="Pivot/PowerUnleashed VFX"]
