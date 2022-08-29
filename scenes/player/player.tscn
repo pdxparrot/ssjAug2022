@@ -70,6 +70,15 @@ shape = SubResource( 4 )
 transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
 script = ExtResource( 8 )
 
+[node name="Spatial" type="Spatial" parent="Pivot"]
+
+[node name="OmniLight" type="OmniLight" parent="Pivot/Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0871811, 4.49464, -2.7578 )
+light_color = Color( 1, 0, 0, 1 )
+light_energy = 4.0
+omni_range = 10.0
+omni_attenuation = 0.732043
+
 [node name="Timers" type="Node" parent="."]
 
 [node name="ClawAttack Animation Timer" type="Timer" parent="Timers"]
