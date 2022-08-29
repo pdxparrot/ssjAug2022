@@ -30,7 +30,16 @@ namespace pdxpartyparrot.ssjAug2022
         public Vector3 Velocity
         {
             get => _velocity;
-            protected set => _velocity = value.LimitLength(MaxSpeed);
+
+            protected set
+            {
+                float y = value.y;
+                value.y = 0.0f;
+                value = value.LimitLength(_maxSpeed);
+                value.y = y;
+
+                _velocity = value;
+            }
         }
 
         public float Speed => _velocity.Length();
@@ -97,6 +106,11 @@ namespace pdxpartyparrot.ssjAug2022
         }
 
         #endregion
+
+        public virtual void Stop()
+        {
+            Velocity = new Vector3(0.0f, Velocity.y, 0.0f);
+        }
 
         public void ApplyForce(Vector3 force)
         {

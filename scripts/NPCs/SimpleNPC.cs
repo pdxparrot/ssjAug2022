@@ -24,6 +24,15 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         #endregion
 
+        public override void Stop()
+        {
+            base.Stop();
+
+            SetVelocity(Velocity);
+        }
+
+        #region Navigation
+
         public void SetTarget(Vector3 target)
         {
             _agent.SetTargetLocation(target);
@@ -53,6 +62,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         {
             _agent.SetVelocity(velocity);
         }
+
+        #endregion
 
         #region Spawn
 
@@ -84,7 +95,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         protected void _on_NavigationAgent_velocity_computed(Vector3 safeVelocity)
         {
             //GD.Print($"[{Id}] velocity updated: {safeVelocity}");
-            Velocity = new Vector3(safeVelocity.x, 0.0f, safeVelocity.z);
+            Velocity = new Vector3(safeVelocity.x, Velocity.y, safeVelocity.z);
         }
 
         #endregion

@@ -146,7 +146,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
         {
             if(IsInputAllowed) {
                 var input = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
-                Velocity = new Vector3(input.x, 0.0f, input.y) * MaxSpeed;
+                Velocity = new Vector3(input.x, Velocity.y, input.y) * MaxSpeed;
             }
 
             base._PhysicsProcess(delta);
@@ -154,15 +154,22 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #endregion
 
+        private void Kill()
+        {
+            Stop();
+
+            Model.ChangeState("death");
+
+            _deathTimer.Start();
+        }
+
         public void Damage(int amount)
         {
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
             GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
 
             if(IsDead) {
-                Model.ChangeState("death");
-
-                _deathTimer.Start();
+                Kill();
             }
         }
 
@@ -188,7 +195,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void ClawAttack()
         {
-            if(IsGlobalCooldown || !_clawAttackCooldown.IsStopped()) {
+            if(IsDead || IsGlobalCooldown || !_clawAttackCooldown.IsStopped()) {
                 return;
             }
 
@@ -206,7 +213,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void PowerUnleashed()
         {
-            if(IsGlobalCooldown || !_powerUnleashedCooldown.IsStopped()) {
+            if(IsDead || IsGlobalCooldown || !_powerUnleashedCooldown.IsStopped()) {
                 return;
             }
 
@@ -218,7 +225,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void Dash()
         {
-            if(IsGlobalCooldown || !_dashCooldown.IsStopped()) {
+            if(IsDead || IsGlobalCooldown || !_dashCooldown.IsStopped()) {
                 return;
             }
 

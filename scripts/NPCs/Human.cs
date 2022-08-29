@@ -115,6 +115,15 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         #endregion
 
+        private void Kill()
+        {
+            _stateMachine.ChangeState(new States.Dead());
+
+            Stop();
+
+            _deathTimer.Start();
+        }
+
         public void Damage(int amount)
         {
             if(IsDead) {
@@ -123,7 +132,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
             if(IsDead) {
-                _deathTimer.Start();
+                Kill();
             }
         }
 

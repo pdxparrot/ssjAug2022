@@ -194,7 +194,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         private void Seek()
         {
             if(!_owner.IsTargetReachable() || _owner.IsTargetReached() /*|| !_owner.IsNavigationFinished()*/) {
-                _owner.SetVelocity(Vector3.Zero);
+                _owner.Stop();
                 return;
             }
 
@@ -210,7 +210,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         private void Arrive()
         {
             if(!_owner.IsTargetReachable() || _owner.IsTargetReached() /*|| !_owner.IsNavigationFinished()*/) {
-                _owner.SetVelocity(Vector3.Zero);
+                _owner.Stop();
                 return;
             }
 
@@ -260,7 +260,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         private void Wander(float delta)
         {
             /*if(!_owner.IsNavigationFinished()) {
-                _owner.SetVelocity(Vector3.Zero);
+                _owner.Stop();
                 return;
             }*/
 
