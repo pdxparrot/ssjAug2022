@@ -275,7 +275,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
         {
             GD.Print($"[{Name}] died!");
 
-            GameManager.Instance.GameOver();
+            GameManager.Instance.GameOver(false);
         }
 
         #endregion

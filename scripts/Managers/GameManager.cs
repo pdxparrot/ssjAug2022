@@ -8,6 +8,16 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 {
     public class GameManager : SingletonNode<GameManager>
     {
+        [Export]
+        private PackedScene _gameOverLossScene;
+
+        private Control _gameOverLossUI;
+
+        [Export]
+        private PackedScene _gameOverWinScene;
+
+        private Control _gameOverWinUI;
+
         private bool _isGameOver;
 
         public bool IsGameOver => _isGameOver;
@@ -19,6 +29,9 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         public override void _Ready()
         {
             base._Ready();
+
+            _gameOverLossUI = (Control)_gameOverLossScene.Instance();
+            _gameOverWinUI = (Control)_gameOverWinScene.Instance();
 
             _gameOverTimer = GetNode<Timer>("Timers/Game Over");
 
@@ -36,11 +49,28 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             await SceneManager.Instance.LoadInitialLevelAsync().ConfigureAwait(false);
         }
 
-        public void GameOver()
+        private void ShowGameOverUI(bool win)
+        {
+            if(win) {
+                AddChild(_gameOverWinUI);
+            } else {
+                AddChild(_gameOverLossUI);
+            }
+        }
+
+        private void HideGameOverUI()
+        {
+            RemoveChild(_gameOverLossUI);
+            RemoveChild(_gameOverWinUI);
+        }
+
+        public void GameOver(bool win)
         {
             GD.Print("[GameManager] Game over!");
 
             _isGameOver = true;
+
+            ShowGameOverUI(win);
 
             _gameOverTimer.Start();
         }
@@ -50,7 +80,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             if(NPCManager.Instance.NPCCount == 0) {
                 GD.Print("[GameManager] All enemies defeated!");
 
-                GameOver();
+                GameOver(true);
             }
         }
 
@@ -59,6 +89,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         private async void _on_Game_Over_timeout()
         {
             _isGameOver = false;
+
+            HideGameOverUI();
 
             PlayerManager.Instance.DestroyPlayers();
             NPCManager.Instance.DespawnAllNPCs(true);

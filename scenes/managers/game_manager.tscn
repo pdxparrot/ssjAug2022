@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/Managers/GameManager.cs" type="Script" id=1]
+[ext_resource path="res://scenes/ui/game_over_lost.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/game_over_win.tscn" type="PackedScene" id=3]
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
+_gameOverLossScene = ExtResource( 2 )
+_gameOverWinScene = ExtResource( 3 )
 
 [node name="Timers" type="Node" parent="."]
 
