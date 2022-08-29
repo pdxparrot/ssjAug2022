@@ -71,7 +71,7 @@ script = ExtResource( 8 )
 [node name="Timers" type="Node" parent="."]
 
 [node name="ClawAttack Animation Timer" type="Timer" parent="Timers"]
-wait_time = 0.63
+wait_time = 0.53
 one_shot = true
 
 [node name="ClawAttack Cooldown" type="Timer" parent="Timers"]
@@ -82,7 +82,7 @@ wait_time = 0.15
 one_shot = true
 
 [node name="PowerUnleashed Scale Timer" type="Timer" parent="Timers"]
-wait_time = 0.3
+wait_time = 2.0
 one_shot = true
 
 [node name="PowerUnleashed Cooldown" type="Timer" parent="Timers"]
@@ -98,7 +98,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="Death Timer" type="Timer" parent="Timers"]
-wait_time = 0.5
+wait_time = 4.0
 one_shot = true
 
 [node name="SFX" type="Node" parent="."]
