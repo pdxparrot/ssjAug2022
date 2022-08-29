@@ -51,12 +51,12 @@ light_color = Color( 1, 0.635294, 0.576471, 1 )
 shadow_enabled = true
 
 [node name="World" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="World"]
 navmesh = SubResource( 3 )
 
 [node name="Ground" parent="World/NavigationMeshInstance" instance=ExtResource( 1 )]
+transform = Transform( 60, 0, 0, 0, 1, 0, 0, 0, 60, -30, 0, 30 )
 
 [node name="Test Cube Large" parent="World/NavigationMeshInstance" instance=ExtResource( 6 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -24, 2, -24 )
@@ -81,15 +81,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 20 )
 
 [node name="floating_crystal4" parent="World/NavigationMeshInstance" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1.5, 0 )
-
-[node name="Ground2" parent="World/NavigationMeshInstance" instance=ExtResource( 1 )]
-transform = Transform( 30, 0, 0, 0, 1, 0, 0, 0, 30, -60, 0, 0 )
-
-[node name="Ground3" parent="World/NavigationMeshInstance" instance=ExtResource( 1 )]
-transform = Transform( 30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 60 )
-
-[node name="Ground4" parent="World/NavigationMeshInstance" instance=ExtResource( 1 )]
-transform = Transform( 30, 0, 0, 0, 1, 0, 0, 0, 30, -60, 0, 60 )
 
 [node name="Border" type="Spatial" parent="World/NavigationMeshInstance"]
 
