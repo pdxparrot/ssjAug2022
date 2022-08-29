@@ -12,6 +12,11 @@ namespace pdxpartyparrot.ssjAug2022.Managers
     public class SceneManager : SingletonNode<SceneManager>
     {
         [Export]
+        private PackedScene _loadingScreenScene;
+
+        public LoadingScreen LoadingScreen { get; private set; }
+
+        [Export]
         private PackedScene _mainMenuScene;
 
         [Export]
@@ -25,12 +30,36 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         {
             base._Ready();
 
-            LoadingScreen.Instance.Hide();
+            CreateLoadingScreen();
 
             CallDeferred("LoadMainMenu");
         }
 
         #endregion
+
+        private void CreateLoadingScreen()
+        {
+            if(IsInstanceValid(LoadingScreen)) {
+                GD.PushWarning("[SceneManager] Re-creating Loading Screen ...");
+
+                LoadingScreen.QueueFree();
+            }
+
+            LoadingScreen = (LoadingScreen)_loadingScreenScene.Instance();
+            LoadingScreen.Name = "Loading Screen";
+        }
+
+        public void ShowLoadingScreen()
+        {
+            GD.Print("[SceneManager] Showing loading screen...");
+            AddChild(LoadingScreen);
+        }
+
+        public void HideLoadingScreen()
+        {
+            GD.Print("[SceneManager] Hiding loading screen...");
+            RemoveChild(LoadingScreen);
+        }
 
         private void SetCurrentScene(PackedScene scene)
         {
@@ -76,13 +105,15 @@ namespace pdxpartyparrot.ssjAug2022.Managers
                 _currentScene.QueueFree();
             }
 
-            LoadingScreen.Instance.Show();
+            ShowLoadingScreen();
 
             await ResourceManager.Instance.LoadResourceAsync(level.ResourcePath,
                 (owner, args) => {
                     SetCurrentScene((PackedScene)args.Resource);
 
                     onSuccess?.Invoke();
+
+                    HideLoadingScreen();
                 },
                 (owner, args) => ShowError(args.Error),
                 (owner, args) => UpdateProgress(args.Progress)

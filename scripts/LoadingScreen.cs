@@ -1,16 +1,8 @@
-using pdxpartyparrot.ssjAug2022.Util;
+using Godot;
 
 namespace pdxpartyparrot.ssjAug2022
 {
-    public class LoadingScreen : SingletonSpatial<LoadingScreen>
+    public class LoadingScreen : Spatial
     {
-        #region Godot Lifecycle
-
-        public override void _Ready()
-        {
-            base._Ready();
-        }
-
-        #endregion
     }
 }
