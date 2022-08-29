@@ -12,11 +12,15 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public bool IsGameOver => _isGameOver;
 
+        private Timer _gameOverTimer;
+
         #region Godot Lifecycle
 
         public override void _Ready()
         {
             base._Ready();
+
+            _gameOverTimer = GetNode<Timer>("Timers/Game Over");
 
             _isGameOver = false;
         }
@@ -32,9 +36,29 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             await SceneManager.Instance.LoadInitialLevelAsync().ConfigureAwait(false);
         }
 
-        public async Task GameOverAsync()
+        public void GameOver()
         {
             GD.Print("[GameManager] Game over!");
+
+            _isGameOver = true;
+
+            _gameOverTimer.Start();
+        }
+
+        public void EnemyDefeated()
+        {
+            if(NPCManager.Instance.NPCCount == 0) {
+                GD.Print("[GameManager] All enemies defeated!");
+
+                GameOver();
+            }
+        }
+
+        #region Signal Handlers
+
+        private async void _on_Game_Over_timeout()
+        {
+            _isGameOver = false;
 
             PlayerManager.Instance.DestroyPlayers();
             NPCManager.Instance.DespawnAllNPCs(true);
@@ -42,13 +66,6 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             await SceneManager.Instance.LoadMainMenuAsync().ConfigureAwait(false);
         }
 
-        public async Task EnemyDefeatedAsync()
-        {
-            if(NPCManager.Instance.NPCCount == 0) {
-                GD.Print("[GameManager] All enemies defeated!");
-
-                await GameOverAsync().ConfigureAwait(false);
-            }
-        }
+        #endregion
     }
 }

@@ -26,7 +26,14 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
 
         public void Execute(Human owner, StateMachine<Human> stateMachine)
         {
-            if(owner.GlobalTranslation.DistanceSquaredTo(Target.GlobalTranslation) > owner.AttackRangeSquared) {
+            if(Target.IsDead) {
+                //GD.Print($"[{owner.Id} my target died");
+                stateMachine.ChangeState(new ReturnHome());
+                return;
+            }
+
+            float targetDistance = owner.GlobalTranslation.DistanceSquaredTo(Target.GlobalTranslation);
+            if(targetDistance > owner.AttackRangeSquared) {
                 //GD.Print($"[{owner.Id} too far from target to attack");
                 stateMachine.ChangeState(new ChasePlayer {
                     Target = Target,

@@ -271,11 +271,11 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _dashCooldown.Start();
         }
 
-        private async void _on_Death_Timer_timeout()
+        private void _on_Death_Timer_timeout()
         {
             GD.Print($"[{Name}] died!");
 
-            await GameManager.Instance.GameOverAsync().ConfigureAwait(false);
+            GameManager.Instance.GameOver();
         }
 
         #endregion

@@ -26,6 +26,12 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
 
         public void Execute(Human owner, StateMachine<Human> stateMachine)
         {
+            if(Target.IsDead) {
+                //GD.Print($"[{owner.Id} my target died");
+                stateMachine.ChangeState(new ReturnHome());
+                return;
+            }
+
             float targetDistance = owner.GlobalTranslation.DistanceSquaredTo(Target.GlobalTranslation);
 
             if(targetDistance > owner.TrackingRangeSquared) {

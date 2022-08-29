@@ -202,13 +202,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             });
         }
 
-        private async void _on_Death_Timer_timeout()
+        private void _on_Death_Timer_timeout()
         {
             GD.Print($"[{Id}] died!");
 
             NPCManager.Instance.DeSpawnNPC(this, true);
 
-            await GameManager.Instance.EnemyDefeatedAsync().ConfigureAwait(false);
+            GameManager.Instance.EnemyDefeated();
         }
 
         #endregion
