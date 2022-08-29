@@ -21,7 +21,7 @@ blend_point_2/node = SubResource( 11 )
 blend_point_2/pos = 0.8
 
 [sub_resource type="AnimationNodeBlendTree" id=2]
-graph_offset = Vector2( 413.938, 384.655 )
+graph_offset = Vector2( 279.56, 298.88 )
 nodes/BlendSpace1D/node = SubResource( 12 )
 nodes/BlendSpace1D/position = Vector2( 380, 340 )
 nodes/output/position = Vector2( 660, 300 )
@@ -70,6 +70,7 @@ states/power_unleash/node = SubResource( 6 )
 states/power_unleash/position = Vector2( 426, 152 )
 transitions = [ "Movement", "claw_attack", SubResource( 13 ), "Movement", "power_unleash", SubResource( 14 ), "Movement", "dash", SubResource( 15 ), "Movement", "death", SubResource( 16 ), "claw_attack", "Movement", SubResource( 17 ), "power_unleash", "Movement", SubResource( 18 ), "dash", "Movement", SubResource( 19 ) ]
 start_node = "Movement"
+graph_offset = Vector2( -102, 98 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=8]
 

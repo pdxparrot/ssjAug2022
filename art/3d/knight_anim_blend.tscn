@@ -2267,7 +2267,7 @@ nodes/Idle/node = SubResource( 17 )
 nodes/Idle/position = Vector2( -320, -240 )
 nodes/Motion/node = SubResource( 15 )
 nodes/Motion/position = Vector2( -240, 80 )
-node_connections = [ "output", 0, "Blend2", "Blend2", 0, "Claw_AttackTrigger", "Blend2", 1, "Motion", "Claw_AttackTrigger", 0, "Idle", "Claw_AttackTrigger", 1, "Claw_Attack" ]
+node_connections = [ "output", 0, "Blend2", "Claw_AttackTrigger", 0, "Idle", "Claw_AttackTrigger", 1, "Claw_Attack", "Blend2", 0, "Claw_AttackTrigger", "Blend2", 1, "Motion" ]
 
 [node name="Model" type="Spatial"]
 
