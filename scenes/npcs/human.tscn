@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/NPCs/Human.cs" type="Script" id=1]
 [ext_resource path="res://art/3d/knight_anim_blend.tscn" type="PackedScene" id=2]
@@ -6,7 +6,8 @@
 [ext_resource path="res://scripts/NPCs/HumanStateMachine.cs" type="Script" id=4]
 [ext_resource path="res://scripts/NPCs/HumanSteering.cs" type="Script" id=5]
 [ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=6]
-[ext_resource path="res://audio/player/SFX_PC_ClawAttack_1.wav" type="AudioStream" id=7]
+[ext_resource path="res://audio/npc/SFX_SwordSwing_2.wav" type="AudioStream" id=7]
+[ext_resource path="res://audio/npc/SFX_Impact_Gore_4.wav" type="AudioStream" id=8]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
@@ -88,6 +89,10 @@ one_shot = true
 
 [node name="Attack" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 7 )
+volume_db = -12.0
+
+[node name="Death" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 8 )
 volume_db = -12.0
 
 [connection signal="area_entered" from="Pivot/DetectionBox" to="." method="_on_DetectionBox_area_entered"]
