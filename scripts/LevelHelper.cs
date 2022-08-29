@@ -56,7 +56,7 @@ namespace pdxpartyparrot.ssjAug2022
         {
             var id = Guid.NewGuid();
 
-            GD.Print($"[Level] Spawning enemy {id}...");
+            //GD.Print($"[Level] Spawning enemy {id}...");
 
             var spawnPoint = SpawnManager.Instance.GetSpawnPoint(_enemySpawnTag);
             if(null == spawnPoint) {

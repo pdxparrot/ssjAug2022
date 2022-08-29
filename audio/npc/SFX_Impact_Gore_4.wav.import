@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/SFX_SwordSwing_2.wav-76d15d76e19d9292a5180d55182475ee.sample"
+path="res://.import/SFX_Impact_Gore_4.wav-0dc9b8c2c5f49a9128af4b216aed8e3d.sample"
 
 [deps]
 
-source_file="res://audio/NPC/SFX_SwordSwing_2.wav"
-dest_files=[ "res://.import/SFX_SwordSwing_2.wav-76d15d76e19d9292a5180d55182475ee.sample" ]
+source_file="res://audio/npc/SFX_Impact_Gore_4.wav"
+dest_files=[ "res://.import/SFX_Impact_Gore_4.wav-0dc9b8c2c5f49a9128af4b216aed8e3d.sample" ]
 
 [params]
 
