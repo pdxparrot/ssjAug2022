@@ -1,29 +1,39 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://art/ui/credits.png" type="Texture" id=1]
+[ext_resource path="res://scenes/ui/button.tscn" type="PackedScene" id=2]
+[ext_resource path="res://art/ui/back_button_pressed.png" type="Texture" id=3]
+[ext_resource path="res://art/ui/back_button_unselected.png" type="Texture" id=4]
+[ext_resource path="res://art/ui/back_button_selected.png" type="Texture" id=5]
 
 [node name="Canvas" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 5
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( 650, 350 )
 color = Color( 0, 0, 0, 0.784314 )
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="."]
 anchor_left = 0.2
 anchor_right = 0.8
 anchor_bottom = 1.0
-margin_left = 0.999939
+margin_left = 1.0
 margin_top = 41.0
-margin_right = 399.08
-margin_bottom = 345.0
+margin_right = 399.0
+margin_bottom = 246.0
 rect_scale = Vector2( 0.65, 0.65 )
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 6
+
+[node name="Back" parent="." instance=ExtResource( 2 )]
+margin_left = 542.0
+margin_top = 652.0
+margin_right = 742.0
+margin_bottom = 702.0
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 5 )
