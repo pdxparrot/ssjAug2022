@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/SplashScreen.cs" type="Script" id=1]
+[ext_resource path="res://art/ui/ssj2022_bumper.png" type="Texture" id=2]
+[ext_resource path="res://art/ui/1_dialog.png" type="Texture" id=3]
+[ext_resource path="res://art/ui/2_dialog.png" type="Texture" id=4]
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
+_splashImages = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]
 
 [node name="Canvas" type="Control" parent="."]
 margin_right = 40.0
@@ -12,8 +16,10 @@ margin_bottom = 40.0
 [node name="CanvasLayer" type="CanvasLayer" parent="Canvas"]
 
 [node name="Splash Image" type="TextureRect" parent="Canvas/CanvasLayer"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 1280.0
+margin_bottom = 720.0
+expand = true
+stretch_mode = 1
 
 [node name="Timers" type="Node" parent="."]
 
@@ -21,5 +27,8 @@ margin_bottom = 40.0
 one_shot = true
 
 [node name="Timer" type="Timer" parent="Timers"]
-wait_time = 5.0
+wait_time = 3.0
 one_shot = true
+
+[connection signal="timeout" from="Timers/Fade Timer" to="." method="_on_Fade_Timer_timeout"]
+[connection signal="timeout" from="Timers/Timer" to="." method="_on_Timer_timeout"]
