@@ -33,51 +33,75 @@ expand = true
 stretch_mode = 1
 
 [node name="Main Menu" type="Control" parent="CanvasLayer"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 5
+size_flags_vertical = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main Menu"]
 anchor_left = 0.4
-anchor_top = 0.75
+anchor_top = 0.7
 anchor_right = 0.6
-anchor_bottom = 0.95
-margin_left = 496.0
-margin_top = 510.0
-margin_right = 688.0
-margin_bottom = 606.0
+anchor_bottom = 0.9
+margin_left = 6.0
+margin_right = -1.0
+margin_bottom = 14.0
 rect_pivot_offset = Vector2( 127, 70 )
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 5
+size_flags_vertical = 5
 alignment = 1
 
 [node name="Play" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
-margin_left = 0.0
+margin_left = 24.0
 margin_top = 0.0
-margin_right = 200.0
+margin_right = 224.0
 margin_bottom = 50.0
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 4 )
 
 [node name="Credits" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
-margin_left = 0.0
+margin_left = 24.0
 margin_top = 54.0
-margin_right = 200.0
+margin_right = 224.0
 margin_bottom = 104.0
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 texture_hover = ExtResource( 8 )
 
 [node name="Quit" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
-margin_left = 0.0
+margin_left = 24.0
 margin_top = 108.0
-margin_right = 200.0
+margin_right = 224.0
 margin_bottom = 158.0
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
 texture_hover = ExtResource( 12 )
 
 [node name="Credits" parent="CanvasLayer" instance=ExtResource( 10 )]
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="TextureRect" parent="CanvasLayer/Credits" index="1"]
+anchor_left = 0.3
+anchor_right = 0.75
+anchor_bottom = 0.841
+margin_left = -12.0
+margin_top = 26.0
+margin_right = 306.0
+margin_bottom = 319.48
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="Back" parent="CanvasLayer/Credits" index="2"]
+anchor_left = 0.4
+anchor_top = 0.8
+anchor_right = 0.6
+anchor_bottom = 0.95
+margin_left = 29.0
+margin_top = 20.0
+margin_right = -7.0
+margin_bottom = -4.0
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
