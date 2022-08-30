@@ -1,6 +1,7 @@
 using Godot;
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 using pdxpartyparrot.ssjAug2022.Util;
@@ -17,8 +18,10 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         // initializes the default cultures to be invariant
         // https://twitter.com/OwenGoss/status/1413576850715156484
-        public static void InitCulture()
+        private static void InitCulture()
         {
+            GD.Print("[Engine] Setting invariant culture");
+
             // TODO: is this actually safe?
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
@@ -57,11 +60,17 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public RandomNumberGenerator Random { get; private set; }
 
+        private readonly List<Func<bool>> _quitHandlers = new List<Func<bool>>();
+
         #region Godot Lifecycle
 
         public override void _Ready()
         {
             base._Ready();
+
+            InitCulture();
+
+            GetTree().AutoAcceptQuit = false;
 
             // TODO: is this the best place for this log?
             GD.Print("Party Parrot Engine starting up...");
@@ -74,7 +83,34 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             SetRandomSeed(RandomSeed);
         }
 
+        public override void _Notification(int what)
+        {
+            if(what == MainLoop.NotificationWmQuitRequest) {
+                GD.Print("[Engine] Received quit notification, running handlers ...");
+
+                // TODO: what if a handler needs to prompt the user?
+                foreach(var handler in _quitHandlers) {
+                    if(!handler()) {
+                        return;
+                    }
+                }
+
+                GD.Print("[Engine] Quitting!");
+                GetTree().Quit();
+            }
+        }
+
         #endregion
+
+        public void RegisterQuitHandler(Func<bool> handler)
+        {
+            _quitHandlers.Add(handler);
+        }
+
+        public void SafeQuit()
+        {
+            GetTree().Notification(MainLoop.NotificationWmQuitRequest);
+        }
 
         public void SetRandomSeed(ulong seed)
         {

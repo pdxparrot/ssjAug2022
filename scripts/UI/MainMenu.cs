@@ -50,7 +50,7 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         private void _on_Quit_pressed()
         {
-            GetTree().Quit();
+            PartyParrotManager.Instance.SafeQuit();
         }
 
         #endregion
