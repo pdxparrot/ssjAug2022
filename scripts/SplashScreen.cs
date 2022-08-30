@@ -56,6 +56,9 @@ namespace pdxpartyparrot.ssjAug2022
             // TODO: this is just a jank hack for ssj2022, please remove it
             if(_currentSplashImage == 1 && _splashImages.Length > 2) {
                 _currentSplashImage = 1 + PartyParrotManager.Instance.Random.CoinFlip();
+            } else if(_currentSplashImage == 2 && _splashImages.Length > 2) {
+                _currentSplashImage++;
+                return;
             }
 
             _splashImage.Texture = _splashImages[_currentSplashImage];
