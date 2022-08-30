@@ -31,8 +31,6 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             base._Ready();
 
             CreateLoadingScreen();
-
-            CallDeferred("LoadMainMenu");
         }
 
         #endregion
@@ -82,13 +80,9 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             GD.Print($"[SceneManager] Error loading level: {err}");
         }
 
-        private void LoadMainMenu()
-        {
-            new Task(async () => await LoadMainMenuAsync().ConfigureAwait(false)).RunSynchronously();
-        }
-
         public async Task LoadMainMenuAsync()
         {
+            GD.Print("[SceneManager] Loading main menu ...");
             await LoadLevelAsync(_mainMenuScene).ConfigureAwait(false);
         }
 
