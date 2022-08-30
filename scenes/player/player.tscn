@@ -86,6 +86,7 @@ wait_time = 0.53
 one_shot = true
 
 [node name="ClawAttack Cooldown" type="Timer" parent="Timers"]
+wait_time = 0.25
 one_shot = true
 
 [node name="PowerUnleashed Delay Timer" type="Timer" parent="Timers"]
