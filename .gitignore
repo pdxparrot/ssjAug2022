@@ -15,4 +15,5 @@ data_*/
 /target
 /Cargo.lock
 
-build/
+builds/
+Crimson Crescendo.zip
