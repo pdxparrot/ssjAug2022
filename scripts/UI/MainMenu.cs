@@ -36,16 +36,21 @@ namespace pdxpartyparrot.ssjAug2022.UI
             await GameManager.Instance.StartGameAsync().ConfigureAwait(false);
         }
 
-        private async void _on_Credits_pressed()
+        private void _on_Credits_pressed()
         {
             _mainMenu.Hide();
             _credits.Show();
         }
 
-        private async void _on_Credits_Back_pressed()
+        private void _on_Credits_Back_pressed()
         {
             _mainMenu.Show();
             _credits.Hide();
+        }
+
+        private void _on_Quit_pressed()
+        {
+            GetTree().Quit();
         }
 
         #endregion

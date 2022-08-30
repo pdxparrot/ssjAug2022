@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/UI/MainMenu.cs" type="Script" id=1]
 [ext_resource path="res://art/ui/title_screen08.png" type="Texture" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://audio/MX_Intro_LP.wav" type="AudioStream" id=9]
 [ext_resource path="res://scenes/ui/credits.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/ui/button.tscn" type="PackedScene" id=11]
+[ext_resource path="res://art/ui/quit_button_selected.png" type="Texture" id=12]
+[ext_resource path="res://art/ui/quit_button_unselected.png" type="Texture" id=13]
+[ext_resource path="res://art/ui/quit_button_pressed.png" type="Texture" id=14]
 
 [node name="Canvas" type="Control"]
 anchor_right = 1.0
@@ -65,6 +68,15 @@ texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 texture_hover = ExtResource( 8 )
 
+[node name="Quit" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
+margin_left = 0.0
+margin_top = 108.0
+margin_right = 200.0
+margin_bottom = 158.0
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
+texture_hover = ExtResource( 12 )
+
 [node name="Credits" parent="CanvasLayer" instance=ExtResource( 10 )]
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
@@ -72,6 +84,7 @@ stream = ExtResource( 9 )
 
 [connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="pressed" from="CanvasLayer/Credits/Back" to="." method="_on_Credits_Back_pressed"]
 
 [editable path="CanvasLayer/Credits"]
