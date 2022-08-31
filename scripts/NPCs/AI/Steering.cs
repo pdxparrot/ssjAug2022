@@ -36,9 +36,23 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             public ArriveDeceleration deceleration;
         }
 
+        public struct FleeParams
+        {
+            public Vector3 target;
+
+            public float maxSpeed;
+        }
+
         public struct PursuitParams
         {
             public SimpleCharacter target;
+
+            public float maxSpeed;
+        }
+
+        public struct EvadeParams
+        {
+            public SimpleCharacter pursuer;
 
             public float maxSpeed;
         }
@@ -65,9 +79,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
             Arrive = 2,
 
-            Pursuit = 4,
+            Flee = 4,
 
-            Wander = 8,
+            Pursuit = 8,
+
+            Evade = 16,
+
+            Wander = 32,
         }
 
         private T _owner;
@@ -78,7 +96,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private ArriveParams _arriveParams;
 
+        private FleeParams _fleeParams;
+
         private PursuitParams _pursuitParams;
+
+        private EvadeParams _evadeParams;
 
         private WanderParams _wanderParams;
 
@@ -117,6 +139,18 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             _enabledBehaviors &= ~SteeringBehavior.Arrive;
         }
 
+        public void FleeOn(FleeParams fleeParams)
+        {
+            _fleeParams = fleeParams;
+
+            _enabledBehaviors |= SteeringBehavior.Flee;
+        }
+
+        public void FleeOff()
+        {
+            _enabledBehaviors &= ~SteeringBehavior.Flee;
+        }
+
         public void PursuitOn(PursuitParams pursuitParams)
         {
             _pursuitParams = pursuitParams;
@@ -129,6 +163,18 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             _enabledBehaviors &= ~SteeringBehavior.Pursuit;
         }
 
+        public void EvadeOn(EvadeParams evadeParams)
+        {
+            _evadeParams = evadeParams;
+
+            _enabledBehaviors |= SteeringBehavior.Evade;
+        }
+
+        public void EvadeOff()
+        {
+            _enabledBehaviors &= ~SteeringBehavior.Evade;
+        }
+
         public void WanderOn(WanderParams wanderParams)
         {
             _wanderParams = wanderParams;
@@ -136,6 +182,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             // start with a random point on the circle
             double theta = PartyParrotManager.Instance.Random.NextSingle() * 2.0 * Math.PI;
             _wanderParams.target = new Vector3((float)Math.Cos(theta), 0.0f, (float)Math.Sin(theta)) * _wanderParams.radius;
+
+            // 0 jitter to get the world target we just calculated
+            var target = GetWanderTarget(0.0f);
+            _owner.SetTarget(target);
 
             _enabledBehaviors |= SteeringBehavior.Wander;
         }
@@ -166,8 +216,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
                 steeringForce += Arrive();
             }
 
+            if(On(SteeringBehavior.Flee)) {
+                steeringForce += Flee();
+            }
+
             if(On(SteeringBehavior.Pursuit)) {
                 steeringForce += Pursuit();
+            }
+
+            if(On(SteeringBehavior.Evade)) {
+                steeringForce += Evade();
             }
 
             if(On(SteeringBehavior.Wander)) {
@@ -206,6 +264,17 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             return desiredVelocity - _owner.Velocity;
         }
 
+        private Vector3 Flee()
+        {
+            return Flee(_fleeParams.target, _fleeParams.maxSpeed);
+        }
+
+        private Vector3 Flee(Vector3 target, float maxSpeed)
+        {
+            var desiredVelocity = (_owner.GlobalTranslation - target).Normalized() * maxSpeed;
+            return desiredVelocity - _owner.Velocity;
+        }
+
         private Vector3 Pursuit()
         {
             var toEvader = _pursuitParams.target.GlobalTranslation - _owner.GlobalTranslation;
@@ -217,14 +286,20 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
                 return Seek(_pursuitParams.target.GlobalTranslation, _pursuitParams.maxSpeed);
             }
 
-            float lookAheadTime = toEvader.Length() / (_pursuitParams.maxSpeed + _pursuitParams.target.MaxSpeed);
+            float lookAheadTime = toEvader.Length() / (_pursuitParams.maxSpeed + _pursuitParams.target.HorizontalSpeed);
             return Seek(_pursuitParams.target.GlobalTranslation + _pursuitParams.target.Velocity * lookAheadTime, _pursuitParams.maxSpeed);
         }
 
-        private Vector3 Wander(float delta)
+        private Vector3 Evade()
         {
-            float jitter = _wanderParams.jitter * delta;
+            var toPursuer = _evadeParams.pursuer.GlobalTranslation - _owner.GlobalTranslation;
 
+            float lookAheadTime = toPursuer.Length() / (_evadeParams.maxSpeed + _evadeParams.pursuer.HorizontalSpeed);
+            return Flee(_evadeParams.pursuer.GlobalTranslation + _evadeParams.pursuer.Velocity * lookAheadTime, _evadeParams.maxSpeed);
+        }
+
+        private Vector3 GetWanderTarget(float jitter)
+        {
             // offset slightly on the circle
             _wanderParams.target += new Vector3(
                 PartyParrotManager.Instance.Random.NextSingle(-1.0f, 1.0f) * jitter,
@@ -237,7 +312,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             _wanderParams.target = wanderTarget * _wanderParams.radius;
 
             // project the circle in the heading direction
-            var target = _owner.GlobalTranslation + _wanderParams.target + (_owner.Heading * _wanderParams.distance);
+            return _owner.GlobalTranslation + _wanderParams.target + (_owner.Heading * _wanderParams.distance);
+        }
+
+        private Vector3 Wander(float delta)
+        {
+            float jitter = _wanderParams.jitter * delta;
+            var target = GetWanderTarget(jitter);
             return Seek(target, _wanderParams.maxSpeed);
         }
 

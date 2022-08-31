@@ -236,7 +236,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             var target = _owner.GetNextLocation();
             var toTarget = target - _owner.GlobalTranslation;
 
-            float lookAheadTime = toTarget.Length() / (_pursuitParams.maxSpeed + _pursuitParams.target.MaxSpeed);
+            float lookAheadTime = toTarget.Length() / (_pursuitParams.maxSpeed + _pursuitParams.target.HorizontalSpeed);
             Seek(target + _pursuitParams.target.Velocity * lookAheadTime, _pursuitParams.maxSpeed);
         }
 
