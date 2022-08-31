@@ -65,5 +65,18 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         {
             ChangeState(_previousState);
         }
+
+        public bool HandleMessage(Telegram message)
+        {
+            if(_currentState != null && _currentState.OnMessage(_owner, this, message)) {
+                return true;
+            }
+
+            if(_globalState != null && _globalState.OnMessage(_owner, this, message)) {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
