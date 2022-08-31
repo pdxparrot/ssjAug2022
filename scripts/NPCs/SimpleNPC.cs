@@ -66,6 +66,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public void SetVelocity(Vector3 velocity)
         {
+            velocity = LimitVelocity(velocity);
             _agent.SetVelocity(velocity);
         }
 

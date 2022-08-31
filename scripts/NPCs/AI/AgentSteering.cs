@@ -167,20 +167,48 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         public void Update(float delta)
         {
+            bool velocityUpdated = false;
+            bool shouldStop = false;
+            Vector3 velocity = Vector3.Zero;
+
             if(On(SteeringBehavior.Seek)) {
-                Seek();
+                (bool updated, bool stop) = Seek(out Vector3 seekVelocity);
+                shouldStop |= stop;
+                if(updated) {
+                    velocity += seekVelocity;
+                    velocityUpdated = true;
+                }
             }
 
             if(On(SteeringBehavior.Arrive)) {
-                Arrive();
+                (bool updated, bool stop) = Arrive(out Vector3 arriveVelocity);
+                shouldStop |= stop;
+                if(updated) {
+                    velocity += arriveVelocity;
+                    velocityUpdated = true;
+                }
             }
 
             if(On(SteeringBehavior.Pursuit)) {
-                Pursuit();
+                if(Pursuit(out Vector3 pursuitVelocity)) {
+                    velocity += pursuitVelocity;
+                    velocityUpdated = true;
+                }
             }
 
             if(On(SteeringBehavior.Wander)) {
-                Wander(delta);
+                (bool updated, bool stop) = Wander(delta, out Vector3 wanderVelocity);
+                shouldStop |= stop;
+                if(updated) {
+                    velocity += wanderVelocity;
+                    velocityUpdated = true;
+                }
+            }
+
+            if(shouldStop) {
+                _owner.Stop();
+            } else if(velocityUpdated) {
+                _owner.SetVelocity(velocity);
             }
         }
 
@@ -191,27 +219,29 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         // getting stuck trying to reach something unreachable
         // (go as far as we can down the path and then do something else)
 
-        private void Seek()
+        private (bool, bool) Seek(out Vector3 velocity)
         {
+            velocity = Vector3.Zero;
+
             if(!_owner.IsTargetReachable() || _owner.IsTargetReached() /*|| !_owner.IsNavigationFinished()*/) {
-                _owner.Stop();
-                return;
+                return (false, true);
             }
 
-            Seek(_owner.GetNextLocation(), _seekParams.maxSpeed);
+            velocity = Seek(_owner.GetNextLocation(), _seekParams.maxSpeed);
+            return (true, false);
         }
 
-        private void Seek(Vector3 target, float maxSpeed)
+        private Vector3 Seek(Vector3 target, float maxSpeed)
         {
-            var desiredVelocity = (target - _owner.GlobalTranslation).Normalized() * maxSpeed;
-            _owner.SetVelocity(desiredVelocity);
+            return (target - _owner.GlobalTranslation).Normalized() * maxSpeed;
         }
 
-        private void Arrive()
+        private (bool, bool) Arrive(out Vector3 velocity)
         {
+            velocity = Vector3.Zero;
+
             if(!_owner.IsTargetReachable() || _owner.IsTargetReached() /*|| !_owner.IsNavigationFinished()*/) {
-                _owner.Stop();
-                return;
+                return (false, true);
             }
 
             var target = _owner.GetNextLocation();
@@ -221,23 +251,26 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             float speed = distance / ((int)_arriveParams.deceleration * DecelerationTweaker);
             speed = Math.Min(speed, _arriveParams.maxSpeed);
 
-            var desiredVelocity = toTarget * speed / distance;
-            _owner.SetVelocity(desiredVelocity);
+            velocity = toTarget * speed / distance;
+            return (true, false);
         }
 
-        private void Pursuit()
+        private bool Pursuit(out Vector3 velocity)
         {
+            velocity = Vector3.Zero;
+
             if(!_owner.IsTargetReachable() || _owner.IsTargetReached() || Time.GetTicksMsec() - _pursuitParams.lastTargetUpdate > 500) {
                 _owner.SetTarget(_pursuitParams.target.GlobalTranslation);
                 _pursuitParams.lastTargetUpdate = Time.GetTicksMsec();
-                return;
+                return false;
             }
 
             var target = _owner.GetNextLocation();
             var toTarget = target - _owner.GlobalTranslation;
 
             float lookAheadTime = toTarget.Length() / (_pursuitParams.maxSpeed + _pursuitParams.target.HorizontalSpeed);
-            Seek(target + _pursuitParams.target.Velocity * lookAheadTime, _pursuitParams.maxSpeed);
+            velocity = Seek(target + _pursuitParams.target.Velocity * lookAheadTime, _pursuitParams.maxSpeed);
+            return true;
         }
 
         private Vector3 GetWanderTarget(float jitter)
@@ -257,23 +290,26 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             return _owner.GlobalTranslation + _wanderParams.target + (_owner.Heading * _wanderParams.distance);
         }
 
-        private void Wander(float delta)
+        private (bool, bool) Wander(float delta, out Vector3 velocity)
         {
+            velocity = Vector3.Zero;
+
             /*if(!_owner.IsNavigationFinished()) {
-                _owner.Stop();
-                return;
+                return (false, true);
             }*/
 
             // seek the target until we reach it
             if(_owner.IsTargetReachable() && !_owner.IsTargetReached()) {
-                Seek(_owner.GetNextLocation(), _wanderParams.maxSpeed);
-                return;
+                velocity = Seek(_owner.GetNextLocation(), _wanderParams.maxSpeed);
+                return (true, false);
             }
 
             // update the target
             float jitter = _wanderParams.jitter * delta;
             var target = GetWanderTarget(jitter);
             _owner.SetTarget(target);
+
+            return (false, false);
         }
 
         #endregion

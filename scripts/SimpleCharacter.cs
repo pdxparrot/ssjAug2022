@@ -31,15 +31,7 @@ namespace pdxpartyparrot.ssjAug2022
         {
             get => _velocity;
 
-            protected set
-            {
-                float y = value.y;
-                value.y = 0.0f;
-                value = value.LimitLength(_maxSpeed);
-                value.y = y;
-
-                _velocity = value;
-            }
+            protected set => _velocity = LimitVelocity(value);
         }
 
         public float Speed => _velocity.Length();
@@ -87,10 +79,7 @@ namespace pdxpartyparrot.ssjAug2022
             _acceleration = Vector3.Zero;
 
             // cap horizontal speed
-            float y = _velocity.y;
-            _velocity.y = 0.0f;
-            _velocity = _velocity.LimitLength(_maxSpeed);
-            _velocity.y = y;
+            _velocity = LimitVelocity(_velocity);
 
             // calculate horizontal heading
             _heading = new Vector3(_velocity.x, 0.0f, _velocity.z);
@@ -119,6 +108,15 @@ namespace pdxpartyparrot.ssjAug2022
             }
 
             _acceleration += force;
+        }
+
+        protected Vector3 LimitVelocity(Vector3 velocity)
+        {
+            float y = velocity.y;
+            velocity.y = 0.0f;
+            velocity = velocity.LimitLength(_maxSpeed);
+            velocity.y = y;
+            return velocity;
         }
 
         #region Events
