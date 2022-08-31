@@ -26,6 +26,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private Interactables.Interactables _clawAttackInteractables;
 
+        private VFX _clawAttackVFX;
+
         // TODO: this would be better if it was driven by the animation
         private Timer _clawAttackAnimationTimer;
 
@@ -95,6 +97,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _clawAttackAnimationTimer = GetNode<Timer>("Timers/ClawAttack Animation Timer");
             _clawAttackCooldown = GetNode<Timer>("Timers/ClawAttack Cooldown");
             _clawAttackInteractables = Pivot.GetNode<Interactables.Interactables>("ClawAttack Hitbox");
+            _clawAttackVFX = Pivot.GetNode<VFX>("ClawAttack VFX");
             _clawAttackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/ClawAttack");
 
             _powerUnleashedDelayTimer = GetNode<Timer>("Timers/PowerUnleashed Delay Timer");
@@ -244,6 +247,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
         private void _on_ClawAttack_Animation_Timer_timeout()
         {
             DoClawAttackDamage();
+
+            _clawAttackVFX.Play("claw_attack");
 
             _clawAttackCooldown.Start();
         }

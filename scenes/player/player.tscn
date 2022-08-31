@@ -71,6 +71,10 @@ shape = SubResource( 4 )
 transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
 script = ExtResource( 8 )
 
+[node name="ClawAttack VFX" parent="Pivot" instance=ExtResource( 7 )]
+transform = Transform( 0.824376, -0.325545, -0.46306, -0.279598, -0.945491, 0.166946, -0.492167, -0.00815527, -0.870463, -0.547281, 3.30438, -2.29472 )
+script = ExtResource( 8 )
+
 [node name="Spatial" type="Spatial" parent="Pivot"]
 transform = Transform( 0.999994, -0.00231519, -0.00242054, 0.00231495, 0.999997, -0.000103869, 0.00242078, 9.8277e-05, 0.999997, 0, 0, 0 )
 
@@ -80,9 +84,6 @@ light_color = Color( 1, 0, 0, 1 )
 light_energy = 4.0
 omni_range = 10.0
 omni_attenuation = 0.732043
-
-[node name="claw_vfx_mesh" parent="Pivot" instance=ExtResource( 7 )]
-transform = Transform( 0.824376, -0.325545, -0.46306, -0.279598, -0.945491, 0.166946, -0.492167, -0.00815527, -0.870463, -0.547281, 3.30438, -2.29472 )
 
 [node name="Timers" type="Node" parent="."]
 
