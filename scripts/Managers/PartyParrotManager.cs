@@ -38,6 +38,18 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         public ulong RandomSeed => _randomSeed;
 
+        #region Godot Feature Helpers
+
+        public bool IsEditor => OS.HasFeature("editor");
+
+        public bool IsHeadless => OS.HasFeature("Server");
+
+        public bool IsDebug => OS.HasFeature("debug");
+
+        public bool IsRelease => OS.HasFeature("release");
+
+        #endregion
+
         private bool _isPaused;
 
         public bool IsPaused

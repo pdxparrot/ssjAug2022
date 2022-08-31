@@ -10,6 +10,11 @@ namespace pdxpartyparrot.ssjAug2022
     public class SplashScreen : Node
     {
         [Export]
+        private bool _skipSplashImagesInEditor = true;
+
+        private bool SkipSplashImages => _skipSplashImagesInEditor && PartyParrotManager.Instance.IsEditor;
+
+        [Export]
         private Texture[] _splashImages = new Texture[0];
 
         private TextureRect _splashImage;
@@ -44,12 +49,17 @@ namespace pdxpartyparrot.ssjAug2022
 
         #endregion
 
+        private async Task LoadMainMenuAsync()
+        {
+            QueueFree();
+
+            await SceneManager.Instance.LoadMainMenuAsync().ConfigureAwait(false);
+        }
+
         private async Task ShowNextSplashImageAsync()
         {
-            if(_currentSplashImage >= _splashImages.Length) {
-                QueueFree();
-
-                await SceneManager.Instance.LoadMainMenuAsync().ConfigureAwait(false);
+            if(SkipSplashImages || _currentSplashImage >= _splashImages.Length) {
+                await LoadMainMenuAsync().ConfigureAwait(false);
                 return;
             }
 
