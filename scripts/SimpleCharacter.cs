@@ -71,6 +71,8 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _PhysicsProcess(float delta)
         {
+            // TODO: a max turn rate and smoothed heading might make this nicer
+
             // apply gravity
             _acceleration += Vector3.Down * _gravity * _gravityMultiplier;
 

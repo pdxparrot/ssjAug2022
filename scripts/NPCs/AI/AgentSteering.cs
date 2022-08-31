@@ -165,6 +165,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         #endregion
 
+        // TODO: this should use weighted prioritization for accumulation
         public void Update(float delta)
         {
             bool velocityUpdated = false;

@@ -204,6 +204,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         // call each _PhysicsProcess and ApplyForce()
         // can be useful to multiply by the owners mass as well
+        // TODO: this should use weighted prioritization for accumulation
         public Vector3 Calculate(float delta)
         {
             var steeringForce = Vector3.Zero;
