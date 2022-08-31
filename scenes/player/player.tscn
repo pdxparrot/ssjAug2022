@@ -72,7 +72,7 @@ transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
 script = ExtResource( 8 )
 
 [node name="ClawAttack VFX" parent="Pivot" instance=ExtResource( 7 )]
-transform = Transform( 0.824376, -0.325545, -0.46306, -0.279598, -0.945491, 0.166946, -0.492167, -0.00815527, -0.870463, -0.547281, 3.30438, -2.29472 )
+transform = Transform( -1.76777, -6.18172e-08, 1.76777, 2.18557e-07, -1, 0, 1.76777, 6.18172e-08, 1.76777, -0.547281, 2.54157, -2.24665 )
 script = ExtResource( 8 )
 
 [node name="Spatial" type="Spatial" parent="Pivot"]
