@@ -80,19 +80,25 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         {
             base._Ready();
 
+            string build = IsRelease ? "release" : IsDebug ? "debug" : "unknown";
+            GD.Print($"Party Parrot Engine ({build} build) starting up...");
+            GD.Print($"Godot version: {Engine.GetVersionInfo()["string"]}");
+
+            if(IsEditor) {
+                GD.Print("Detected editor run");
+            }
+
+            if(IsHeadless) {
+                GD.Print("Detected headless run");
+            }
+
             InitCulture();
 
             GetTree().AutoAcceptQuit = false;
 
-            // TODO: is this the best place for this log?
-            GD.Print("Party Parrot Engine starting up...");
-            GD.Print($"Godot version: {Engine.GetVersionInfo()["string"]}");
-
-            float gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
-            var gravityVector = (Vector3)ProjectSettings.GetSetting("physics/3d/default_gravity_vector");
-            GD.Print($"Gravity: {gravityVector * gravity}");
-
             SetRandomSeed(RandomSeed);
+
+            DumpInfo();
         }
 
         public override void _Notification(int what)
@@ -113,6 +119,21 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         }
 
         #endregion
+
+        private void DumpInfo()
+        {
+            GD.Print($"[Engine] OS: {OS.GetName()}");
+            GD.Print($"[Engine] Multithreading: {OS.CanUseThreads()}");
+
+            GD.Print($"[Engine] Target FPS: {Engine.TargetFps}");
+            GD.Print($"[Engine] Vsync: {OS.VsyncEnabled}");
+
+            GD.Print($"[Engine] Physics FPS: {Engine.IterationsPerSecond}");
+
+            float gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
+            var gravityVector = (Vector3)ProjectSettings.GetSetting("physics/3d/default_gravity_vector");
+            GD.Print($"[Engine] Gravity: {gravityVector * gravity}");
+        }
 
         public void RegisterQuitHandler(Func<bool> handler)
         {

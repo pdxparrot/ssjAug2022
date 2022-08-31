@@ -37,6 +37,11 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override async void _Process(float delta)
         {
+            if(SkipSplashImages) {
+                GD.Print("Skipping splash screen");
+                await LoadMainMenuAsync().ConfigureAwait(false);
+            }
+
             if(_fadeTimer.IsStopped() && _displayTimer.IsStopped()) {
                 await ShowNextSplashImageAsync().ConfigureAwait(false);
                 return;
@@ -58,7 +63,7 @@ namespace pdxpartyparrot.ssjAug2022
 
         private async Task ShowNextSplashImageAsync()
         {
-            if(SkipSplashImages || _currentSplashImage >= _splashImages.Length) {
+            if(_currentSplashImage >= _splashImages.Length) {
                 await LoadMainMenuAsync().ConfigureAwait(false);
                 return;
             }
