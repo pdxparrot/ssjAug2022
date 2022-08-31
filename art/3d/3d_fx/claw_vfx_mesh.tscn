@@ -39,6 +39,7 @@ tracks/0/keys = {
 
 [node name="claw01" type="MeshInstance" parent="."]
 transform = Transform( 0, -250, 0, 0, 0, 250, -250, 0, 0, 0, 0, 0 )
+visible = false
 mesh = SubResource( 1 )
 skeleton = NodePath("")
 material/0 = ExtResource( 2 )

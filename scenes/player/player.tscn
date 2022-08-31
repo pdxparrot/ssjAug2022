@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/Player/Vampire.cs" type="Script" id=1]
 [ext_resource path="res://art/3d/vamp_anim02.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://art/3d/3d_fx/claw_vfx_mesh.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scripts/VFX.cs" type="Script" id=8]
 [ext_resource path="res://art/3d/3d_fx/power_unleased02.tscn" type="PackedScene" id=9]
+[ext_resource path="res://art/3d/3d_fx/dash_vfx_mesh.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
@@ -74,6 +75,12 @@ script = ExtResource( 8 )
 [node name="ClawAttack VFX" parent="Pivot" instance=ExtResource( 7 )]
 transform = Transform( -1.76777, -6.18172e-08, 1.76777, 2.18557e-07, -1, 0, 1.76777, 6.18172e-08, 1.76777, -0.547281, 2.54157, -2.24665 )
 script = ExtResource( 8 )
+
+[node name="Dash VFX" type="Spatial" parent="Pivot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.00505447, 2.63107, -0.40916 )
+visible = false
+
+[node name="dash_vfx_mesh" parent="Pivot/Dash VFX" instance=ExtResource( 10 )]
 
 [node name="Spatial" type="Spatial" parent="Pivot"]
 transform = Transform( 0.999994, -0.00231519, -0.00242054, 0.00231495, 0.999997, -0.000103869, 0.00242078, 9.8277e-05, 0.999997, 0, 0, 0 )
