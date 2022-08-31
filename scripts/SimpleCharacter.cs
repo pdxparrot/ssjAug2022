@@ -85,11 +85,13 @@ namespace pdxpartyparrot.ssjAug2022
 
             // calculate horizontal heading
             _heading = new Vector3(_velocity.x, 0.0f, _velocity.z);
-            if(_heading != Vector3.Zero) {
+            if(_heading.LengthSquared() > 0.01) {
                 _heading = _heading.Normalized();
 
                 // look in the direction we're heading
                 _pivot.LookAt(Translation + _heading, Vector3.Up);
+            } else {
+                _heading = Vector3.Zero;
             }
 
             // move the player
