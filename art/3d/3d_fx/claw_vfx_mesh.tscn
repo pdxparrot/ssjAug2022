@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://art/3d/3d_fx/Claw  VFX.material" type="Material" id=1]
+[ext_resource path="res://art/3d/3d_fx/power_vfx.material" type="Material" id=2]
+
+[sub_resource type="ArrayMesh" id=1]
+blend_shape_mode = 0
+surfaces/0 = {
+"aabb": AABB( -0.005, -0.005, -7.14835e-05, 0.01, 0.01, 0.000142967 ),
+"array_data": PoolByteArray( 10, 215, 163, 187, 10, 215, 163, 187, 112, 233, 149, 184, 127, 127, 127, 193, 0, 0, 0, 56, 10, 215, 163, 59, 10, 215, 163, 59, 112, 233, 149, 184, 127, 127, 127, 193, 0, 56, 0, 0, 10, 215, 163, 187, 10, 215, 163, 59, 112, 233, 149, 184, 127, 127, 127, 193, 0, 0, 0, 0, 10, 215, 163, 59, 10, 215, 163, 59, 112, 233, 149, 184, 127, 127, 127, 193, 0, 56, 0, 0, 10, 215, 163, 187, 10, 215, 163, 187, 112, 233, 149, 184, 127, 127, 127, 193, 0, 0, 0, 56, 10, 215, 163, 59, 10, 215, 163, 187, 112, 233, 149, 184, 127, 127, 127, 193, 0, 56, 0, 56, 10, 215, 163, 187, 10, 215, 163, 187, 112, 233, 149, 56, 0, 0, 127, 63, 0, 0, 0, 56, 10, 215, 163, 59, 10, 215, 163, 59, 112, 233, 149, 56, 0, 0, 127, 63, 0, 56, 0, 0, 10, 215, 163, 59, 10, 215, 163, 187, 112, 233, 149, 56, 0, 0, 127, 63, 0, 56, 0, 56, 10, 215, 163, 187, 10, 215, 163, 59, 112, 233, 149, 56, 0, 0, 127, 63, 0, 0, 0, 0 ),
+"array_index_data": PoolByteArray( 0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 7, 0, 6, 0, 9, 0 ),
+"blend_shape_data": [  ],
+"format": 2194711,
+"index_count": 12,
+"material": ExtResource( 1 ),
+"name": "Claw  VFX",
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 10
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "claw_attack"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/path = NodePath("claw01:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0333333, 0.266667, 0.3 ),
+"transitions": PoolRealArray( 1, 2.14354, 2.14354, 1 ),
+"update": 1,
+"values": [ false, true, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("claw02:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.0333333, 0.266667, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("claw03:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.0333333, 0.266667, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, true, false ]
+}
+
+[node name="claw_vfx_mesh" type="Spatial"]
+
+[node name="claw01" type="MeshInstance" parent="."]
+transform = Transform( 0, -250, 0, 0, 0, 250, -250, 0, 0, 0, 0, 0 )
+mesh = SubResource( 1 )
+skeleton = NodePath("")
+material/0 = ExtResource( 2 )
+
+[node name="claw02" type="MeshInstance" parent="."]
+transform = Transform( 0, -250, 0, 0, 0, 250, -250, 0, 0, 0.8, -0.5, 0.5 )
+mesh = SubResource( 1 )
+skeleton = NodePath("")
+material/0 = ExtResource( 2 )
+
+[node name="claw03" type="MeshInstance" parent="."]
+transform = Transform( 0, -250, 0, 0, 0, 250, -250, 0, 0, 1.6, -0.986, 1 )
+mesh = SubResource( 1 )
+skeleton = NodePath("")
+material/0 = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/claw_attack = SubResource( 2 )
