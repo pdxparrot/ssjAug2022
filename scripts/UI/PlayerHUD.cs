@@ -49,7 +49,7 @@ namespace pdxpartyparrot.ssjAug2022.UI
         public void UpdatePlayerHealth(float percent)
         {
             float value = percent * 100.0f;
-            _playerHealthTween.InterpolateProperty(this, "_playerHealthPercent", _playerHealthPercent, value, _animationSeconds);
+            _playerHealthTween.InterpolateProperty(this, "_playerHealthPercent", _playerHealthPercent, value, _animationSeconds, easeType: Tween.EaseType.In);
 
             if(!_playerHealthTween.IsActive()) {
                 _playerHealthTween.Start();
