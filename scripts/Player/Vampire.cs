@@ -169,7 +169,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
         public void Damage(int amount)
         {
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
-            GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
+            GameUIManager.Instance.HUD.UpdatePlayerHealth(_maxHealth > 0 ? _currentHealth / (float)_maxHealth : 0.0f);
 
             if(IsDead) {
                 Kill();
@@ -293,8 +293,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             _currentHealth = _maxHealth;
 
-            GameUIManager.Instance.HUD.SetMaxHealth(_maxHealth);
-            GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
+            GameUIManager.Instance.HUD.UpdatePlayerHealth(1.0f);
         }
 
         public override void OnReSpawn(SpawnPoint spawnPoint)
@@ -303,8 +302,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             _currentHealth = _maxHealth;
 
-            GameUIManager.Instance.HUD.SetMaxHealth(_maxHealth);
-            GameUIManager.Instance.HUD.UpdateHealth(_currentHealth);
+            GameUIManager.Instance.HUD.UpdatePlayerHealth(1.0f);
         }
 
         #endregion

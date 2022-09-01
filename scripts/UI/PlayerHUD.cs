@@ -6,9 +6,16 @@ namespace pdxpartyparrot.ssjAug2022.UI
 {
     public class PlayerHUD : Control
     {
+        [Export]
+        private float _animationSeconds = 0.25f;
+
         private CanvasLayer _canvas;
 
-        private TextureProgress _health;
+        private TextureProgress _playerHealthBar;
+
+        private float _playerHealthPercent = 100.0f;
+
+        private Tween _playerHealthTween;
 
         #region Godot Lifecycle
 
@@ -16,8 +23,15 @@ namespace pdxpartyparrot.ssjAug2022.UI
         {
             _canvas = GetNode<CanvasLayer>("CanvasLayer");
 
-            _health = _canvas.GetNode<TextureProgress>("Pivot/Health");
-            _health.MinValue = 0;
+            _playerHealthBar = _canvas.GetNode<TextureProgress>("Pivot/Player Health");
+            _playerHealthBar.MinValue = 0.0;
+
+            _playerHealthTween = GetNode<Tween>("Tweens/Player Health");
+        }
+
+        public override void _Process(float delta)
+        {
+            _playerHealthBar.Value = _playerHealthPercent;
         }
 
         #endregion
@@ -32,14 +46,14 @@ namespace pdxpartyparrot.ssjAug2022.UI
             _canvas.Show();
         }
 
-        public void SetMaxHealth(int maxHealth)
+        public void UpdatePlayerHealth(float percent)
         {
-            _health.MaxValue = maxHealth;
-        }
+            float value = percent * 100.0f;
+            _playerHealthTween.InterpolateProperty(this, "_playerHealthPercent", _playerHealthPercent, value, _animationSeconds);
 
-        public void UpdateHealth(int currentHealth)
-        {
-            _health.Value = currentHealth;
+            if(!_playerHealthTween.IsActive()) {
+                _playerHealthTween.Start();
+            }
         }
     }
 }
