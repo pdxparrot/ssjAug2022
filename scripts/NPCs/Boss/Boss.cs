@@ -118,7 +118,12 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         #endregion
 
-        private void Kill()
+        public void Kill()
+        {
+            Damage(_currentHealth);
+        }
+
+        private void OnDied()
         {
             _stateMachine.ChangeState(new States.Dead());
 
@@ -138,7 +143,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
             if(IsDead) {
-                Kill();
+                OnDied();
             }
         }
 

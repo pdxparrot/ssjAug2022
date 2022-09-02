@@ -157,7 +157,12 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #endregion
 
-        private void Kill()
+        public void Kill()
+        {
+            Damage(_currentHealth);
+        }
+
+        private void OnDied()
         {
             Stop();
 
@@ -173,7 +178,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             GameUIManager.Instance.HUD.UpdatePlayerHealth(_maxHealth > 0 ? _currentHealth / (float)_maxHealth : 0.0f);
 
             if(IsDead) {
-                Kill();
+                OnDied();
             }
         }
 

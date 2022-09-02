@@ -4,6 +4,8 @@ using System;
 
 using pdxpartyparrot.ssjAug2022.Camera;
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.NPCs.Boss;
+using pdxpartyparrot.ssjAug2022.NPCs.Human;
 
 namespace pdxpartyparrot.ssjAug2022
 {
@@ -71,7 +73,44 @@ namespace pdxpartyparrot.ssjAug2022
             GameUIManager.Instance.HideHUD();
         }
 
+        public override void _UnhandledInput(InputEvent @event)
+        {
+            if(!PartyParrotManager.Instance.IsEditor) {
+                return;
+            }
+
+            if(GameManager.Instance.IsGameOver) {
+                return;
+            }
+
+            if(@event is InputEventKey eventKey) {
+                if(eventKey.Pressed && eventKey.Scancode == (int)KeyList.K) {
+                    switch(_stage) {
+                    case Stage.Enemies:
+                        KillAllEnemies();
+                        break;
+                    case Stage.Boss:
+                        KillBoss();
+                        break;
+                    }
+                }
+            }
+        }
+
         #endregion
+
+        #region Enemies
+
+        private void KillAllEnemies()
+        {
+            GD.Print("[Level] Killing all enemies ...");
+
+            foreach(var npc in NPCManager.Instance.NPCs) {
+                if(npc is Human human) {
+                    human.Kill();
+                }
+            }
+        }
 
         private void SpawnEnemy()
         {
@@ -98,6 +137,21 @@ namespace pdxpartyparrot.ssjAug2022
             }
         }
 
+        #endregion
+
+        #region Boss
+
+        private void KillBoss()
+        {
+            GD.Print("[Level] Killing boss ...");
+
+            foreach(var npc in NPCManager.Instance.NPCs) {
+                if(npc is Boss boss) {
+                    boss.Kill();
+                }
+            }
+        }
+
         private void SpawnBoss()
         {
             GD.Print($"[Level] Spawning boss ...");
@@ -115,5 +169,7 @@ namespace pdxpartyparrot.ssjAug2022
             var boss = spawnPoint.SpawnNPC(_bossScene, $"Boss {id}");
             boss.Id = id;
         }
+
+        #endregion
     }
 }
