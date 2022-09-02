@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://scripts/NPCs/Human/Human.cs" type="Script" id=1]
+[ext_resource path="res://scripts/NPCs/Boss/Boss.cs" type="Script" id=1]
 [ext_resource path="res://art/3d/knight_anim_blend.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Model.cs" type="Script" id=3]
-[ext_resource path="res://scripts/NPCs/Human/HumanStateMachine.cs" type="Script" id=4]
-[ext_resource path="res://scripts/NPCs/Human/HumanSteering.cs" type="Script" id=5]
+[ext_resource path="res://scripts/NPCs/Boss/BossStateMachine.cs" type="Script" id=4]
+[ext_resource path="res://scripts/NPCs/Boss/BossSteering.cs" type="Script" id=5]
 [ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=6]
 [ext_resource path="res://audio/npc/SFX_SwordSwing_2.wav" type="AudioStream" id=7]
 [ext_resource path="res://audio/npc/SFX_Impact_Gore_4.wav" type="AudioStream" id=8]
@@ -23,8 +23,8 @@ height = 2.0
 script = ExtResource( 1 )
 _mass = 75.0
 _maxSpeed = 10.0
-_maxHealth = 3
-_attackDamage = 5
+_maxHealth = 10
+_attackDamage = 10
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0 )

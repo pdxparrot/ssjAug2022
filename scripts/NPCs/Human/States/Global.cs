@@ -1,8 +1,8 @@
 using pdxpartyparrot.ssjAug2022.NPCs.AI;
 
-namespace pdxpartyparrot.ssjAug2022.NPCs.States
+namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
 {
-    public struct Dead : IState<Human>
+    public struct Global : IState<Human>
     {
         public void Enter(Human owner, StateMachine<Human> stateMachine)
         {

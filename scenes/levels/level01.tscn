@@ -704,5 +704,9 @@ _maxXSpawnRange = 5.0
 _minZSpawnRange = 1.0
 _maxZSpawnRange = 5.0
 
+[node name="Boss Spawn" parent="World" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 1, 26 )
+_tags = PoolStringArray( "boss" )
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )

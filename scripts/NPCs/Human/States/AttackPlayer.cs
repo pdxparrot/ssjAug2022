@@ -3,15 +3,15 @@ using Godot;
 using pdxpartyparrot.ssjAug2022.NPCs.AI;
 using pdxpartyparrot.ssjAug2022.Player;
 
-namespace pdxpartyparrot.ssjAug2022.NPCs.States
+namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
 {
-    public struct ChasePlayer : IState<Human>
+    public struct AttackPlayer : IState<Human>
     {
         public Vampire Target { get; set; }
 
         public void Enter(Human owner, StateMachine<Human> stateMachine)
         {
-            //GD.Print($"[{owner.Id} chasing vampire {Target.Name}");
+            //GD.Print($"[{owner.Id} attacking vampire {Target.Name}");
 
             owner.Steering.PursuitOn(new HumanSteering.PursuitParams {
                 target = Target,
@@ -33,19 +33,15 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.States
             }
 
             float targetDistance = owner.GlobalTranslation.DistanceSquaredTo(Target.GlobalTranslation);
-
-            if(targetDistance > owner.TrackingRangeSquared) {
-                //GD.Print($"[{owner.Id} lost my target");
-                stateMachine.ChangeState(new ReturnHome());
-                return;
-            }
-
-            if(targetDistance <= owner.AttackRangeSquared) {
-                stateMachine.ChangeState(new AttackPlayer {
+            if(targetDistance > owner.AttackRangeSquared) {
+                //GD.Print($"[{owner.Id} too far from target to attack");
+                stateMachine.ChangeState(new ChasePlayer {
                     Target = Target,
                 });
                 return;
             }
+
+            owner.Attack(Target);
         }
 
         public bool OnMessage(Human owner, StateMachine<Human> stateMachine, Telegram message)

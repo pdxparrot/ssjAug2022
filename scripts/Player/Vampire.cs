@@ -5,7 +5,7 @@ using System.Linq;
 
 using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
-using pdxpartyparrot.ssjAug2022.NPCs;
+using pdxpartyparrot.ssjAug2022.NPCs.Human;
 using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022.Player
@@ -163,6 +163,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             Model.ChangeState("death");
 
+            // TODO: this should despawn the player but not destroy it
             _deathTimer.Start();
         }
 
@@ -269,6 +270,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private void _on_Dash_Timer_timeout()
         {
+            // TODO: this is dumb
             MaxSpeed /= _dashModifier;
 
             Model.ChangeState("Movement");

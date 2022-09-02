@@ -7,9 +7,9 @@ using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.Player;
 
-namespace pdxpartyparrot.ssjAug2022.NPCs
+namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 {
-    public class Human : SimpleNPC, IInteractable
+    public class Boss : SimpleNPC, IInteractable
     {
         [Export]
         private int _maxHealth = 1;
@@ -63,9 +63,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public Vector3 HomeTranslation { get; private set; }
 
-        private HumanStateMachine _stateMachine;
+        private BossStateMachine _stateMachine;
 
-        public HumanSteering Steering { get; private set; }
+        public BossSteering Steering { get; private set; }
 
         public bool CanInteract => !IsDead;
 
@@ -91,9 +91,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             _deathTimer = GetNode<Timer>("Timers/Death Timer");
             _deathAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Death");
 
-            Steering = GetNode<HumanSteering>("Steering");
+            Steering = GetNode<BossSteering>("Steering");
 
-            _stateMachine = GetNode<HumanStateMachine>("StateMachine");
+            _stateMachine = GetNode<BossStateMachine>("StateMachine");
             _stateMachine.SetGlobalState(new States.Global());
             _stateMachine.ChangeState(new States.Idle());
         }
@@ -126,6 +126,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
             _deathAudioPlayer.Play();
 
+            // TODO: this should despawn but not destroy (do not decrease enemy count)
             _deathTimer.Start();
         }
 
@@ -202,15 +203,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
             // TODO: it would be better if this was done
             // in the Global state so the AI is contained
-            _stateMachine.ChangeState(new States.ChasePlayer {
+            /*_stateMachine.ChangeState(new States.ChasePlayer {
                 Target = vampire,
-            });
+            });*/
         }
 
         private void _on_Death_Timer_timeout()
         {
             GD.Print($"[{Id}] died!");
 
+            // TODO: this should destroy the NPC (decrease enemy count)
             NPCManager.Instance.DeSpawnNPC(this, true);
 
             GameManager.Instance.EnemyDefeated();
