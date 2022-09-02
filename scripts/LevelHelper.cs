@@ -11,11 +11,17 @@ namespace pdxpartyparrot.ssjAug2022
 {
     public class LevelHelper : Node
     {
-        private enum Stage
+        public enum Stage
         {
             Enemies,
             Boss,
         }
+
+        #region Events
+
+        public event EventHandler<EventArgs> StageChangeEvent;
+
+        #endregion
 
         #region Enemies
 
@@ -50,6 +56,8 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _Ready()
         {
+            GameManager.Instance.Level = this;
+
             _musicPlayer = GetNode<AudioStreamPlayer>("Music");
             _musicPlayer.Play();
 
@@ -98,6 +106,35 @@ namespace pdxpartyparrot.ssjAug2022
         }
 
         #endregion
+
+        public void EnemyDefeated()
+        {
+            switch(_stage) {
+            case Stage.Enemies:
+                if(NPCManager.Instance.NPCCount == 0) {
+                    GD.Print("[GameManager] All enemies defeated!");
+
+                    EnterBossStage();
+                }
+                break;
+            case Stage.Boss:
+                if(NPCManager.Instance.NPCCount == 0) {
+                    GD.Print("[Level] Boss defeated!");
+
+                    GameManager.Instance.GameOver(true);
+                }
+                break;
+            }
+        }
+
+        private void EnterBossStage()
+        {
+            _stage = Stage.Boss;
+
+            StageChangeEvent?.Invoke(this, EventArgs.Empty);
+
+            SpawnBoss();
+        }
 
         #region Enemies
 

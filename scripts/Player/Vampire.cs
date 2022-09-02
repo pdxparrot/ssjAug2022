@@ -115,6 +115,15 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _deathTimer = GetNode<Timer>("Timers/Death Timer");
         }
 
+        public override void _ExitTree()
+        {
+            base._ExitTree();
+
+            if(GameManager.HasInstance && GameManager.Instance.Level != null) {
+                GameManager.Instance.Level.StageChangeEvent -= StageChangeEventHandler;
+            }
+        }
+
         public override void _Input(InputEvent @event)
         {
             if(!IsInputAllowed) {
@@ -156,6 +165,13 @@ namespace pdxpartyparrot.ssjAug2022.Player
         }
 
         #endregion
+
+        private void ResetHealth()
+        {
+            _currentHealth = _maxHealth;
+
+            GameUIManager.Instance.HUD.UpdatePlayerHealth(1.0f);
+        }
 
         public void Kill()
         {
@@ -292,24 +308,40 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         #endregion
 
-        #region Events
+        #region Spawn
 
         public override void OnSpawn(SpawnPoint spawnPoint)
         {
             base.OnSpawn(spawnPoint);
 
-            _currentHealth = _maxHealth;
+            GameManager.Instance.Level.StageChangeEvent += StageChangeEventHandler;
 
-            GameUIManager.Instance.HUD.UpdatePlayerHealth(1.0f);
+            ResetHealth();
         }
 
         public override void OnReSpawn(SpawnPoint spawnPoint)
         {
             base.OnSpawn(spawnPoint);
 
-            _currentHealth = _maxHealth;
+            ResetHealth();
+        }
 
-            GameUIManager.Instance.HUD.UpdatePlayerHealth(1.0f);
+        public override void OnDeSpawn()
+        {
+            base.OnDeSpawn();
+
+            if(GameManager.HasInstance && GameManager.Instance.Level != null) {
+                GameManager.Instance.Level.StageChangeEvent -= StageChangeEventHandler;
+            }
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void StageChangeEventHandler(object sender, EventArgs args)
+        {
+            ResetHealth();
         }
 
         #endregion

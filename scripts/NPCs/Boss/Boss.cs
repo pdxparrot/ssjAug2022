@@ -220,7 +220,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             // TODO: this should destroy the NPC (decrease enemy count)
             NPCManager.Instance.DeSpawnNPC(this, true);
 
-            GameManager.Instance.EnemyDefeated();
+            GameManager.Instance.Level.EnemyDefeated();
         }
 
         #endregion

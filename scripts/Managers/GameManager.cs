@@ -24,6 +24,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         private Timer _gameOverTimer;
 
+        public LevelHelper Level { get; set; }
+
         #region Godot Lifecycle
 
         public override void _Ready()
@@ -73,15 +75,6 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             ShowGameOverUI(win);
 
             _gameOverTimer.Start();
-        }
-
-        public void EnemyDefeated()
-        {
-            if(NPCManager.Instance.NPCCount == 0) {
-                GD.Print("[GameManager] All enemies defeated!");
-
-                GameOver(true);
-            }
         }
 
         #region Signal Handlers
