@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/world/ground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/world/props/floating_crystal.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://audio/MX_Gameplay_LP1.wav" type="AudioStream" id=8]
 [ext_resource path="res://scenes/world/wall.tscn" type="PackedScene" id=9]
 [ext_resource path="res://art/3d/Tree01.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/npcs/boss.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ProceduralSky" id=1]
 sky_top_color = Color( 0, 0, 0, 1 )
@@ -41,6 +42,8 @@ script = ExtResource( 3 )
 _enemiesToSpawn = 45
 _enemySpawnTag = "human"
 _humanScene = ExtResource( 5 )
+_bossSpawnTag = "boss"
+_bossScene = ExtResource( 11 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )

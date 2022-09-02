@@ -4,12 +4,19 @@ using System;
 
 using pdxpartyparrot.ssjAug2022.Camera;
 using pdxpartyparrot.ssjAug2022.Managers;
-using pdxpartyparrot.ssjAug2022.NPCs;
 
 namespace pdxpartyparrot.ssjAug2022
 {
     public class LevelHelper : Node
     {
+        private enum Stage
+        {
+            Enemies,
+            Boss,
+        }
+
+        #region Enemies
+
         [Export]
         private int _enemiesToSpawn;
 
@@ -19,9 +26,23 @@ namespace pdxpartyparrot.ssjAug2022
         [Export]
         private PackedScene _humanScene;
 
+        #endregion
+
+        #region Boss
+
+        [Export]
+        private string _bossSpawnTag = string.Empty;
+
+        [Export]
+        private PackedScene _bossScene;
+
+        #endregion
+
         private AudioStreamPlayer _musicPlayer;
 
         private FollowCamera _viewer;
+
+        private Stage _stage = Stage.Enemies;
 
         #region Godot Lifecycle
 
@@ -52,7 +73,7 @@ namespace pdxpartyparrot.ssjAug2022
 
         #endregion
 
-        private SimpleNPC SpawnEnemy()
+        private void SpawnEnemy()
         {
             var id = Guid.NewGuid();
 
@@ -61,13 +82,11 @@ namespace pdxpartyparrot.ssjAug2022
             var spawnPoint = SpawnManager.Instance.GetSpawnPoint(_enemySpawnTag);
             if(null == spawnPoint) {
                 GD.PushError("Failed to get enemy spawnpoint!");
-                return null;
+                return;
             }
 
             var enemy = spawnPoint.SpawnNPC(_humanScene, $"Human {id}");
             enemy.Id = id;
-
-            return enemy;
         }
 
         private void SpawnEnemies()
@@ -77,6 +96,24 @@ namespace pdxpartyparrot.ssjAug2022
             for(int i = 0; i < _enemiesToSpawn; ++i) {
                 SpawnEnemy();
             }
+        }
+
+        private void SpawnBoss()
+        {
+            GD.Print($"[Level] Spawning boss ...");
+
+            var id = Guid.NewGuid();
+
+            //GD.Print($"[Level] Spawning boss {id}...");
+
+            var spawnPoint = SpawnManager.Instance.GetSpawnPoint(_bossSpawnTag);
+            if(null == spawnPoint) {
+                GD.PushError("Failed to get boss spawnpoint!");
+                return;
+            }
+
+            var boss = spawnPoint.SpawnNPC(_bossScene, $"Boss {id}");
+            boss.Id = id;
         }
     }
 }
