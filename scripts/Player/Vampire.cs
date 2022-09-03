@@ -259,7 +259,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _dashAudioPlayer.Play();
 
             MaxSpeed *= _dashModifier;
-            Velocity = -Pivot.Transform.basis.z * MaxSpeed;
+            Velocity = Forward * MaxSpeed;
 
             _dashTimer.Start();
         }

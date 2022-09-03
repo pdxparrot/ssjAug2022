@@ -1,5 +1,6 @@
 using Godot;
 
+using pdxpartyparrot.ssjAug2022.Util;
 using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022
@@ -20,6 +21,11 @@ namespace pdxpartyparrot.ssjAug2022
             set => _maxSpeed = value;
         }
 
+        /*[Export]
+        private float _maxTurnRate = Mathf.Pi;
+
+        public float MaxTurnRate => _maxTurnRate;*/
+
         [Export]
         private float _gravityMultiplier = 5.0f;
 
@@ -30,7 +36,6 @@ namespace pdxpartyparrot.ssjAug2022
         public Vector3 Velocity
         {
             get => _velocity;
-
             protected set => _velocity = LimitVelocity(value);
         }
 
@@ -38,9 +43,11 @@ namespace pdxpartyparrot.ssjAug2022
 
         public float HorizontalSpeed => new Vector3(_velocity.x, 0.0f, _velocity.z).Length();
 
-        private Vector3 _heading;
+        public Vector3 Forward => -Pivot.Transform.basis.z;
 
-        public Vector3 Heading => _heading;
+        public Vector3 Heading { get; private set; }
+
+        public Vector3 Side { get; private set; } = Vector3.Right;
 
         private float _gravity;
 
@@ -84,15 +91,17 @@ namespace pdxpartyparrot.ssjAug2022
             _velocity = LimitVelocity(_velocity);
 
             // calculate horizontal heading
-            _heading = new Vector3(_velocity.x, 0.0f, _velocity.z);
-            if(_heading.LengthSquared() > 0.01) {
-                _heading = _heading.Normalized();
+            Heading = new Vector3(_velocity.x, 0.0f, _velocity.z);
+            if(Heading.LengthSquared() > 0.01) {
+                Heading = Heading.Normalized();
 
                 // look in the direction we're heading
-                _pivot.LookAt(Translation + _heading, Vector3.Up);
+                _pivot.LookAt(Translation + Heading, Vector3.Up);
             } else {
-                _heading = Vector3.Zero;
+                Heading = Forward;
             }
+
+            Side = Heading.Perpendicular();
 
             // move the player
             _velocity = MoveAndSlide(_velocity, Vector3.Up);
