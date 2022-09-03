@@ -3,21 +3,13 @@ using Godot;
 using System;
 using System.Linq;
 
-using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.Player;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 {
-    public class Boss : SimpleNPC, IInteractable
+    public class Boss : Enemy
     {
-        [Export]
-        private int _maxHealth = 1;
-
-        private int _currentHealth;
-
-        public bool IsDead => _currentHealth <= 0;
-
         [Export]
         private float _wanderSpeed = 5.0f;
 
@@ -67,10 +59,6 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         public BossSteering Steering { get; private set; }
 
-        public bool CanInteract => !IsDead;
-
-        public Type InteractableType => GetType();
-
         private bool IsGlobalCooldown => !_attackAnimationTimer.IsStopped();
 
         #region Godot Lifecycle
@@ -79,7 +67,6 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
         {
             base._Ready();
 
-            _currentHealth = _maxHealth;
             HomeTranslation = Translation;
 
             _attackAnimationTimer = GetNode<Timer>("Timers/Attack Animation Timer");
@@ -118,33 +105,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         #endregion
 
-        public void Kill()
+        protected override void OnDied()
         {
-            Damage(_currentHealth);
-        }
+            base.OnDied();
 
-        private void OnDied()
-        {
             _stateMachine.ChangeState(new States.Dead());
-
-            Stop();
 
             _deathAudioPlayer.Play();
 
             // TODO: this should despawn but not destroy (do not decrease enemy count)
             _deathTimer.Start();
-        }
-
-        public void Damage(int amount)
-        {
-            if(IsDead) {
-                return;
-            }
-
-            _currentHealth = Mathf.Max(_currentHealth - amount, 0);
-            if(IsDead) {
-                OnDied();
-            }
         }
 
         private void DamageInteractablePlayers(Interactables.Interactables interactables, int damage)
@@ -167,7 +137,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             DamageInteractablePlayers(_attackInteractables, _attackDamage);
         }
 
-        public void Attack(Vampire target)
+        public void Attack()
         {
             if(IsDead || IsGlobalCooldown || !_attackCooldown.IsStopped()) {
                 return;

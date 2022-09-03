@@ -41,7 +41,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
                 return;
             }
 
-            owner.Attack(Target);
+            owner.Attack();
         }
 
         public bool OnMessage(Human owner, StateMachine<Human> stateMachine, Telegram message)

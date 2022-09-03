@@ -5,6 +5,8 @@ using System.Linq;
 
 using pdxpartyparrot.ssjAug2022.Interactables;
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.NPCs;
+using pdxpartyparrot.ssjAug2022.NPCs.Boss;
 using pdxpartyparrot.ssjAug2022.NPCs.Human;
 using pdxpartyparrot.ssjAug2022.World;
 
@@ -198,19 +200,25 @@ namespace pdxpartyparrot.ssjAug2022.Player
             }
         }
 
-        private void DamageInteractableEnemeies(Interactables.Interactables interactables, int damage)
+        private void DamageEnemies<T>(Interactables.Interactables interactables, int damage) where T : Enemy
         {
-            var enemies = interactables.GetInteractables<Human>();
+            var enemies = interactables.GetInteractables<T>();
 
             // copy because we're going to modify the underlying collection
-            var humans = new Human[enemies.Count];
+            var copy = new T[enemies.Count];
             for(int idx = 0; idx < enemies.Count; ++idx) {
-                humans[idx] = (Human)enemies.ElementAt(idx);
+                copy[idx] = (T)enemies.ElementAt(idx);
             }
 
-            foreach(var human in humans) {
-                human.Damage(damage);
+            foreach(var enemy in copy) {
+                enemy.Damage(damage);
             }
+        }
+
+        private void DamageInteractableEnemeies(Interactables.Interactables interactables, int damage)
+        {
+            DamageEnemies<Human>(interactables, damage);
+            DamageEnemies<Boss>(interactables, damage);
         }
 
         private void DoClawAttackDamage()
