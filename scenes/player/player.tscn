@@ -82,15 +82,15 @@ visible = false
 
 [node name="dash_vfx_mesh" parent="Pivot/Dash VFX" instance=ExtResource( 10 )]
 
-[node name="Spatial" type="Spatial" parent="Pivot"]
+[node name="Lighting" type="Spatial" parent="Pivot"]
 transform = Transform( 0.999994, -0.00231519, -0.00242054, 0.00231495, 0.999997, -0.000103869, 0.00242078, 9.8277e-05, 0.999997, 0, 0, 0 )
 
-[node name="OmniLight" type="OmniLight" parent="Pivot/Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0871811, 4.49464, -2.7578 )
+[node name="OmniLight" type="OmniLight" parent="Pivot/Lighting"]
+transform = Transform( 1, -6.56567e-09, -6.75209e-09, 1.32218e-09, 1, -1.19835e-08, -2.32831e-10, -4.36557e-11, 1, 0.0935737, 4.4949, -0.117115 )
 light_color = Color( 1, 0, 0, 1 )
-light_energy = 4.0
-omni_range = 10.0
-omni_attenuation = 0.732043
+light_energy = 3.0
+omni_range = 12.0
+omni_attenuation = 1.86607
 
 [node name="Timers" type="Node" parent="."]
 
