@@ -1,6 +1,7 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://art/3d/Paladin_MAT.material" type="Material" id=1]
+[ext_resource path="res://art/textures/knight/knight_char.tres" type="Material" id=2]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "knight_Paladin_J_Nordstrom"
@@ -3113,18 +3114,22 @@ bones/68/bound_children = [  ]
 [node name="Paladin_J_Nordstrom" type="MeshInstance" parent="Knight/Skeleton"]
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
+material/0 = ExtResource( 2 )
 
 [node name="Paladin_J_Nordstrom_Helmet" type="MeshInstance" parent="Knight/Skeleton"]
 mesh = SubResource( 3 )
 skin = SubResource( 2 )
+material/0 = ExtResource( 2 )
 
 [node name="Paladin_J_Nordstrom_Shield" type="MeshInstance" parent="Knight/Skeleton"]
 mesh = SubResource( 4 )
 skin = SubResource( 2 )
+material/0 = ExtResource( 2 )
 
 [node name="Paladin_J_Nordstrom_Sword" type="MeshInstance" parent="Knight/Skeleton"]
 mesh = SubResource( 5 )
 skin = SubResource( 2 )
+material/0 = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 6 )

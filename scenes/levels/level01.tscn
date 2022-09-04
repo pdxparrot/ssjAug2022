@@ -25,6 +25,7 @@ background_mode = 2
 background_sky = SubResource( 1 )
 ambient_light_color = Color( 1, 0, 0, 1 )
 ambient_light_energy = 0.2
+fog_enabled = true
 fog_color = Color( 0.345098, 0.878431, 0.803922, 1 )
 fog_sun_color = Color( 1, 0, 0, 1 )
 fog_sun_amount = 1.0
@@ -50,10 +51,16 @@ _bossScene = ExtResource( 11 )
 environment = SubResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.639576, -0.6496, 0.41105, -0.708046, -0.289574, 0.644064, -0.299355, -0.70297, -0.645151, -60.0888, 10, 43.3379 )
-light_color = Color( 1, 0.380392, 0.380392, 1 )
-light_energy = 0.35
+transform = Transform( 0.65064, 0.0869922, 0.754387, -0.708046, -0.289573, 0.644064, 0.274479, -0.953194, -0.126814, -60.0888, 10, 43.3379 )
+light_color = Color( 0.203922, 0.517647, 0.847059, 1 )
+light_energy = 0.5
 shadow_enabled = true
+shadow_color = Color( 0.0196078, 0.117647, 0.243137, 1 )
+
+[node name="DirectionalLight2" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -56.9521, 17.1999, 63.7262 )
+light_color = Color( 0.4, 0.87451, 0.796078, 1 )
+light_energy = 0.05
 shadow_color = Color( 0.0196078, 0.117647, 0.243137, 1 )
 
 [node name="World" type="Spatial" parent="."]
