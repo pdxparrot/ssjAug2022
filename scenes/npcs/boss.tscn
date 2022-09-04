@@ -43,7 +43,7 @@ script = ExtResource( 3 )
 _motionBlendPath = "parameters/attack_movement/Motion/blend_position"
 
 [node name="BoneAttachment" parent="Pivot/Model/HeroArmature/Skeleton" index="1"]
-transform = Transform( 0.804366, -0.184807, 0.564662, -0.288682, 0.709094, 0.643309, -0.519286, -0.680463, 0.517021, -79.7383, -51.411, -166.129 )
+transform = Transform( 0.761656, -0.138528, 0.633002, -0.377378, 0.699285, 0.607112, -0.52675, -0.701291, 0.480338, -85.8522, -42.7954, -155.12 )
 
 [node name="hero_scythe" parent="Pivot/Model/HeroArmature/Skeleton/BoneAttachment" index="0"]
 transform = Transform( 1.5, -2.0199e-08, 7.44774e-07, 7.45047e-07, 0.0402286, -1.49946, 2.18279e-10, 1.49947, 0.0402285, -4.45798, 99.8795, 1.41293 )
