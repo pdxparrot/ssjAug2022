@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/world/ground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/world/props/floating_crystal.tscn" type="PackedScene" id=2]
@@ -11,7 +11,6 @@
 [ext_resource path="res://scenes/world/wall.tscn" type="PackedScene" id=9]
 [ext_resource path="res://art/3d/Tree01.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/npcs/boss.tscn" type="PackedScene" id=11]
-[ext_resource path="res://art/3d/character/hero/hero_anim.tscn" type="PackedScene" id=12]
 
 [sub_resource type="ProceduralSky" id=1]
 sky_top_color = Color( 0.0588235, 0.529412, 0.498039, 1 )
@@ -885,9 +884,6 @@ _maxZSpawnRange = 5.0
 [node name="Boss Spawn" parent="World" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.1539, 1, 15.4701 )
 _tags = PoolStringArray( "boss" )
-
-[node name="hero_anim" parent="World" instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -103.375, 1.62326, 105.357 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )

@@ -1,18 +1,20 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/NPCs/Boss/Boss.cs" type="Script" id=1]
-[ext_resource path="res://art/3d/knight_anim_blend.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Model.cs" type="Script" id=3]
 [ext_resource path="res://scripts/NPCs/Boss/BossStateMachine.cs" type="Script" id=4]
 [ext_resource path="res://scripts/NPCs/Boss/BossSteering.cs" type="Script" id=5]
 [ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=6]
 [ext_resource path="res://audio/npc/SFX_SwordSwing_2.wav" type="AudioStream" id=7]
 [ext_resource path="res://audio/npc/SFX_Impact_Gore_4.wav" type="AudioStream" id=8]
+[ext_resource path="res://art/3d/character/hero/hero_anim.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
-radius = 1.5
-height = 3.0
+radius = 2.0
+height = 2.0
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
 
 [sub_resource type="BoxShape" id=2]
 
@@ -35,10 +37,19 @@ shape = SubResource( 1 )
 
 [node name="Pivot" type="Spatial" parent="."]
 
-[node name="Model" parent="Pivot" instance=ExtResource( 2 )]
-transform = Transform( 3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, 0 )
+[node name="Model" parent="Pivot" instance=ExtResource( 9 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
 script = ExtResource( 3 )
-_motionBlendPath = "parameters/Motion/blend_position"
+_motionBlendPath = "parameters/attack_movement/Motion/blend_position"
+
+[node name="BoneAttachment" parent="Pivot/Model/HeroArmature/Skeleton" index="1"]
+transform = Transform( 0.804366, -0.184807, 0.564662, -0.288682, 0.709094, 0.643309, -0.519286, -0.680463, 0.517021, -79.7383, -51.411, -166.129 )
+
+[node name="hero_scythe" parent="Pivot/Model/HeroArmature/Skeleton/BoneAttachment" index="0"]
+transform = Transform( 1.5, -2.0199e-08, 7.44774e-07, 7.45047e-07, 0.0402286, -1.49946, 2.18279e-10, 1.49947, 0.0402285, -4.45798, 99.8795, 1.41293 )
+
+[node name="AnimationTree" parent="Pivot/Model" index="2"]
+parameters/playback = SubResource( 5 )
 
 [node name="Hurtbox" type="Area" parent="Pivot"]
 transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 2, 0, 2.5, 0 )
@@ -55,7 +66,7 @@ monitorable = false
 shape = SubResource( 3 )
 
 [node name="Attack Hitbox" type="Area" parent="Pivot"]
-transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, -4 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 3, 0, 2, -5 )
 monitorable = false
 script = ExtResource( 6 )
 
@@ -64,7 +75,7 @@ shape = SubResource( 4 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
 avoidance_enabled = true
-radius = 1.5
+radius = 2.0
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )

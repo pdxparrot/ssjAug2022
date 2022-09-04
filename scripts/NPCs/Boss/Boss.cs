@@ -99,6 +99,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
         {
             base.OnDied();
 
+            Model.ChangeState("death");
+
             _stateMachine.ChangeState(new States.Dead());
 
             _deathAudioPlayer.Play();
@@ -134,7 +136,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             }
 
             GD.Print($"[{Id}] Attack!");
-            Model.TriggerOneShot("parameters/Claw_AttackTrigger/active");
+            Model.TriggerOneShot("parameters/attack_movement/AttackTrigger/active");
             _attackAudioPlayer.Play();
 
             _attackAnimationTimer.Start();
