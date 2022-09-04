@@ -3502,7 +3502,7 @@ states/power_unleash/node = SubResource( 20 )
 states/power_unleash/position = Vector2( 647, 43 )
 transitions = [ "Movement", "claw_attack", SubResource( 21 ), "Movement", "power_unleash", SubResource( 22 ), "Movement", "dash", SubResource( 23 ), "dash", "Movement", SubResource( 24 ), "power_unleash", "Movement", SubResource( 25 ), "claw_attack", "Movement", SubResource( 26 ), "Movement", "death", SubResource( 27 ) ]
 start_node = "Movement"
-graph_offset = Vector2( 138, -8 )
+graph_offset = Vector2( 143, -49 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
@@ -3857,4 +3857,4 @@ tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 12 )
-parameters/Movement/blend_position = 1.0
+parameters/Movement/blend_position = 0.123649
