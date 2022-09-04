@@ -11,16 +11,6 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
     public class Boss : Enemy
     {
         [Export]
-        private float _wanderSpeed = 5.0f;
-
-        public float WanderSpeed => _wanderSpeed;
-
-        [Export]
-        private float _idleLeashRange = 10.0f;
-
-        public float IdleLeashRangeSquared => _idleLeashRange * _idleLeashRange;
-
-        [Export]
         private float _trackingRange = 20.0f;
 
         public float TrackingRangeSquared => _trackingRange * _trackingRange;

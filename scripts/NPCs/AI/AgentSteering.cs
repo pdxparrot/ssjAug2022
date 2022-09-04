@@ -7,6 +7,8 @@ using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 {
+    // TODO: not sure what's up with it but TargetReachable() doesn't seem to be doing the right thing
+    // agents probably need a stuck check to get them to abandon a path
     public abstract class AgentSteering<T> : Node where T : SimpleNPC
     {
         private const float DecelerationTweaker = 0.3f;
@@ -47,10 +49,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         public struct WanderParams
         {
+            // the radius of the wander circle
             public float radius;
 
+            // how far in front of the agent to project the wander circle
             public float distance;
 
+            // how much jitter per-second to apply to the wander
             public float jitter;
 
             public float maxSpeed;
@@ -295,9 +300,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         {
             velocity = Vector3.Zero;
 
-            /*if(!_owner.IsNavigationFinished()) {
-                return (false, true);
-            }*/
+            //GD.Print($"Wander {_owner.DistanceToTarget()} to {_owner.GetNextLocation()} ({_owner.GetFinalLocation()}): {_owner.IsTargetReachable()} - {_owner.IsTargetReached()}");
 
             // seek the target until we reach it
             if(_owner.IsTargetReachable() && !_owner.IsTargetReached()) {
@@ -306,6 +309,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             }
 
             // update the target
+            //GD.Print($"Updating wander target");
             float jitter = _wanderParams.jitter * delta;
             var target = GetWanderTarget(jitter);
             _owner.SetTarget(target);

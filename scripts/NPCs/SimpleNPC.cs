@@ -64,6 +64,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             return _agent.GetNextLocation();
         }
 
+        public Vector3 GetFinalLocation()
+        {
+            return _agent.GetFinalLocation();
+        }
+
+        public float DistanceToTarget()
+        {
+            return _agent.DistanceToTarget();
+        }
+
         public void SetVelocity(Vector3 velocity)
         {
             velocity = LimitVelocity(velocity);

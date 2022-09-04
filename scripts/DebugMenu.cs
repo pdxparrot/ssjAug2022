@@ -26,6 +26,8 @@ namespace pdxpartyparrot.ssjAug2022
 
             _canvas = GetNode<CanvasLayer>("CanvasLayer");
 
+            // TODO: all of these should be created dynamically
+            // so the debug menu can be code-driven
             _fps = _canvas.GetNode<Label>("VBoxContainer/FPS/FPS");
             _staticMemory = _canvas.GetNode<Label>("VBoxContainer/Static Memory/Static Memory");
             _staticMemoryMax = _canvas.GetNode<Label>("VBoxContainer/Static Memory/Static Memory Max");

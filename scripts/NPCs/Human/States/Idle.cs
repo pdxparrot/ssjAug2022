@@ -7,6 +7,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
         public void Enter(Human owner, StateMachine<Human> stateMachine)
         {
             owner.Steering.WanderOn(new HumanSteering.WanderParams {
+                // TODO: make these configurable
                 radius = 5.0f,
                 distance = 10.0f,
                 jitter = 50.0f,
@@ -21,6 +22,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
 
         public void Execute(Human owner, StateMachine<Human> stateMachine)
         {
+            // leash if we go too far
             float homeDistance = owner.Translation.DistanceSquaredTo(owner.HomeTranslation);
             if(homeDistance > owner.IdleLeashRangeSquared) {
                 stateMachine.ChangeState(new ReturnHome());
