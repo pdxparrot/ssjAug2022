@@ -168,9 +168,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
             // TODO: it would be better if this was done
             // in the Global state so the AI is contained
-            /*_stateMachine.ChangeState(new States.ChasePlayer {
+            _stateMachine.ChangeState(new States.ChasePlayer {
                 Target = vampire,
-            });*/
+            });
         }
 
         private void _on_Death_Timer_timeout()
