@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://art/3d/character/M_Vamp.material" type="Material" id=1]
+[ext_resource path="res://art/textures/vamp_textures/vamp_char.tres" type="Material" id=2]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Vamp_02_BezierCurve002"
@@ -2622,12 +2623,15 @@ bones/86/enabled = true
 bones/86/bound_children = [  ]
 
 [node name="Cape001" type="MeshInstance" parent="RIG_Vamp/Skeleton"]
+transform = Transform( 1, 0.000681952, -0.000411154, -0.000682124, 1, -0.000397601, 0.000410868, 0.000397896, 1, 0, 0, 0 )
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
+material/0 = ExtResource( 2 )
 
 [node name="Vamp001" type="MeshInstance" parent="RIG_Vamp/Skeleton"]
 mesh = SubResource( 3 )
 skin = SubResource( 2 )
+material/0 = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Cape001 = SubResource( 4 )
