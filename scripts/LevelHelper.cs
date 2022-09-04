@@ -50,6 +50,8 @@ namespace pdxpartyparrot.ssjAug2022
 
         private FollowCamera _viewer;
 
+        public FollowCamera Viewer => _viewer;
+
         private Stage _stage = Stage.Enemies;
 
         #region Godot Lifecycle

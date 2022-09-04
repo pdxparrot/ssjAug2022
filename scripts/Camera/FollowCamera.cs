@@ -11,6 +11,8 @@ namespace pdxpartyparrot.ssjAug2022.Camera
 
         private Spatial _target;
 
+        #region Godot Lifecycle
+
         public override void _Process(float delta)
         {
             if(_target != null) {
@@ -18,14 +20,22 @@ namespace pdxpartyparrot.ssjAug2022.Camera
             }
         }
 
+        #endregion
+
         public void Follow(Spatial target)
         {
             _target = target;
         }
 
+        #region Events
+
         public override void OnRelease()
         {
+            base.OnRelease();
+
             _target = null;
         }
+
+        #endregion
     }
 }
