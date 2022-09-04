@@ -10,6 +10,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 {
     public abstract class SimpleNPC : SimpleCharacter
     {
+        [Export]
+        private float _maxTurnRate = Mathf.Pi / 4.0f;
+
+        public float MaxTurnRate => _maxTurnRate;
+
         private NavigationAgent _agent;
 
         public Guid Id { get; set; }
@@ -85,6 +90,23 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             Velocity = velocity;
         }
 
+        private Vector3 LimitTurnRate(Vector3 velocity)
+        {
+            /*var current = new Vector2(Velocity.x, Velocity.z);
+            if(current.LengthSquared() < 0.01) {
+                current = new Vector2(Forward.x, Forward.z);
+            }
+
+            var desired = new Vector2(velocity.x, velocity.z);
+
+            float angle = Vector2.Down.AngleTo(desired);
+            var updated = current.Rotated(Math.Min(angle, _maxTurnRate)).Normalized() * desired.Length();
+
+            return new Vector3(updated.x, Velocity.y, updated.y);*/
+
+            return velocity;
+        }
+
         #endregion
 
         #region Spawn
@@ -117,7 +139,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         protected void _on_NavigationAgent_velocity_computed(Vector3 safeVelocity)
         {
             //GD.Print($"[{Id}] velocity updated: {safeVelocity}");
-            UpdateVelocity(new Vector3(safeVelocity.x, Velocity.y, safeVelocity.z));
+
+            var velocity = LimitTurnRate(safeVelocity);
+            //GD.Print($"[{Id}] turn rate limited velocity: {velocity}");
+
+            UpdateVelocity(velocity);
         }
 
         #endregion

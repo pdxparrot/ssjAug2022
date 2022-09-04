@@ -13,15 +13,17 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss.States
         {
             //GD.Print($"[{owner.Id} attacking vampire {Target.Name}");
 
-            owner.Steering.PursuitOn(new BossSteering.PursuitParams {
+            owner.Stop();
+
+            /*owner.Steering.PursuitOn(new BossSteering.PursuitParams {
                 target = Target,
                 maxSpeed = owner.MaxSpeed,
-            });
+            });*/
         }
 
         public void Exit(Boss owner, StateMachine<Boss> stateMachine)
         {
-            owner.Steering.PursuitOff();
+            //owner.Steering.PursuitOff();
         }
 
         public void Execute(Boss owner, StateMachine<Boss> stateMachine)

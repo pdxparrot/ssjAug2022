@@ -21,12 +21,6 @@ namespace pdxpartyparrot.ssjAug2022
             set => _maxSpeed = value;
         }
 
-        // TODO:
-        /*[Export]
-        private float _maxTurnRate = Mathf.Pi;
-
-        public float MaxTurnRate => _maxTurnRate;*/
-
         [Export]
         private float _gravityMultiplier = 5.0f;
 
