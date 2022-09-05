@@ -52,10 +52,10 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
             _bossStageContainer = _canvas.GetNode<Control>("Pivot/Stage Boss");
 
-            _playerBossHealthBar = _bossStageContainer.GetNode<TextureProgress>("Player Health");
+            _playerBossHealthBar = _bossStageContainer.GetNode<TextureProgress>("Player Health Panel/Player Health");
             _playerBossHealthBar.MinValue = 0.0;
 
-            _bossHealthBar = _bossStageContainer.GetNode<TextureProgress>("Boss Health");
+            _bossHealthBar = _bossStageContainer.GetNode<TextureProgress>("Boss Health Panel/Boss Health");
             _bossHealthBar.MinValue = 0.0;
 
             _playerHealthTween = GetNode<Tween>("Tweens/Player Health");

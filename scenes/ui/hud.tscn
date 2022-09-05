@@ -69,34 +69,6 @@ rect_pivot_offset = Vector2( 384, 50 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Player Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Boss"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -1429.0
-margin_top = 355.0
-margin_right = 2025.0
-margin_bottom = 795.0
-rect_scale = Vector2( 0.18, 0.18 )
-rect_pivot_offset = Vector2( 2048, 256 )
-size_flags_horizontal = 5
-size_flags_vertical = 5
-value = 25.0
-texture_under = ExtResource( 8 )
-texture_over = ExtResource( 7 )
-texture_progress = ExtResource( 6 )
-
-[node name="Boss Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Boss"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 25.0
-margin_top = 22.0
-margin_right = 1668.0
-margin_bottom = 208.0
-rect_scale = Vector2( 0.15, 0.15 )
-texture_under = ExtResource( 4 )
-texture_over = ExtResource( 3 )
-texture_progress = ExtResource( 9 )
-
 [node name="Player Health Panel" type="Control" parent="CanvasLayer/Pivot/Stage Boss"]
 anchor_left = 0.25
 anchor_top = 0.85
@@ -106,6 +78,22 @@ margin_right = 2.0
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
+[node name="Player Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Boss/Player Health Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -69.64
+margin_top = -47.08
+margin_right = 3384.36
+margin_bottom = 392.92
+rect_scale = Vector2( 0.18, 0.18 )
+rect_pivot_offset = Vector2( 2048, 256 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+value = 25.0
+texture_under = ExtResource( 8 )
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 6 )
+
 [node name="Boss Health Panel" type="Control" parent="CanvasLayer/Pivot/Stage Boss"]
 anchor_left = 0.02
 anchor_right = 0.341
@@ -114,6 +102,18 @@ margin_left = 2.4
 margin_top = 4.0
 margin_right = -3.47998
 margin_bottom = -4.48
+
+[node name="Boss Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Boss/Boss Health Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = 18.0
+margin_right = 1640.0
+margin_bottom = 204.0
+rect_scale = Vector2( 0.15, 0.15 )
+texture_under = ExtResource( 4 )
+texture_over = ExtResource( 3 )
+texture_progress = ExtResource( 9 )
 
 [node name="Tweens" type="Node" parent="."]
 
