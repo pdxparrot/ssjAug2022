@@ -63,7 +63,6 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=1]
 resource_name = "lifebar_center_bottom"
-loop = true
 step = 0.0333333
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:rect_position")
@@ -228,6 +227,5 @@ texture_progress = ExtResource( 9 )
 [node name="Boss Health" type="Tween" parent="Tweens"]
 
 [node name="Boss Fight UI Animation" type="AnimationPlayer" parent="."]
-autoplay = "lifebar_center_bottom"
 anims/RESET = SubResource( 2 )
 anims/lifebar_center_bottom = SubResource( 1 )

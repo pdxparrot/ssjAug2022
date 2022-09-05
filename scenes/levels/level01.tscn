@@ -833,7 +833,7 @@ transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 1
 transform = Transform( 0.988952, 0, 0.148241, 0, 1, 0, -0.148241, 0, 0.988952, 10.6162, -3.55983, 36.4755 )
 
 [node name="Player Spawn" parent="World" instance=ExtResource( 4 )]
-transform = Transform( 0.999981, 0, -0.00612602, 0, 1, 0, 0.00612602, 0, 0.999981, -115.797, 1, 117.897 )
+transform = Transform( 0.999981, 0, -0.00612602, 0, 1, 0, 0.00612602, 0, 0.999981, -115.797, 0, 117.897 )
 _tags = PoolStringArray( "player" )
 
 [node name="Enemy Spawns" type="Spatial" parent="World"]

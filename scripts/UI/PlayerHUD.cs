@@ -13,10 +13,6 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         private CanvasLayer _canvas;
 
-        private Control _enemiesStageContainer;
-
-        private Control _bossStageContainer;
-
         #region Player Health
 
         private TextureProgress _playerHealthBar;
@@ -39,27 +35,27 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         #endregion
 
+        AnimationPlayer _bossStageAnimation;
+
         #region Godot Lifecycle
 
         public override void _Ready()
         {
             _canvas = GetNode<CanvasLayer>("CanvasLayer");
 
-            _enemiesStageContainer = _canvas.GetNode<Control>("Pivot/Stage Enemies");
-
-            _playerHealthBar = _enemiesStageContainer.GetNode<TextureProgress>("Player Health");
+            _playerHealthBar = _canvas.GetNode<TextureProgress>("Pivot/Stage Enemies/Player Health");
             _playerHealthBar.MinValue = 0.0;
 
-            _bossStageContainer = _canvas.GetNode<Control>("Pivot/Stage Boss");
-
-            _playerBossHealthBar = _bossStageContainer.GetNode<TextureProgress>("Player Health Panel/Player Health");
+            _playerBossHealthBar = _canvas.GetNode<TextureProgress>("Pivot/Stage Boss/Player Health Panel/Player Health");
             _playerBossHealthBar.MinValue = 0.0;
 
-            _bossHealthBar = _bossStageContainer.GetNode<TextureProgress>("Boss Health Panel/Boss Health");
+            _bossHealthBar = _canvas.GetNode<TextureProgress>("Pivot/Stage Boss/Boss Health Panel/Boss Health");
             _bossHealthBar.MinValue = 0.0;
 
             _playerHealthTween = GetNode<Tween>("Tweens/Player Health");
             _bossHealthTween = GetNode<Tween>("Tweens/Boss Health");
+
+            _bossStageAnimation = GetNode<AnimationPlayer>("Boss Fight UI Animation");
         }
 
         public override void _EnterTree()
@@ -98,14 +94,13 @@ namespace pdxpartyparrot.ssjAug2022.UI
             case LevelHelper.Stage.Enemies:
                 _playerHealthPercent = 100.0f;
 
-                _enemiesStageContainer.Show();
-                _bossStageContainer.Hide();
+                _bossStageAnimation.Stop();
+                _bossStageAnimation.Seek(0, true);
                 break;
             case LevelHelper.Stage.Boss:
                 _bossHealthPercent = 100.0f;
 
-                _enemiesStageContainer.Hide();
-                _bossStageContainer.Show();
+                _bossStageAnimation.Play("lifebar_center_bottom");
                 break;
             }
         }
