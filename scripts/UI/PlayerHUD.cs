@@ -94,10 +94,12 @@ namespace pdxpartyparrot.ssjAug2022.UI
             case LevelHelper.Stage.Enemies:
                 _playerHealthPercent = 100.0f;
 
+                // TODO: idk what to do here, this errors every time
+                // but it's the only way to get the thing to actually reset
                 _bossStageAnimation.Stop();
-                if(!string.IsNullOrWhiteSpace(_bossStageAnimation.CurrentAnimation)) {
-                    _bossStageAnimation.Seek(0, true);
-                }
+                //if(!string.IsNullOrWhiteSpace(_bossStageAnimation.CurrentAnimation)) {
+                _bossStageAnimation.Seek(0, true);
+                //}
                 break;
             case LevelHelper.Stage.Boss:
                 _bossHealthPercent = 100.0f;
