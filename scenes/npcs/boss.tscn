@@ -42,8 +42,11 @@ transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0 )
 script = ExtResource( 3 )
 _motionBlendPath = "parameters/attack_movement/Motion/blend_position"
 
+[node name="Skeleton" parent="Pivot/Model/HeroArmature" index="0"]
+bones/55/bound_children = [ NodePath("BoneAttachment") ]
+
 [node name="BoneAttachment" parent="Pivot/Model/HeroArmature/Skeleton" index="1"]
-transform = Transform( 0.742424, -0.177854, 0.645892, 0.0720559, 0.979723, 0.186952, -0.666044, -0.0922573, 0.740184, -70.671, -67.3284, -206.542 )
+transform = Transform( 0.676976, -0.235349, 0.697363, -0.386748, 0.692393, 0.609113, -0.626203, -0.682058, 0.377712, -77.5534, -34.4565, -142.596 )
 
 [node name="hero_scythe" parent="Pivot/Model/HeroArmature/Skeleton/BoneAttachment" index="0"]
 transform = Transform( 1.36702, -0.614298, 0.0623961, -0.0311385, -0.219976, -1.48346, 0.616667, 1.35066, -0.213226, -7.644, 72.5401, 9.53839 )
@@ -73,7 +76,7 @@ monitorable = false
 script = ExtResource( 6 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/Attack Hitbox"]
-transform = Transform( 1.35, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0.631176 )
+transform = Transform( 1.35, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.218536 )
 shape = SubResource( 4 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
