@@ -5,7 +5,7 @@ using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022
 {
-    public abstract class SimpleCharacter : KinematicBody
+    public abstract class SimpleCharacter : KinematicBody, IDebugDraw
     {
         [Export]
         private float _mass = 1.0f;
@@ -64,6 +64,15 @@ namespace pdxpartyparrot.ssjAug2022
 
             _model = _pivot.GetNode<Model>("Model");
             _model.UpdateMotionBlend(0.0f);
+
+            DebugOverlay.Instance.RegisterDebugDraw(this);
+        }
+
+        public override void _ExitTree()
+        {
+            if(DebugOverlay.HasInstance) {
+                DebugOverlay.Instance.UnRegisterDebugDraw(this);
+            }
         }
 
         public override void _Process(float delta)
@@ -103,6 +112,14 @@ namespace pdxpartyparrot.ssjAug2022
         }
 
         #endregion
+
+        public virtual void DebugDraw(CanvasItem cavas, Godot.Camera camera)
+        {
+            var origin = new Vector3(GlobalTransform.origin.x, 1.0f, GlobalTransform.origin.z);
+            var start = camera.UnprojectPosition(origin);
+            var end = camera.UnprojectPosition(origin + Velocity * 10.0f);
+            cavas.DrawLine(start, end, new Color(1.0f, 1.0f, 1.0f), 2.0f);
+        }
 
         public virtual void Stop()
         {
