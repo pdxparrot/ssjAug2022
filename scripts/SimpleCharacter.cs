@@ -118,10 +118,16 @@ namespace pdxpartyparrot.ssjAug2022
 
         public virtual void DebugDraw(CanvasItem cavas, Godot.Camera camera)
         {
-            var origin = new Vector3(GlobalTransform.origin.x, 1.0f, GlobalTransform.origin.z);
-            var start = camera.UnprojectPosition(origin);
-            var end = camera.UnprojectPosition(origin + Velocity);
-            cavas.DrawLine(start, end, new Color(1.0f, 1.0f, 1.0f), 2.0f);
+            var start = camera.UnprojectPosition(GlobalTransform.origin);
+
+            var velocity = camera.UnprojectPosition(GlobalTransform.origin + Velocity);
+            cavas.DrawLine(start, velocity, new Color(1.0f, 1.0f, 1.0f), 2.0f);
+
+            var heading = camera.UnprojectPosition(GlobalTransform.origin + Heading);
+            cavas.DrawLine(start, heading, new Color(0.0f, 0.0f, 1.0f), 2.0f);
+
+            var side = camera.UnprojectPosition(GlobalTransform.origin + Side);
+            cavas.DrawLine(start, side, new Color(0.0f, 1.0f, 0.0f), 2.0f);
         }
 
         public virtual void Stop()
