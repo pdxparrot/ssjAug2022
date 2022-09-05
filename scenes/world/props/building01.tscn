@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://art/3d/props/brick_wall_03.tscn" type="PackedScene" id=1]
+[ext_resource path="res://art/3d/props/brick_wall_02.fbx" type="PackedScene" id=2]
+[ext_resource path="res://art/3d/props/brick_wall_01.tscn" type="PackedScene" id=3]
+[ext_resource path="res://art/3d/props/brick_wall_04.fbx" type="PackedScene" id=4]
+[ext_resource path="res://art/3d/props/stone_floor.tscn" type="PackedScene" id=5]
+
+[sub_resource type="BoxShape" id=1]
+
+[node name="Mesh" type="Spatial"]
+
+[node name="stone_floor2" parent="." instance=ExtResource( 5 )]
+transform = Transform( -3.27835e-08, 0, -0.75, 0, 1, 0, 0.75, 0, -3.27835e-08, 3.52611, 0, 7.54669 )
+
+[node name="stone_floor" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.85598, 0, -6.63169 )
+
+[node name="brick_wall_01" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.20185, 0, 4.82898 )
+
+[node name="brick_wall_02" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.1931, 0, -3.78928 )
+
+[node name="brick_wall_04" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.97977, 0, -8.9312 )
+
+[node name="brick_wall_03" parent="." instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.301, 0, 4.15407 )
+
+[node name="brick_wall_05" parent="." instance=ExtResource( 4 )]
+transform = Transform( -1, 8.74228e-08, 0, 8.74228e-08, 1, 0, 0, 0, -1, 4.71601, 0, 8.67319 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 8, 0, 0, 0, 2.5, 0, 0, 0, 12, 0, 2.5, 0 )
+shape = SubResource( 1 )
