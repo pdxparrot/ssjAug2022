@@ -5,6 +5,7 @@ using System.Linq;
 
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.Player;
+using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 {
@@ -95,6 +96,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         #endregion
 
+        private void ResetHealth()
+        {
+            CurrentHealth = MaxHealth;
+
+            GameUIManager.Instance.HUD.UpdateBossHealth(1.0f);
+        }
+
         protected override void OnDied()
         {
             base.OnDied();
@@ -107,6 +115,17 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
             // TODO: this should despawn but not destroy (do not decrease enemy count)
             _deathTimer.Start();
+        }
+
+        public override void Damage(int amount)
+        {
+            if(IsDead) {
+                return;
+            }
+
+            base.Damage(amount);
+
+            GameUIManager.Instance.HUD.UpdateBossHealth(MaxHealth > 0 ? CurrentHealth / (float)MaxHealth : 0.0f);
         }
 
         private void DamageInteractablePlayers(Interactables.Interactables interactables, int damage)
@@ -149,6 +168,17 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
                 base.UpdateVelocity(velocity);
             }
         }
+
+        #region Spawn
+
+        public override void OnSpawn(SpawnPoint spawnPoint)
+        {
+            base.OnSpawn(spawnPoint);
+
+            ResetHealth();
+        }
+
+        #endregion
 
         #region Signal Handlers
 

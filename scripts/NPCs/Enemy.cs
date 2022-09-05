@@ -13,9 +13,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public int MaxHealth => _maxHealth;
 
-        private int _currentHealth;
-
-        public int CurrentHealth => _currentHealth;
+        public int CurrentHealth { get; protected set; }
 
         [Export]
         private float _wanderSpeed = 5.0f;
@@ -27,7 +25,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         public float IdleLeashRangeSquared => _idleLeashRange * _idleLeashRange;
 
-        public bool IsDead => _currentHealth <= 0;
+        public bool IsDead => CurrentHealth <= 0;
 
         public bool CanInteract => !IsDead;
 
@@ -39,14 +37,14 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         {
             base._Ready();
 
-            _currentHealth = _maxHealth;
+            CurrentHealth = _maxHealth;
         }
 
         #endregion
 
         public void Kill()
         {
-            Damage(_currentHealth);
+            Damage(CurrentHealth);
         }
 
         protected virtual void OnDied()
@@ -54,13 +52,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             Stop();
         }
 
-        public void Damage(int amount)
+        public virtual void Damage(int amount)
         {
             if(IsDead) {
                 return;
             }
 
-            _currentHealth = Mathf.Max(_currentHealth - amount, 0);
+            CurrentHealth = Mathf.Max(CurrentHealth - amount, 0);
             if(IsDead) {
                 OnDied();
             }

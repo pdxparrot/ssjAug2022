@@ -192,6 +192,10 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void Damage(int amount)
         {
+            if(IsDead) {
+                return;
+            }
+
             _currentHealth = Mathf.Max(_currentHealth - amount, 0);
             GameUIManager.Instance.HUD.UpdatePlayerHealth(_maxHealth > 0 ? _currentHealth / (float)_maxHealth : 0.0f);
 

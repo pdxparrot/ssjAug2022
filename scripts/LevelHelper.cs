@@ -52,7 +52,7 @@ namespace pdxpartyparrot.ssjAug2022
 
         public FollowCamera Viewer => _viewer;
 
-        private Stage _stage = Stage.Enemies;
+        public Stage CurrentStage { get; private set; } = Stage.Enemies;
 
         #region Godot Lifecycle
 
@@ -69,10 +69,8 @@ namespace pdxpartyparrot.ssjAug2022
 
             _viewer = ViewerManager.Instance.AcquireViewer<FollowCamera>();
 
-            var player = PlayerManager.Instance.SpawnPlayer(0);
-            _viewer.Follow(player);
-
-            SpawnEnemies();
+            // have to defer this so the HUD starts in the right state
+            CallDeferred("StartGame");
         }
 
         public override void _ExitTree()
@@ -95,7 +93,7 @@ namespace pdxpartyparrot.ssjAug2022
 
             if(@event is InputEventKey eventKey) {
                 if(eventKey.Pressed && eventKey.Scancode == (int)KeyList.K) {
-                    switch(_stage) {
+                    switch(CurrentStage) {
                     case Stage.Enemies:
                         KillAllEnemies();
                         break;
@@ -109,9 +107,19 @@ namespace pdxpartyparrot.ssjAug2022
 
         #endregion
 
+        private void StartGame()
+        {
+            var player = PlayerManager.Instance.SpawnPlayer(0);
+            _viewer.Follow(player);
+
+            StageChangeEvent?.Invoke(this, EventArgs.Empty);
+
+            SpawnEnemies();
+        }
+
         public void EnemyDefeated()
         {
-            switch(_stage) {
+            switch(CurrentStage) {
             case Stage.Enemies:
                 if(NPCManager.Instance.NPCCount == 0) {
                     GD.Print("[GameManager] All enemies defeated!");
@@ -131,7 +139,7 @@ namespace pdxpartyparrot.ssjAug2022
 
         private void EnterBossStage()
         {
-            _stage = Stage.Boss;
+            CurrentStage = Stage.Boss;
 
             StageChangeEvent?.Invoke(this, EventArgs.Empty);
 
