@@ -28,6 +28,9 @@ namespace pdxpartyparrot.ssjAug2022.World
         [Export]
         private float _maxZSpawnRange;
 
+        [Export]
+        private bool _randomizeRotation;
+
         private Godot.Object _owner;
 
         private Action _onRelease;
@@ -80,7 +83,13 @@ namespace pdxpartyparrot.ssjAug2022.World
             );
 
             spatial.Translation = Translation + offset;
-            spatial.Rotation = Rotation;
+
+            var rotation = Rotation;
+            if(_randomizeRotation) {
+                float angle = PartyParrotManager.Instance.Random.NextSingle((float)Math.PI * 2.0f);
+                rotation = rotation.Rotated(Vector3.Up, angle);
+            }
+            spatial.Rotation = rotation;
         }
 
         #region Spawn
