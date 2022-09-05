@@ -229,7 +229,12 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         {
             velocity = Vector3.Zero;
 
-            if(!_owner.IsTargetReachable() || _owner.IsTargetReached() /*|| !_owner.IsNavigationFinished()*/) {
+            if(!_owner.IsTargetReachable()) {
+                GD.Print($"[{_owner.Id} seek target {_seekParams.target} unreachable!]");
+                return (false, true);
+            }
+
+            if(_owner.IsTargetReached()) {
                 return (false, true);
             }
 
@@ -246,7 +251,12 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
         {
             velocity = Vector3.Zero;
 
-            if(!_owner.IsTargetReachable() || _owner.IsTargetReached() /*|| !_owner.IsNavigationFinished()*/) {
+            if(!_owner.IsTargetReachable()) {
+                GD.Print($"[{_owner.Id} arrive target {_arriveParams.target} unreachable!]");
+                return (false, true);
+            }
+
+            if(_owner.IsTargetReached()) {
                 return (false, true);
             }
 

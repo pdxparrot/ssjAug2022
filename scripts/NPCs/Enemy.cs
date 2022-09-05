@@ -3,6 +3,7 @@ using Godot;
 using System;
 
 using pdxpartyparrot.ssjAug2022.Interactables;
+using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs
 {
@@ -26,6 +27,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         public float IdleLeashRangeSquared => _idleLeashRange * _idleLeashRange;
 
         public bool IsDead => CurrentHealth <= 0;
+
+        public Vector3 HomeTranslation { get; private set; }
 
         public bool CanInteract => !IsDead;
 
@@ -63,5 +66,23 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
                 OnDied();
             }
         }
+
+        #region Spawn
+
+        public override void OnSpawn(SpawnPoint spawnPoint)
+        {
+            base.OnSpawn(spawnPoint);
+
+            HomeTranslation = GlobalTranslation;
+        }
+
+        public override void OnReSpawn(SpawnPoint spawnPoint)
+        {
+            base.OnReSpawn(spawnPoint);
+
+            HomeTranslation = GlobalTranslation;
+        }
+
+        #endregion
     }
 }

@@ -102,7 +102,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
             float angle = Vector2.Down.AngleTo(desired);
             var updated = current.Rotated(Math.Min(angle, _maxTurnRate)).Normalized() * desired.Length();
 
-            return new Vector3(updated.x, Velocity.y, updated.y);*/
+            return new Vector3(updated.x, velocity.y, updated.y);*/
 
             return velocity;
         }
@@ -140,7 +140,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         {
             //GD.Print($"[{Id}] velocity updated: {safeVelocity}");
 
-            var velocity = LimitTurnRate(safeVelocity);
+            var velocity = LimitTurnRate(new Vector3(safeVelocity.x, Velocity.y, safeVelocity.z));
             //GD.Print($"[{Id}] turn rate limited velocity: {velocity}");
 
             UpdateVelocity(velocity);

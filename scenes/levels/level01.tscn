@@ -73,7 +73,6 @@ navmesh = SubResource( 3 )
 
 [node name="Ground" parent="World/NavigationMeshInstance" instance=ExtResource( 1 )]
 transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, -70, 0, 66.397 )
-visible = false
 
 [node name="floating_crystal4" parent="World/NavigationMeshInstance" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.75, 0 )
@@ -848,7 +847,7 @@ _minZSpawnRange = 5.0
 _maxZSpawnRange = 5.0
 
 [node name="Enemy Spawn" parent="World/Enemy Spawns" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -65.0903, 0.499878, 58.939 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -65.09, 1, 58.939 )
 _tags = PoolStringArray( "human" )
 _minXSpawnRange = 5.0
 _maxXSpawnRange = 5.0
@@ -856,7 +855,7 @@ _minZSpawnRange = 5.0
 _maxZSpawnRange = 5.0
 
 [node name="Enemy Spawn3" parent="World/Enemy Spawns" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -82.9817, -0.604752, 88.8989 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -82.982, 1, 88.899 )
 _tags = PoolStringArray( "human" )
 _minXSpawnRange = 5.0
 _maxXSpawnRange = 5.0
@@ -864,7 +863,7 @@ _minZSpawnRange = 5.0
 _maxZSpawnRange = 5.0
 
 [node name="Enemy Spawn2" parent="World/Enemy Spawns" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -115.329, -0.604752, 84.42 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -115.329, 1, 84.42 )
 _tags = PoolStringArray( "human" )
 _minXSpawnRange = 5.0
 _maxXSpawnRange = 5.0

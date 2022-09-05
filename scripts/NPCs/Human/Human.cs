@@ -42,8 +42,6 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human
 
         private Timer _deathTimer;
 
-        public Vector3 HomeTranslation { get; private set; }
-
         private HumanStateMachine _stateMachine;
 
         public HumanSteering Steering { get; private set; }
@@ -55,8 +53,6 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human
         public override void _Ready()
         {
             base._Ready();
-
-            HomeTranslation = Translation;
 
             _attackAnimationTimer = GetNode<Timer>("Timers/Attack Animation Timer");
             _attackDamageTimer = GetNode<Timer>("Timers/Attack Damage Timer");
