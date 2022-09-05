@@ -65,7 +65,7 @@ tracks/3/keys = {
 resource_name = "lifebar_center_bottom"
 step = 0.0333333
 tracks/0/type = "value"
-tracks/0/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:rect_position")
+tracks/0/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:rect_scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -74,34 +74,34 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -2180, -838 ), Vector2( -2180, -836 ), Vector2( -1709, -225 ) ]
+"values": [ Vector2( 0.08, 0.08 ), Vector2( 0.08, 0.08 ), Vector2( 0.18, 0.18 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:rect_scale")
+tracks/1/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0.08, 0.08 ), Vector2( 0.08, 0.08 ), Vector2( 0.18, 0.18 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:self_modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 0.0647042 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("CanvasLayer/Pivot/Stage Boss/Boss Health Panel/Boss Health:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 tracks/3/type = "value"
-tracks/3/path = NodePath("CanvasLayer/Pivot/Stage Boss/Boss Health Panel/Boss Health:self_modulate")
+tracks/3/path = NodePath("CanvasLayer/Pivot/Stage Enemies/Player Health:self_modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -110,7 +110,19 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:rect_position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2337, -1133 ), Vector2( -1590, -213 ) ]
 }
 
 [node name="Canvas" type="Control"]
@@ -149,6 +161,7 @@ margin_right = -3.48004
 margin_bottom = -4.48
 
 [node name="Player Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Enemies"]
+self_modulate = Color( 1, 1, 1, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -3.0
@@ -177,7 +190,10 @@ anchor_left = 0.25
 anchor_top = 0.85
 anchor_right = 0.75
 anchor_bottom = 0.95
-margin_right = 2.0
+margin_left = 4.0
+margin_top = -9.0
+margin_right = 5.99976
+margin_bottom = -9.0
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
