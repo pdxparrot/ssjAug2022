@@ -72,3 +72,11 @@ margin_left = 149.0
 margin_right = 181.0
 margin_bottom = 14.0
 text = "(999)"
+
+[node name="Debug Overlay" type="Button" parent="CanvasLayer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 181.0
+margin_bottom = 74.0
+text = "Debug Overlay"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Debug Overlay" to="." method="_on_Debug_Overlay_pressed"]
