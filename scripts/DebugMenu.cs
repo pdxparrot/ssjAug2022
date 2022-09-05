@@ -78,5 +78,14 @@ namespace pdxpartyparrot.ssjAug2022
                 _canvas.Show();
             }
         }
+
+        #region Signal Handlers
+
+        private void _on_Debug_Overlay_pressed()
+        {
+            DebugOverlay.Instance.Toggle();
+        }
+
+        #endregion
     }
 }
