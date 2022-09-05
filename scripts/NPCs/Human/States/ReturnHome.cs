@@ -20,7 +20,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
         public void Execute(Human owner, StateMachine<Human> stateMachine)
         {
             // idle when we get home
-            float homeDistance = owner.Translation.DistanceSquaredTo(owner.HomeTranslation);
+            float homeDistance = owner.GlobalTranslation.DistanceSquaredTo(owner.HomeTranslation);
             if(homeDistance <= 1.0f) {
                 stateMachine.ChangeState(new Idle());
             }

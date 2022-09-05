@@ -82,7 +82,7 @@ namespace pdxpartyparrot.ssjAug2022.World
                 zSpawnRange.GetRandomValue() * PartyParrotManager.Instance.Random.NextSign()
             );
 
-            spatial.Translation = Translation + offset;
+            spatial.Translation = GlobalTranslation + offset;
 
             var rotation = Rotation;
             if(_randomizeRotation) {

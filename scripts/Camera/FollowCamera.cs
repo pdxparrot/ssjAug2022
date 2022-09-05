@@ -16,7 +16,7 @@ namespace pdxpartyparrot.ssjAug2022.Camera
         public override void _Process(float delta)
         {
             if(_target != null) {
-                Translation = _target.Translation + _offset;
+                GlobalTranslation = _target.GlobalTranslation + _offset;
             }
         }
 
