@@ -1,3 +1,4 @@
+using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.NPCs.AI;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs.Boss.States
@@ -6,6 +7,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss.States
     {
         public void Enter(Boss owner, StateMachine<Boss> stateMachine)
         {
+            if(!GameManager.Instance.IsGameOver) {
+                stateMachine.ChangeState(new HuntPlayer());
+                return;
+            }
+
             owner.Steering.WanderOn(new BossSteering.WanderParams {
                 // TODO: make these configurable
                 radius = 5.0f,

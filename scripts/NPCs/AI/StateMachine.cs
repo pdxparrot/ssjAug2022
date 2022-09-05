@@ -61,6 +61,12 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             _currentState.Enter(_owner, this);
         }
 
+        public void ReEnterState()
+        {
+            _currentState.Exit(_owner, this);
+            _currentState.Enter(_owner, this);
+        }
+
         public void RevertToPreviousState()
         {
             ChangeState(_previousState);
