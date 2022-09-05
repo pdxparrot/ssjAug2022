@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/UI/PlayerHUD.cs" type="Script" id=1]
 [ext_resource path="res://art/ui/life_bar_filled.png" type="Texture" id=2]
@@ -9,6 +9,110 @@
 [ext_resource path="res://art/ui/boss bar top.png" type="Texture" id=7]
 [ext_resource path="res://art/ui/boss bar bottom.png" type="Texture" id=8]
 [ext_resource path="res://art/ui/boss_life_bar_filled.png" type="Texture" id=9]
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2180, -838 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.08, 0.08 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CanvasLayer/Pivot/Stage Boss/Boss Health Panel/Boss Health:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "lifebar_center_bottom"
+loop = true
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2180, -838 ), Vector2( -2180, -836 ), Vector2( -1709, -225 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.08, 0.08 ), Vector2( 0.08, 0.08 ), Vector2( 0.18, 0.18 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CanvasLayer/Pivot/Stage Boss/Player Health Panel/Player Health:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 0.0647042 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CanvasLayer/Pivot/Stage Boss/Boss Health Panel/Boss Health:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Canvas" type="Control"]
 anchor_right = 1.0
@@ -79,13 +183,14 @@ size_flags_horizontal = 5
 size_flags_vertical = 5
 
 [node name="Player Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Boss/Player Health Panel"]
+self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -69.64
-margin_top = -47.08
-margin_right = 3384.36
-margin_bottom = 392.92
-rect_scale = Vector2( 0.18, 0.18 )
+margin_left = -2180.0
+margin_top = -838.0
+margin_right = 1274.0
+margin_bottom = -398.0
+rect_scale = Vector2( 0.08, 0.08 )
 rect_pivot_offset = Vector2( 2048, 256 )
 size_flags_horizontal = 5
 size_flags_vertical = 5
@@ -104,6 +209,7 @@ margin_right = -3.47998
 margin_bottom = -4.48
 
 [node name="Boss Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Boss/Boss Health Panel"]
+self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -3.0
@@ -120,3 +226,8 @@ texture_progress = ExtResource( 9 )
 [node name="Player Health" type="Tween" parent="Tweens"]
 
 [node name="Boss Health" type="Tween" parent="Tweens"]
+
+[node name="Boss Fight UI Animation" type="AnimationPlayer" parent="."]
+autoplay = "lifebar_center_bottom"
+anims/RESET = SubResource( 2 )
+anims/lifebar_center_bottom = SubResource( 1 )
