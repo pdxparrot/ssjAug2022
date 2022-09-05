@@ -46,13 +46,9 @@ namespace pdxpartyparrot.ssjAug2022
 
         private float _gravity;
 
-        private Spatial _pivot;
+        public Spatial Pivot { get; private set; }
 
-        protected Spatial Pivot => _pivot;
-
-        private Model _model;
-
-        protected Model Model => _model;
+        protected Model Model { get; private set; }
 
         #region Godot Lifecycle
 
@@ -60,10 +56,10 @@ namespace pdxpartyparrot.ssjAug2022
         {
             _gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
-            _pivot = GetNode<Spatial>("Pivot");
+            Pivot = GetNode<Spatial>("Pivot");
 
-            _model = _pivot.GetNode<Model>("Model");
-            _model.UpdateMotionBlend(0.0f);
+            Model = Pivot.GetNode<Model>("Model");
+            Model.UpdateMotionBlend(0.0f);
         }
 
         public override void _EnterTree()
@@ -80,7 +76,7 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _Process(float delta)
         {
-            _model.UpdateMotionBlend(MaxSpeed > 0.0f ? HorizontalSpeed / MaxSpeed : 0.0f);
+            Model.UpdateMotionBlend(MaxSpeed > 0.0f ? HorizontalSpeed / MaxSpeed : 0.0f);
         }
 
         public override void _PhysicsProcess(float delta)
@@ -103,7 +99,7 @@ namespace pdxpartyparrot.ssjAug2022
                 Heading = Heading.Normalized();
 
                 // look in the direction we're heading
-                _pivot.LookAt(Translation + Heading, Vector3.Up);
+                Pivot.LookAt(Translation + Heading, Vector3.Up);
             } else {
                 Heading = Forward;
             }
