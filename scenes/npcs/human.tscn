@@ -1,17 +1,19 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/NPCs/Human/Human.cs" type="Script" id=1]
-[ext_resource path="res://art/3d/knight_anim_blend.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Model.cs" type="Script" id=3]
 [ext_resource path="res://scripts/NPCs/Human/HumanStateMachine.cs" type="Script" id=4]
 [ext_resource path="res://scripts/NPCs/Human/HumanSteering.cs" type="Script" id=5]
 [ext_resource path="res://scripts/Interactables/Interactables.cs" type="Script" id=6]
 [ext_resource path="res://audio/npc/SFX_SwordSwing_2.wav" type="AudioStream" id=7]
 [ext_resource path="res://audio/npc/SFX_Impact_Gore_4.wav" type="AudioStream" id=8]
+[ext_resource path="res://art/3d/knight_anim_blend02.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
 height = 2.0
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
 
 [sub_resource type="BoxShape" id=2]
 
@@ -32,10 +34,13 @@ shape = SubResource( 1 )
 
 [node name="Pivot" type="Spatial" parent="."]
 
-[node name="Model" parent="Pivot" instance=ExtResource( 2 )]
+[node name="Model" parent="Pivot" instance=ExtResource( 9 )]
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
 script = ExtResource( 3 )
-_motionBlendPath = "parameters/Motion/blend_position"
+_motionBlendPath = "parameters/BlendTree/Motion/blend_position"
+
+[node name="AnimationTree" parent="Pivot/Model" index="2"]
+parameters/playback = SubResource( 5 )
 
 [node name="Hurtbox" type="Area" parent="Pivot"]
 transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )

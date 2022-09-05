@@ -2757,7 +2757,7 @@ nodes/Idle/position = Vector2( 720, 560 )
 nodes/Motion/node = SubResource( 28 )
 nodes/Motion/position = Vector2( 1020, 860 )
 nodes/output/position = Vector2( 1600, 800 )
-node_connections = [ "Claw_Attack_Trigger", 0, "Idle", "Claw_Attack_Trigger", 1, "Claw_Attack", "output", 0, "Blend2", "Blend2", 0, "Claw_Attack_Trigger", "Blend2", 1, "Motion" ]
+node_connections = [ "output", 0, "Blend2", "Blend2", 0, "Claw_Attack_Trigger", "Blend2", 1, "Motion", "Claw_Attack_Trigger", 0, "Idle", "Claw_Attack_Trigger", 1, "Claw_Attack" ]
 
 [sub_resource type="AnimationNodeAnimation" id=31]
 animation = "Death"
@@ -2768,11 +2768,11 @@ xfade_time = 0.2
 [sub_resource type="AnimationNodeStateMachine" id=20]
 states/BlendTree/node = SubResource( 30 )
 states/BlendTree/position = Vector2( 352, 204 )
-states/Death/node = SubResource( 31 )
-states/Death/position = Vector2( 352, 287 )
-transitions = [ "BlendTree", "Death", SubResource( 32 ) ]
+states/death/node = SubResource( 31 )
+states/death/position = Vector2( 352, 287 )
+transitions = [ "BlendTree", "death", SubResource( 32 ) ]
 start_node = "BlendTree"
-graph_offset = Vector2( -12, -51 )
+graph_offset = Vector2( -164, 108 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=21]
 
