@@ -95,7 +95,9 @@ namespace pdxpartyparrot.ssjAug2022.UI
                 _playerHealthPercent = 100.0f;
 
                 _bossStageAnimation.Stop();
-                _bossStageAnimation.Seek(0, true);
+                if(!string.IsNullOrWhiteSpace(_bossStageAnimation.CurrentAnimation)) {
+                    _bossStageAnimation.Seek(0, true);
+                }
                 break;
             case LevelHelper.Stage.Boss:
                 _bossHealthPercent = 100.0f;
