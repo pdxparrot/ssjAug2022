@@ -64,7 +64,10 @@ namespace pdxpartyparrot.ssjAug2022
 
             _model = _pivot.GetNode<Model>("Model");
             _model.UpdateMotionBlend(0.0f);
+        }
 
+        public override void _EnterTree()
+        {
             DebugOverlay.Instance.RegisterDebugDraw(this);
         }
 
@@ -117,7 +120,7 @@ namespace pdxpartyparrot.ssjAug2022
         {
             var origin = new Vector3(GlobalTransform.origin.x, 1.0f, GlobalTransform.origin.z);
             var start = camera.UnprojectPosition(origin);
-            var end = camera.UnprojectPosition(origin + Velocity * 10.0f);
+            var end = camera.UnprojectPosition(origin + Velocity);
             cavas.DrawLine(start, end, new Color(1.0f, 1.0f, 1.0f), 2.0f);
         }
 

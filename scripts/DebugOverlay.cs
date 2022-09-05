@@ -9,8 +9,6 @@ namespace pdxpartyparrot.ssjAug2022
 {
     public class DebugOverlay : SingletonUI<DebugOverlay>
     {
-        public CanvasItem _canvas;
-
         private readonly HashSet<IDebugDraw> _draw = new HashSet<IDebugDraw>();
 
         #region Godot Lifecycle
@@ -19,24 +17,26 @@ namespace pdxpartyparrot.ssjAug2022
         {
             base._Ready();
 
-            _canvas = GetNode<CanvasItem>("CanvasLayer/DebugOverlay");
+            // disable processing if we aren't in the editor
+            if(!PartyParrotManager.Instance.IsEditor) {
+                SetProcess(false);
+            }
         }
 
         public override void _Process(float delta)
         {
             Update();
-            _canvas.Update();
         }
 
         public override void _Draw()
         {
-            if(GameManager.Instance.Level == null || GameManager.Instance.Level.Viewer == null) {
+            if(!PartyParrotManager.Instance.IsEditor || GameManager.Instance.Level == null || GameManager.Instance.Level.Viewer == null) {
                 return;
             }
 
             var viewer = GameManager.Instance.Level.Viewer;
             foreach(var draw in _draw) {
-                draw.DebugDraw(_canvas, viewer.Camera);
+                draw.DebugDraw(this, viewer.Camera);
             }
         }
 
