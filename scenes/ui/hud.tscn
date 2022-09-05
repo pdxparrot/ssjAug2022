@@ -1,36 +1,41 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/UI/PlayerHUD.cs" type="Script" id=1]
 [ext_resource path="res://art/ui/life_bar_filled.png" type="Texture" id=2]
 [ext_resource path="res://art/ui/life bar top.png" type="Texture" id=3]
 [ext_resource path="res://art/ui/life bar bottom.png" type="Texture" id=4]
 [ext_resource path="res://art/ui/controller_layout.png" type="Texture" id=5]
+[ext_resource path="res://art/ui/boss bar filled.png" type="Texture" id=6]
+[ext_resource path="res://art/ui/boss bar top.png" type="Texture" id=7]
+[ext_resource path="res://art/ui/boss bar bottom.png" type="Texture" id=8]
+[ext_resource path="res://art/ui/boss_life_bar_filled.png" type="Texture" id=9]
 
 [node name="Canvas" type="Control"]
-anchor_top = 0.75
-anchor_right = 0.4
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 2.0
-margin_top = -6.0
-margin_right = 1.0
 script = ExtResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Pivot" type="Control" parent="CanvasLayer"]
-anchor_top = 0.75
-anchor_right = 0.4
-anchor_bottom = 1.0
-margin_left = 2.0
-margin_right = 4.0
+anchor_left = 0.002
+anchor_right = 0.298
+anchor_bottom = 0.136
+margin_left = -0.56
+margin_top = 1.0
+margin_right = 0.559998
+margin_bottom = 0.0799942
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Player Health" type="TextureProgress" parent="CanvasLayer/Pivot"]
 anchor_left = 0.05
-anchor_top = 0.5
-anchor_right = 0.659
-anchor_bottom = 0.8
+anchor_top = 0.258
+anchor_right = 0.858
+anchor_bottom = 0.654
+margin_top = -0.026001
+margin_right = 1740.96
+margin_bottom = 217.562
 rect_scale = Vector2( 0.15, 0.15 )
 value = 25.0
 texture_under = ExtResource( 4 )
@@ -38,15 +43,74 @@ texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-anchor_right = 0.158
-anchor_bottom = 0.282
-margin_left = 11.0
-margin_top = 10.0
-margin_right = 320.76
-margin_bottom = 318.96
+anchor_left = 0.02
+anchor_top = 0.11
+anchor_right = 0.159
+anchor_bottom = 0.361
+margin_left = -1.6
+margin_top = 1.8
+margin_right = 332.48
+margin_bottom = 333.08
 rect_scale = Vector2( 0.35, 0.35 )
 texture = ExtResource( 5 )
 stretch_mode = 6
+
+[node name="Boss Fight Player Health" type="Control" parent="CanvasLayer"]
+anchor_left = 0.3
+anchor_top = 0.831
+anchor_right = 0.7
+anchor_bottom = 0.969
+margin_left = -2.0
+margin_top = -0.320007
+margin_bottom = 0.319946
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 384, 50 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player Health" type="TextureProgress" parent="CanvasLayer/Boss Fight Player Health"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1731.0
+margin_top = -216.0
+margin_right = 1851.0
+margin_bottom = 300.0
+rect_scale = Vector2( 0.18, 0.18 )
+rect_pivot_offset = Vector2( 2048, 256 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 25.0
+texture_under = ExtResource( 8 )
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 6 )
+
+[node name="Boss Fiht Boss Health" type="Control" parent="CanvasLayer"]
+anchor_left = 0.002
+anchor_right = 0.298
+anchor_bottom = 0.136
+margin_left = -0.56
+margin_top = 1.0
+margin_right = 0.559998
+margin_bottom = 0.0799942
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Boss Health" type="TextureProgress" parent="CanvasLayer/Boss Fiht Boss Health"]
+visible = false
+anchor_left = 0.05
+anchor_top = 0.258
+anchor_right = 0.858
+anchor_bottom = 0.654
+margin_top = -0.026001
+margin_right = 1740.96
+margin_bottom = 217.562
+rect_scale = Vector2( 0.15, 0.15 )
+value = 100.0
+texture_under = ExtResource( 4 )
+texture_over = ExtResource( 3 )
+texture_progress = ExtResource( 9 )
 
 [node name="Tweens" type="Node" parent="."]
 
