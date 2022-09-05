@@ -4,6 +4,7 @@ using System;
 
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.NPCs.AI;
+using pdxpartyparrot.ssjAug2022.Util;
 using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs
@@ -92,17 +93,21 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
 
         private Vector3 LimitTurnRate(Vector3 velocity)
         {
-            /*var current = new Vector2(Velocity.x, Velocity.z);
+            // TODO: this is producing a spinning result and I'm not sure why
+            // maybe because it's being applied only when velocity is updated
+            // and isn't being done relative to the frame rate? idk
+            /*var current = new Vector3(Velocity.x, 0.0f, Velocity.z);
             if(current.LengthSquared() < 0.01) {
-                current = new Vector2(Forward.x, Forward.z);
+                current = new Vector3(Forward.x, 0.0f, Forward.z);
             }
 
-            var desired = new Vector2(velocity.x, velocity.z);
+            var desired = new Vector3(velocity.x, 0.0f, velocity.z);
 
-            float angle = Vector2.Down.AngleTo(desired);
-            var updated = current.Rotated(Math.Min(angle, _maxTurnRate)).Normalized() * desired.Length();
+            float desiredAngle = current.AngleTo(desired);
+            float clampedAngle = desiredAngle.Clamp(-_maxTurnRate, _maxTurnRate);
+            var updated = current.Rotated(Vector3.Up, clampedAngle).Normalized() * desired.Length();
 
-            return new Vector3(updated.x, velocity.y, updated.y);*/
+            return new Vector3(updated.x, velocity.y, updated.z);*/
 
             return velocity;
         }
