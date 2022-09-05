@@ -18,13 +18,8 @@ script = ExtResource( 1 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Pivot" type="Control" parent="CanvasLayer"]
-anchor_left = 0.002
-anchor_right = 0.298
-anchor_bottom = 0.136
-margin_left = -0.56
-margin_top = 1.0
-margin_right = 0.559998
-margin_bottom = 0.0799942
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
@@ -33,42 +28,41 @@ anchor_left = 0.02
 anchor_top = 0.11
 anchor_right = 0.159
 anchor_bottom = 0.361
-margin_left = 14.4
-margin_top = 69.33
-margin_right = 473.58
-margin_bottom = 556.983
+margin_left = -3.6
+margin_top = 1.8
+margin_right = 344.48
+margin_bottom = 333.08
 rect_scale = Vector2( 0.35, 0.35 )
 texture = ExtResource( 5 )
 stretch_mode = 6
 
 [node name="Stage Enemies" type="Control" parent="CanvasLayer/Pivot"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_left = 0.02
+anchor_right = 0.341
+anchor_bottom = 0.109
+margin_left = 2.4
+margin_top = 4.0
+margin_right = -3.48004
+margin_bottom = -4.48
 
 [node name="Player Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Enemies"]
-anchor_left = 0.05
-anchor_top = 0.258
-anchor_right = 0.858
-anchor_bottom = 0.654
-margin_left = 17.0
-margin_top = 14.68
-margin_right = 2032.68
-margin_bottom = 254.84
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = 18.0
+margin_right = 1640.0
+margin_bottom = 204.0
 rect_scale = Vector2( 0.15, 0.15 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
 value = 25.0
 texture_under = ExtResource( 4 )
 texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 2 )
 
 [node name="Stage Boss" type="Control" parent="CanvasLayer/Pivot"]
-anchor_left = 0.3
-anchor_top = 0.831
-anchor_right = 0.7
-anchor_bottom = 0.969
-margin_left = 266.0
-margin_top = 516.393
-margin_right = 268.0
-margin_bottom = 517.033
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_pivot_offset = Vector2( 384, 50 )
@@ -78,32 +72,48 @@ size_flags_vertical = 3
 [node name="Player Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Boss"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -1731.0
-margin_top = -216.0
-margin_right = 1851.0
-margin_bottom = 300.0
+margin_left = -1429.0
+margin_top = 355.0
+margin_right = 2025.0
+margin_bottom = 795.0
 rect_scale = Vector2( 0.18, 0.18 )
 rect_pivot_offset = Vector2( 2048, 256 )
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 5
+size_flags_vertical = 5
 value = 25.0
 texture_under = ExtResource( 8 )
 texture_over = ExtResource( 7 )
 texture_progress = ExtResource( 6 )
 
 [node name="Boss Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Boss"]
-anchor_left = 0.05
-anchor_top = 0.258
-anchor_right = 0.858
-anchor_bottom = 0.654
-margin_left = -382.02
-margin_top = -597.479
-margin_right = 1541.55
-margin_bottom = -347.033
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 25.0
+margin_top = 22.0
+margin_right = 1668.0
+margin_bottom = 208.0
 rect_scale = Vector2( 0.15, 0.15 )
 texture_under = ExtResource( 4 )
 texture_over = ExtResource( 3 )
 texture_progress = ExtResource( 9 )
+
+[node name="Player Health Panel" type="Control" parent="CanvasLayer/Pivot/Stage Boss"]
+anchor_left = 0.25
+anchor_top = 0.85
+anchor_right = 0.75
+anchor_bottom = 0.95
+margin_right = 2.0
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="Boss Health Panel" type="Control" parent="CanvasLayer/Pivot/Stage Boss"]
+anchor_left = 0.02
+anchor_right = 0.341
+anchor_bottom = 0.109
+margin_left = 2.4
+margin_top = 4.0
+margin_right = -3.47998
+margin_bottom = -4.48
 
 [node name="Tweens" type="Node" parent="."]
 
