@@ -305,6 +305,8 @@ length = 5.0
 [sub_resource type="Animation" id=5]
 resource_name = "ClawAttack"
 length = 0.416667
+loop = true
+step = 0.0333333
 tracks/0/type = "transform"
 tracks/0/path = NodePath("VampChar/Skeleton:root.x")
 tracks/0/interp = 1
@@ -4658,7 +4660,6 @@ animation = "PowerUnleashed02"
 [sub_resource type="AnimationNodeStateMachineTransition" id=23]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=24]
-xfade_time = 0.2
 priority = 0
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=25]

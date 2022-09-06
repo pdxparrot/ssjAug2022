@@ -38,8 +38,7 @@ tracks/0/keys = {
 [node name="claw_vfx_mesh" type="Spatial"]
 
 [node name="claw01" type="MeshInstance" parent="."]
-transform = Transform( 0, -250, 0, 0, 0, 250, -250, 0, 0, 0, 0, 0 )
-visible = false
+transform = Transform( -1.09278e-05, 250, -1.09278e-05, 0, -1.09278e-05, -250, -250, -1.09278e-05, 4.77671e-13, 0, 0, 0 )
 mesh = SubResource( 1 )
 skeleton = NodePath("")
 material/0 = ExtResource( 2 )
