@@ -2178,6 +2178,7 @@ states/claw_attack/node = SubResource( 12 )
 states/claw_attack/position = Vector2( 221, 70 )
 transitions = [ "claw_attack", "BlendSpace1D", SubResource( 13 ), "BlendSpace1D", "claw_attack", SubResource( 14 ) ]
 start_node = "BlendSpace1D"
+graph_offset = Vector2( -74, -168 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=16]
 
