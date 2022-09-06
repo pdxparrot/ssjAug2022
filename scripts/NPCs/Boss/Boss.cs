@@ -44,6 +44,23 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         #endregion
 
+        #region Dash
+
+        [Export]
+        private float _dashModifier = 3.0f;
+
+        private Timer _dashTimer;
+
+        private Timer _dashCooldown;
+
+        private AudioStreamPlayer _dashAudioPlayer;
+
+        private bool IsDashing => !_dashTimer.IsStopped();
+
+        private bool CanDash => !IsGlobalCooldown && _dashTimer.IsStopped() && _dashCooldown.IsStopped();
+
+        #endregion
+
         private Timer _deathTimer;
 
         private BossStateMachine _stateMachine;
@@ -63,6 +80,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             _attackCooldown = GetNode<Timer>("Timers/Attack Cooldown");
             _attackInteractables = Pivot.GetNode<Interactables.Interactables>("Attack Hitbox");
             _attackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Attack");
+
+            _dashTimer = GetNode<Timer>("Timers/Dash Timer");
+            _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
+            _dashAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Dash");
 
             _deathTimer = GetNode<Timer>("Timers/Death Timer");
             _deathAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Death");
@@ -160,9 +181,25 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             _attackDamageTimer.Start();
         }
 
+        public void Dash()
+        {
+            if(!CanDash) {
+                return;
+            }
+
+            GD.Print($"[{Id}] Dash!");
+            Model.ChangeState("dash");
+            _dashAudioPlayer.Play();
+
+            MaxSpeed *= _dashModifier;
+            Velocity = Forward * MaxSpeed;
+
+            _dashTimer.Start();
+        }
+
         protected override void UpdateVelocity(Vector3 velocity)
         {
-            if(!IsDead) {
+            if(!IsDead && !IsDashing) {
                 base.UpdateVelocity(velocity);
             }
         }
@@ -188,6 +225,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
         private void _on_Attack_Damage_Timer_timeout()
         {
             DoAttackDamage();
+        }
+
+        private void _on_Dash_Timer_timeout()
+        {
+            // TODO: this is dumb
+            MaxSpeed /= _dashModifier;
+
+            Model.ChangeState("Movement");
+
+            _dashCooldown.Start();
         }
 
         private void _on_DetectionBox_area_entered(Area other)

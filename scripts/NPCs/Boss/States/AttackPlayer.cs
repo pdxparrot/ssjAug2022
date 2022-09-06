@@ -43,7 +43,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss.States
                 return;
             }
 
+            // TODO: we should turn towards the player by max turn rate
+            // and only attack if the player is in our arc after doing so
             owner.Pivot.LookAt(Target.GlobalTranslation, Vector3.Up);
+
             owner.Attack();
         }
 

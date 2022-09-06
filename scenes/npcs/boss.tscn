@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/NPCs/Boss/Boss.cs" type="Script" id=1]
+[ext_resource path="res://audio/player/SFX_PC_Dash_1.wav" type="AudioStream" id=2]
 [ext_resource path="res://scripts/Model.cs" type="Script" id=3]
 [ext_resource path="res://scripts/NPCs/Boss/BossStateMachine.cs" type="Script" id=4]
 [ext_resource path="res://scripts/NPCs/Boss/BossSteering.cs" type="Script" id=5]
@@ -42,11 +43,8 @@ transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0 )
 script = ExtResource( 3 )
 _motionBlendPath = "parameters/attack_movement/Motion/blend_position"
 
-[node name="Skeleton" parent="Pivot/Model/HeroArmature" index="0"]
-bones/55/bound_children = [ NodePath("BoneAttachment") ]
-
 [node name="BoneAttachment" parent="Pivot/Model/HeroArmature/Skeleton" index="1"]
-transform = Transform( 0.718801, -0.241151, 0.652052, -0.31175, 0.72652, 0.612356, -0.621399, -0.643439, 0.447045, -76.5053, -45.3054, -156.885 )
+transform = Transform( 0.682251, -0.221787, 0.696666, -0.38056, 0.705887, 0.597409, -0.624265, -0.672706, 0.397189, -77.9169, -37.1942, -146.681 )
 
 [node name="hero_scythe" parent="Pivot/Model/HeroArmature/Skeleton/BoneAttachment" index="0"]
 transform = Transform( 1.36702, -0.614298, 0.0623961, -0.0311385, -0.219976, -1.48346, 0.616667, 1.35066, -0.213226, -7.644, 72.5401, 9.53839 )
@@ -55,11 +53,10 @@ transform = Transform( 1.36702, -0.614298, 0.0623961, -0.0311385, -0.219976, -1.
 parameters/playback = SubResource( 5 )
 
 [node name="Hurtbox" type="Area" parent="Pivot"]
-transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 2, 0, 2.5, 0 )
+transform = Transform( 1.5, 0, 0, 0, 2, 0, 0, 0, 1.5, 0, 2, 0 )
 monitoring = false
 
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/Hurtbox"]
-transform = Transform( 0.65, 0, 0, 0, 1, 0, 0, 0, 0.65, 0, 0, 0 )
 shape = SubResource( 2 )
 
 [node name="DetectionBox" type="Area" parent="Pivot"]
@@ -67,16 +64,15 @@ transform = Transform( 20, 0, 0, 0, 2, 0, 0, 0, 20, 0, 2, 0 )
 monitorable = false
 
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/DetectionBox"]
-transform = Transform( 0.703651, 0, 0, 0, 1.00522, 0, 0, 0, 0.703651, 0, 0, 0 )
 shape = SubResource( 3 )
 
 [node name="Attack Hitbox" type="Area" parent="Pivot"]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 3, 0, 2, -5 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2.5, 0, 2, -4.5 )
 monitorable = false
 script = ExtResource( 6 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/Attack Hitbox"]
-transform = Transform( 1.35, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.218536 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.218536 )
 shape = SubResource( 4 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
@@ -102,6 +98,14 @@ one_shot = true
 [node name="Attack Cooldown" type="Timer" parent="Timers"]
 one_shot = true
 
+[node name="Dash Timer" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Dash Cooldown" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
+
 [node name="Death Timer" type="Timer" parent="Timers"]
 wait_time = 2.0
 one_shot = true
@@ -111,6 +115,10 @@ one_shot = true
 [node name="Attack" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 7 )
 volume_db = -12.0
+
+[node name="Dash" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 2 )
+volume_db = -8.0
 
 [node name="Death" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 8 )
@@ -122,6 +130,7 @@ volume_db = -12.0
 [connection signal="velocity_computed" from="NavigationAgent" to="." method="_on_NavigationAgent_velocity_computed"]
 [connection signal="timeout" from="Timers/Attack Animation Timer" to="." method="_on_Attack_Animation_Timer_timeout"]
 [connection signal="timeout" from="Timers/Attack Damage Timer" to="." method="_on_Attack_Damage_Timer_timeout"]
+[connection signal="timeout" from="Timers/Dash Timer" to="." method="_on_Dash_Timer_timeout"]
 [connection signal="timeout" from="Timers/Death Timer" to="." method="_on_Death_Timer_timeout"]
 
 [editable path="Pivot/Model"]

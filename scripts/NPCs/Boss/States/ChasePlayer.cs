@@ -36,7 +36,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss.States
 
             if(targetDistance > owner.TrackingRangeSquared) {
                 //GD.Print($"[{owner.Id} lost my target");
-                stateMachine.ChangeState(new ReturnHome());
+                stateMachine.ChangeState(new HuntPlayer());
                 return;
             }
 
@@ -46,6 +46,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss.States
                 });
                 return;
             }
+
+            // try and get closer faster
+            owner.Pivot.LookAt(Target.GlobalTranslation, Vector3.Up);
+            owner.Dash();
         }
 
         public bool OnMessage(Boss owner, StateMachine<Boss> stateMachine, Telegram message)

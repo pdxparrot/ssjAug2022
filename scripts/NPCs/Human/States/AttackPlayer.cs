@@ -44,6 +44,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
             }
 
             owner.Pivot.LookAt(Target.GlobalTranslation, Vector3.Up);
+
             owner.Attack();
         }
 
