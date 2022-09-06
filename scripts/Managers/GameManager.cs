@@ -1,5 +1,6 @@
 using Godot;
 
+using System;
 using System.Threading.Tasks;
 
 using pdxpartyparrot.ssjAug2022.Util;
@@ -8,6 +9,12 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 {
     public class GameManager : SingletonNode<GameManager>
     {
+        #region Events
+
+        public event EventHandler<EventArgs> GameOverEvent;
+
+        #endregion
+
         [Export]
         private PackedScene _gameOverLossScene;
 
@@ -75,6 +82,8 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             ShowGameOverUI(win);
 
             _gameOverTimer.Start();
+
+            GameOverEvent?.Invoke(this, EventArgs.Empty);
         }
 
         #region Signal Handlers

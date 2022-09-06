@@ -1,5 +1,8 @@
 using Godot;
 
+using System;
+
+using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.Util;
 using pdxpartyparrot.ssjAug2022.World;
 
@@ -65,12 +68,18 @@ namespace pdxpartyparrot.ssjAug2022
         public override void _EnterTree()
         {
             DebugOverlay.Instance.RegisterDebugDraw(this);
+
+            GameManager.Instance.GameOverEvent += GameOverEventHandler;
         }
 
         public override void _ExitTree()
         {
             if(DebugOverlay.HasInstance) {
                 DebugOverlay.Instance.UnRegisterDebugDraw(this);
+            }
+
+            if(GameManager.HasInstance) {
+                GameManager.Instance.GameOverEvent -= GameOverEventHandler;
             }
         }
 
@@ -149,7 +158,7 @@ namespace pdxpartyparrot.ssjAug2022
             return velocity;
         }
 
-        #region Events
+        #region Spawn
 
         public virtual void OnSpawn(SpawnPoint spawnPoint)
         {
@@ -165,8 +174,21 @@ namespace pdxpartyparrot.ssjAug2022
         {
         }
 
+        #endregion
+
+        #region Events
+
         public virtual void OnIdle()
         {
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void GameOverEventHandler(object sender, EventArgs args)
+        {
+            Stop();
         }
 
         #endregion

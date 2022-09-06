@@ -37,9 +37,14 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private AudioStreamPlayer _clawAttackAudioPlayer;
 
+        private bool CanClawAttack => !IsGlobalCooldown && _clawAttackAnimationTimer.IsStopped() && _clawAttackCooldown.IsStopped();
+
         #endregion
 
         #region Power Unleashed
+
+        [Export]
+        private bool _shouldPowerUnleashedRoot;
 
         [Export]
         private int _powerUnleashedDamage = 1;
@@ -63,6 +68,12 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private Vector3 _powerUnleashedMaxScale;
 
+        private bool IsPowerUnleashing => !_powerUnleashedScaleTimer.IsStopped();
+
+        private float PowerUnleashedPercent => _powerUnleashedScaleTimer.TimeLeft / _powerUnleashedScaleTimer.WaitTime;
+
+        private bool CanPowerUnleashed => !IsGlobalCooldown && _powerUnleashedDelayTimer.IsStopped() && _powerUnleashedScaleTimer.IsStopped() && _powerUnleashedCooldown.IsStopped();
+
         #endregion
 
         #region Dash
@@ -76,6 +87,10 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private AudioStreamPlayer _dashAudioPlayer;
 
+        private bool IsDashing => !_dashTimer.IsStopped();
+
+        private bool CanDash => !IsGlobalCooldown && _dashTimer.IsStopped() && _dashCooldown.IsStopped();
+
         #endregion
 
         private Timer _deathTimer;
@@ -84,9 +99,11 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public Type InteractableType => GetType();
 
-        private bool IsInputAllowed => !IsDead && !GameManager.Instance.IsGameOver && _dashTimer.IsStopped();
+        private bool IsInputAllowed => !IsDead && !GameManager.Instance.IsGameOver && !PartyParrotManager.Instance.IsPaused && !IsDashing;
 
-        private bool IsGlobalCooldown => !_clawAttackAnimationTimer.IsStopped() || !_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped() || !_dashTimer.IsStopped();
+        private bool IsGlobalCooldown => !_clawAttackAnimationTimer.IsStopped() || !_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped() || IsDashing;
+
+        private bool IsRooted => _shouldPowerUnleashedRoot && (!_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped());
 
         #region Godot Lifecycle
 
@@ -145,8 +162,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
         {
             base._Process(delta);
 
-            if(!_powerUnleashedScaleTimer.IsStopped()) {
-                float pct = 1.0f - (_powerUnleashedScaleTimer.TimeLeft / _powerUnleashedScaleTimer.WaitTime);
+            if(IsPowerUnleashing) {
+                float pct = 1.0f - PowerUnleashedPercent;
                 var scale = _powerUnleashedInitialScale + (_powerUnleashedMaxScale - _powerUnleashedInitialScale) * pct;
                 scale.y = _powerUnleashedInitialScale.y;
                 _powerUnleashedInteractables.Scale = scale;
@@ -158,7 +175,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public override void _PhysicsProcess(float delta)
         {
-            if(IsInputAllowed) {
+            if(IsRooted) {
+                Velocity = new Vector3(0.0f, Velocity.y, 0.0f);
+            } else if(IsInputAllowed) {
                 var input = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
                 Velocity = new Vector3(input.x, Velocity.y, input.y) * MaxSpeed;
             }
@@ -232,7 +251,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void ClawAttack()
         {
-            if(IsDead || IsGlobalCooldown || !_clawAttackCooldown.IsStopped()) {
+            if(!CanClawAttack) {
                 return;
             }
 
@@ -250,7 +269,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public void PowerUnleashed()
         {
-            if(IsDead || IsGlobalCooldown || !_powerUnleashedCooldown.IsStopped()) {
+            if(!CanPowerUnleashed) {
                 return;
             }
 
@@ -258,11 +277,15 @@ namespace pdxpartyparrot.ssjAug2022.Player
             Model.ChangeState("power_unleash");
 
             _powerUnleashedDelayTimer.Start();
+
+            if(_shouldPowerUnleashedRoot) {
+                Stop();
+            }
         }
 
         public void Dash()
         {
-            if(IsDead || IsGlobalCooldown || !_dashCooldown.IsStopped()) {
+            if(!CanDash) {
                 return;
             }
 
@@ -333,7 +356,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         public override void OnReSpawn(SpawnPoint spawnPoint)
         {
-            base.OnSpawn(spawnPoint);
+            base.OnReSpawn(spawnPoint);
 
             ResetHealth();
         }
