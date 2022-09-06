@@ -29,6 +29,7 @@ _mass = 50.0
 _maxHealth = 100
 _clawAttackDamage = 3
 _shouldPowerUnleashedRoot = true
+_dashCancelPowerUnleashed = true
 _powerUnleashedDamage = 10
 _powerUnleashedScale = 6.0
 

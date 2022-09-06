@@ -19,5 +19,11 @@ namespace pdxpartyparrot.ssjAug2022
         {
             _animationPlayer.Play(animationName);
         }
+
+        public void Stop()
+        {
+            _animationPlayer.Stop();
+            _animationPlayer.Seek(0, true);
+        }
     }
 }

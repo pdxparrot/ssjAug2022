@@ -47,6 +47,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
         private bool _shouldPowerUnleashedRoot;
 
         [Export]
+        private bool _dashCancelPowerUnleashed;
+
+        [Export]
         private int _powerUnleashedDamage = 1;
 
         [Export]
@@ -68,11 +71,13 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private Vector3 _powerUnleashedMaxScale;
 
-        private bool IsPowerUnleashing => !_powerUnleashedScaleTimer.IsStopped();
+        private bool IsPowerUnleashing => !_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped();
+
+        private bool IsPowerUnleashScaling => !_powerUnleashedScaleTimer.IsStopped();
 
         private float PowerUnleashedPercent => _powerUnleashedScaleTimer.TimeLeft / _powerUnleashedScaleTimer.WaitTime;
 
-        private bool CanPowerUnleashed => !IsGlobalCooldown && _powerUnleashedDelayTimer.IsStopped() && _powerUnleashedScaleTimer.IsStopped() && _powerUnleashedCooldown.IsStopped();
+        private bool CanPowerUnleashed => !IsGlobalCooldown && !IsPowerUnleashing && _powerUnleashedCooldown.IsStopped();
 
         #endregion
 
@@ -101,9 +106,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private bool IsInputAllowed => !IsDead && !GameManager.Instance.IsGameOver && !PartyParrotManager.Instance.IsPaused && !IsDashing;
 
-        private bool IsGlobalCooldown => !_clawAttackAnimationTimer.IsStopped() || !_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped() || IsDashing;
+        private bool IsGlobalCooldown => !_clawAttackAnimationTimer.IsStopped() || IsPowerUnleashing || IsDashing;
 
-        private bool IsRooted => _shouldPowerUnleashedRoot && (!_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped());
+        private bool IsRooted => _shouldPowerUnleashedRoot && IsPowerUnleashing;
 
         #region Godot Lifecycle
 
@@ -162,7 +167,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
         {
             base._Process(delta);
 
-            if(IsPowerUnleashing) {
+            if(IsPowerUnleashScaling) {
                 float pct = 1.0f - PowerUnleashedPercent;
                 var scale = _powerUnleashedInitialScale + (_powerUnleashedMaxScale - _powerUnleashedInitialScale) * pct;
                 scale.y = _powerUnleashedInitialScale.y;
@@ -249,7 +254,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
             DamageInteractableEnemeies(_clawAttackInteractables, _clawAttackDamage);
         }
 
-        public void ClawAttack()
+        private void ClawAttack()
         {
             if(!CanClawAttack) {
                 return;
@@ -267,7 +272,20 @@ namespace pdxpartyparrot.ssjAug2022.Player
             DamageInteractableEnemeies(_powerUnleashedInteractables, _powerUnleashedDamage);
         }
 
-        public void PowerUnleashed()
+        private void CancelPowerUnleashed()
+        {
+            if(!IsPowerUnleashing) {
+                return;
+            }
+
+            _powerUnleashedDelayTimer.Stop();
+            _powerUnleashedScaleTimer.Stop();
+            _powerUnleashedVFX.Stop();
+
+            _on_PowerUnleashed_Scale_Timer_timeout();
+        }
+
+        private void PowerUnleashed()
         {
             if(!CanPowerUnleashed) {
                 return;
@@ -283,9 +301,13 @@ namespace pdxpartyparrot.ssjAug2022.Player
             }
         }
 
-        public void Dash()
+        private void Dash()
         {
             if(!CanDash) {
+                if(IsPowerUnleashing && _dashCancelPowerUnleashed) {
+                    CancelPowerUnleashed();
+                    Dash();
+                }
                 return;
             }
 
