@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scenes/world/ground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/world/props/floating_crystal.tscn" type="PackedScene" id=2]
@@ -12,6 +12,9 @@
 [ext_resource path="res://art/3d/Tree01.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/npcs/boss.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/world/props/building01.tscn" type="PackedScene" id=12]
+[ext_resource path="res://art/3d/props/road_tile_02.tscn" type="PackedScene" id=13]
+[ext_resource path="res://art/3d/props/road_tile_01.tscn" type="PackedScene" id=14]
+[ext_resource path="res://art/3d/props/road_tile_03.tscn" type="PackedScene" id=15]
 
 [sub_resource type="ProceduralSky" id=1]
 sky_top_color = Color( 0.0588235, 0.529412, 0.498039, 1 )
@@ -831,6 +834,24 @@ transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 1
 
 [node name="Tree25" parent="World/Env/West Trees 03" instance=ExtResource( 10 )]
 transform = Transform( 0.988952, 0, 0.148241, 0, 1, 0, -0.148241, 0, 0.988952, 10.6162, -3.55983, 36.4755 )
+
+[node name="road_tile_01" parent="World/Env" instance=ExtResource( 14 )]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -83.3614, 0.8, 83.2702 )
+
+[node name="road_tile_02" parent="World/Env" instance=ExtResource( 13 )]
+transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -106.188, 0.8, 98.7458 )
+
+[node name="road_tile_03" parent="World/Env" instance=ExtResource( 15 )]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -124.1, 0.8, 118.895 )
+
+[node name="road_tile_04" parent="World/Env" instance=ExtResource( 14 )]
+transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -57.2816, 0.8, 64.9001 )
+
+[node name="road_tile_05" parent="World/Env" instance=ExtResource( 13 )]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -42.6061, 0.8, 43.8259 )
+
+[node name="road_tile_06" parent="World/Env" instance=ExtResource( 15 )]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -27.2996, 0.8, 25.5215 )
 
 [node name="Player Spawn" parent="World" instance=ExtResource( 4 )]
 transform = Transform( 0.694633, 0, -0.719364, 0, 1, 0, 0.719364, 0, 0.694633, -115.797, 0, 117.897 )
