@@ -31,7 +31,6 @@ background_mode = 2
 background_sky = SubResource( 1 )
 ambient_light_color = Color( 1, 0, 0, 1 )
 ambient_light_energy = 0.2
-fog_enabled = true
 fog_color = Color( 0.0196078, 0.207843, 0.196078, 1 )
 fog_sun_color = Color( 1, 0, 0, 1 )
 fog_sun_amount = 1.0
@@ -836,19 +835,19 @@ transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 1
 transform = Transform( 0.988952, 0, 0.148241, 0, 1, 0, -0.148241, 0, 0.988952, 10.6162, -3.55983, 36.4755 )
 
 [node name="road_tile_01" parent="World/Env" instance=ExtResource( 14 )]
-transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -83.3614, 0.8, 83.2702 )
+transform = Transform( -0.59377, 0, 0.804635, 0, 1, 0, -0.804635, 0, -0.59377, -83.3614, 0.8, 83.2702 )
 
 [node name="road_tile_02" parent="World/Env" instance=ExtResource( 13 )]
-transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -106.188, 0.8, 98.7458 )
+transform = Transform( 0.803545, 0, -0.595244, 0, 1, 0, 0.595244, 0, 0.803545, -106.188, 0.8, 98.7458 )
 
 [node name="road_tile_03" parent="World/Env" instance=ExtResource( 15 )]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -124.1, 0.8, 118.895 )
+transform = Transform( -0.653579, 0, 0.756858, 0, 1, 0, -0.756858, 0, -0.653579, -124.311, 0.8, 118.049 )
 
 [node name="road_tile_04" parent="World/Env" instance=ExtResource( 14 )]
-transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -57.2816, 0.8, 64.9001 )
+transform = Transform( 0.793863, 0, -0.608097, 0, 1, 0, 0.608097, 0, 0.793863, -57.2816, 0.8, 64.9001 )
 
 [node name="road_tile_05" parent="World/Env" instance=ExtResource( 13 )]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -42.6061, 0.8, 43.8259 )
+transform = Transform( -0.656125, 0, 0.754652, 0, 1, 0, -0.754652, 0, -0.656125, -44.0856, 0.8, 42.8748 )
 
 [node name="road_tile_06" parent="World/Env" instance=ExtResource( 15 )]
 transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -27.2996, 0.8, 25.5215 )
