@@ -60,6 +60,7 @@ monitorable = false
 script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/ClawAttack Hitbox"]
+transform = Transform( 1.91165, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 2 )
 
 [node name="PowerUnleashed Hitbox" type="Area" parent="Pivot"]
@@ -75,7 +76,7 @@ transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
 script = ExtResource( 8 )
 
 [node name="ClawAttack VFX" parent="Pivot" instance=ExtResource( 7 )]
-transform = Transform( -1.76777, -6.18172e-08, 1.76777, 2.18557e-07, -1, 0, 1.76777, 6.18172e-08, 1.76777, -0.547281, 2.54157, -2.24665 )
+transform = Transform( -1.76777, 6.18172e-08, -1.76777, -2.18557e-07, -1, 0, -1.76777, 6.18172e-08, 1.76777, 0.0934343, 3, -2.18131 )
 script = ExtResource( 8 )
 
 [node name="Dash VFX" type="Spatial" parent="Pivot"]
@@ -88,7 +89,7 @@ visible = false
 transform = Transform( 0.999994, -0.00231519, -0.00242054, 0.00231495, 0.999997, -0.000103869, 0.00242078, 9.8277e-05, 0.999997, 0, 0, 0 )
 
 [node name="OmniLight" type="OmniLight" parent="Pivot/Lighting"]
-transform = Transform( 1, -6.56567e-09, -6.75209e-09, 1.32218e-09, 1, -1.19835e-08, -2.32831e-10, -4.36557e-11, 1, 0.0935737, 4.4949, -0.117115 )
+transform = Transform( 1, -7.03137e-09, -6.51926e-09, 1.78782e-09, 1, -1.1969e-08, -4.65661e-10, -5.82077e-11, 1, 0.0878059, 4.49467, -2.49972 )
 light_color = Color( 1, 0, 0, 1 )
 light_energy = 3.0
 omni_range = 12.0
