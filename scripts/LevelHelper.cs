@@ -143,6 +143,8 @@ namespace pdxpartyparrot.ssjAug2022
 
             StageChangeEvent?.Invoke(this, EventArgs.Empty);
 
+            Viewer.Shake(0.2f);
+
             SpawnBoss();
         }
 
