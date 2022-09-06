@@ -60,6 +60,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("CanvasLayer/Pivot/Stage Enemies/Player Health:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "lifebar_center_bottom"
@@ -161,7 +173,6 @@ margin_right = -3.48004
 margin_bottom = -4.48
 
 [node name="Player Health" type="TextureProgress" parent="CanvasLayer/Pivot/Stage Enemies"]
-self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -3.0
