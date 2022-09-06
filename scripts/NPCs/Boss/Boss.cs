@@ -16,12 +16,12 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         public float TrackingRangeSquared => _trackingRange * _trackingRange;
 
+        #region Attack
+
         [Export]
         private float _attackRange = 4.0f;
 
         public float AttackRangeSquared => _attackRange * _attackRange;
-
-        #region Attack
 
         [Export]
         private int _attackDamage = 1;
@@ -39,6 +39,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
         private AudioStreamPlayer _attackAudioPlayer;
 
         private AudioStreamPlayer _deathAudioPlayer;
+
+        private bool CanAttack => !IsDead && !IsGlobalCooldown && _attackAnimationTimer.IsStopped() && _attackCooldown.IsStopped();
 
         #endregion
 
@@ -146,7 +148,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         public void Attack()
         {
-            if(IsDead || IsGlobalCooldown || !_attackCooldown.IsStopped()) {
+            if(!CanAttack) {
                 return;
             }
 
