@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scripts/UI/MainMenu.cs" type="Script" id=1]
 [ext_resource path="res://art/ui/title_screen08.png" type="Texture" id=2]
@@ -14,6 +14,12 @@
 [ext_resource path="res://art/ui/quit_button_selected.png" type="Texture" id=12]
 [ext_resource path="res://art/ui/quit_button_unselected.png" type="Texture" id=13]
 [ext_resource path="res://art/ui/quit_button_pressed.png" type="Texture" id=14]
+[ext_resource path="res://art/ui/fullscreen_selected.png" type="Texture" id=15]
+[ext_resource path="res://art/ui/windowed_button_unselected.png" type="Texture" id=16]
+[ext_resource path="res://art/ui/fullscreen_unselected.png" type="Texture" id=17]
+[ext_resource path="res://art/ui/windowed_button_pressed.png" type="Texture" id=18]
+[ext_resource path="res://art/ui/windowed_button_selected.png" type="Texture" id=19]
+[ext_resource path="res://art/ui/fullscreen_pressed.png" type="Texture" id=20]
 
 [node name="Canvas" type="Control"]
 anchor_right = 1.0
@@ -52,56 +58,77 @@ size_flags_vertical = 5
 alignment = 1
 
 [node name="Play" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
-margin_left = 24.0
-margin_top = 0.0
-margin_right = 224.0
-margin_bottom = 50.0
+margin_left = 88.0
+margin_top = 36.0
+margin_right = 288.0
+margin_bottom = 86.0
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 4 )
 
 [node name="Credits" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
-margin_left = 24.0
-margin_top = 54.0
-margin_right = 224.0
-margin_bottom = 104.0
+margin_left = 88.0
+margin_top = 90.0
+margin_right = 288.0
+margin_bottom = 140.0
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 texture_hover = ExtResource( 8 )
 
-[node name="Quit" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
-margin_left = 24.0
+[node name="Windowed" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
+visible = false
+margin_left = 88.0
 margin_top = 108.0
-margin_right = 224.0
+margin_right = 288.0
 margin_bottom = 158.0
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 18 )
+texture_hover = ExtResource( 19 )
+
+[node name="Fullscreen" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
+visible = false
+margin_left = 88.0
+margin_top = 117.0
+margin_right = 288.0
+margin_bottom = 167.0
+texture_normal = ExtResource( 17 )
+texture_pressed = ExtResource( 20 )
+texture_hover = ExtResource( 15 )
+
+[node name="Quit" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
+margin_left = 88.0
+margin_top = 144.0
+margin_right = 288.0
+margin_bottom = 194.0
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
 texture_hover = ExtResource( 12 )
 
 [node name="Credits" parent="CanvasLayer" instance=ExtResource( 10 )]
+visible = false
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
 [node name="TextureRect" parent="CanvasLayer/Credits" index="1"]
 anchor_left = 0.3
-anchor_right = 0.75
-anchor_bottom = 0.841
-margin_left = -12.0
-margin_top = 26.0
-margin_right = 306.0
-margin_bottom = 319.48
+anchor_right = 0.7
+anchor_bottom = 0.774
+margin_left = 23.0
+margin_top = 83.0
+margin_right = 392.28
+margin_bottom = 405.08
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
 [node name="Back" parent="CanvasLayer/Credits" index="2"]
-anchor_left = 0.4
-anchor_top = 0.8
-anchor_right = 0.6
-anchor_bottom = 0.95
-margin_left = 29.0
-margin_top = 20.0
-margin_right = -7.0
-margin_bottom = -4.0
+anchor_left = 0.448
+anchor_top = 0.809
+anchor_right = 0.553
+anchor_bottom = 0.856
+margin_left = 0.839966
+margin_top = 0.279968
+margin_right = -0.76001
+margin_bottom = -0.480042
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
