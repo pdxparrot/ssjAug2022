@@ -44,7 +44,7 @@ polygons = [ PoolIntArray( 1, 0, 2 ), PoolIntArray( 2, 0, 4 ), PoolIntArray( 2, 
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 3 )
-_enemiesToSpawn = 10
+_enemiesToSpawn = 40
 _enemySpawnTag = "human"
 _humanScene = ExtResource( 5 )
 _bossSpawnTag = "boss"
@@ -833,34 +833,34 @@ transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 1
 transform = Transform( 0.988952, 0, 0.148241, 0, 1, 0, -0.148241, 0, 0.988952, 10.6162, -3.55983, 36.4755 )
 
 [node name="Player Spawn" parent="World" instance=ExtResource( 4 )]
-transform = Transform( 0.999981, 0, -0.00612602, 0, 1, 0, 0.00612602, 0, 0.999981, -115.797, 0, 117.897 )
+transform = Transform( 0.694633, 0, -0.719364, 0, 1, 0, 0.719364, 0, 0.694633, -115.797, 0, 117.897 )
 _tags = PoolStringArray( "player" )
 
 [node name="Enemy Spawns" type="Spatial" parent="World"]
 
 [node name="Enemy Spawn4" parent="World/Enemy Spawns" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -54.6587, 0.999756, 21.2605 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.5996, 0.999756, 32.0646 )
 _tags = PoolStringArray( "human" )
 _maxXSpawnRange = 5.0
 _maxZSpawnRange = 5.0
 _randomizeRotation = true
 
 [node name="Enemy Spawn" parent="World/Enemy Spawns" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -65.09, 1, 58.939 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -58.2664, 1, 54.9585 )
 _tags = PoolStringArray( "human" )
 _maxXSpawnRange = 5.0
 _maxZSpawnRange = 5.0
 _randomizeRotation = true
 
 [node name="Enemy Spawn3" parent="World/Enemy Spawns" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -82.982, 1, 88.899 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -81.3695, 1, 76.3572 )
 _tags = PoolStringArray( "human" )
 _maxXSpawnRange = 5.0
 _maxZSpawnRange = 5.0
 _randomizeRotation = true
 
 [node name="Enemy Spawn2" parent="World/Enemy Spawns" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -115.329, 1, 84.42 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -101.354, 1, 93.3784 )
 _tags = PoolStringArray( "human" )
 _maxXSpawnRange = 5.0
 _maxZSpawnRange = 5.0
