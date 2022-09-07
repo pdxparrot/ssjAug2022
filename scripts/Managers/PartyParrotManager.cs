@@ -57,6 +57,9 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             set => OS.WindowFullscreen = value;
         }
 
+        // TODO: pause management should move to the game manager
+        // I don't know why it was ever put into the engine manager
+
         private bool _isPaused;
 
         public bool IsPaused

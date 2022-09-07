@@ -90,6 +90,10 @@ namespace pdxpartyparrot.ssjAug2022
 
         public override void _PhysicsProcess(float delta)
         {
+            if(PartyParrotManager.Instance.IsPaused) {
+                return;
+            }
+
             // TODO: a max turn rate and smoothed heading might make this nicer
 
             // apply gravity
