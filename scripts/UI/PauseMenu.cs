@@ -28,6 +28,8 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         public override void _EnterTree()
         {
+            // TODO: for some reason this isn't working if you
+            // play, pause, end the game, play again, pause again
             if(_resumeButton != null) {
                 _resumeButton.GrabFocus();
             }
