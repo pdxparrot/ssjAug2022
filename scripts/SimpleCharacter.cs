@@ -162,6 +162,11 @@ namespace pdxpartyparrot.ssjAug2022
 
         public virtual void OnSpawn(SpawnPoint spawnPoint)
         {
+            // spawnpoint rotates the main object
+            // but what we actually want to rotate is the pivot
+            Pivot.Rotation = Rotation;
+            Rotation = Vector3.Zero;
+
             OnIdle();
         }
 
