@@ -43,11 +43,24 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss.States
                 return;
             }
 
-            // TODO: we should turn towards the player by max turn rate
-            // and only attack if the player is in our arc after doing so
-            owner.Pivot.LookAt(Target.GlobalTranslation, Vector3.Up);
+            // TODO: if the player is near us but not in front of us, AOE
+            // otherwise do the frontal attack
 
-            owner.Attack();
+            var toTarget = (Target.GlobalTranslation - owner.GlobalTranslation).Normalized();
+            float dot = owner.Forward.Dot(toTarget);
+            if(dot > 0.0f) {
+                if(!owner.Attack()) {
+                    // TODO: we should turn towards the player by max turn rate
+                    // and only attack if the player is in our arc after doing so
+                    //owner.Pivot.LookAt(Target.GlobalTranslation, Vector3.Up);
+                }
+            } else {
+                if(!owner.PowerUnleashed()) {
+                    // TODO: we should turn towards the player by max turn rate
+                    // and only attack if the player is in our arc after doing so
+                    //owner.Pivot.LookAt(Target.GlobalTranslation, Vector3.Up);
+                }
+            }
         }
 
         public bool OnMessage(Boss owner, StateMachine<Boss> stateMachine, Telegram message)

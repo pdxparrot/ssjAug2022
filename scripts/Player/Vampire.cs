@@ -65,6 +65,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
         // TODO: this would be better if it was driven by the animation
         private Timer _powerUnleashedScaleTimer;
 
+        // TODO: this would be better if it was driven by the animation
+        private Timer _powerUnleashedDamageTimer;
+
         private Timer _powerUnleashedCooldown;
 
         private Vector3 _powerUnleashedInitialScale;
@@ -126,6 +129,7 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
             _powerUnleashedDelayTimer = GetNode<Timer>("Timers/PowerUnleashed Delay Timer");
             _powerUnleashedScaleTimer = GetNode<Timer>("Timers/PowerUnleashed Scale Timer");
+            _powerUnleashedDamageTimer = GetNode<Timer>("Timers/PowerUnleashed Damage Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/PowerUnleashed Cooldown");
             _powerUnleashedInteractables = Pivot.GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
             _powerUnleashedVFX = Pivot.GetNode<VFX>("PowerUnleashed VFX");
@@ -172,9 +176,6 @@ namespace pdxpartyparrot.ssjAug2022.Player
                 var scale = _powerUnleashedInitialScale + (_powerUnleashedMaxScale - _powerUnleashedInitialScale) * pct;
                 scale.y = _powerUnleashedInitialScale.y;
                 _powerUnleashedInteractables.Scale = scale;
-
-                // TODO: we should pulse at a slower rate than every frame
-                DoPowerUnleashedDamage();
             }
         }
 
@@ -269,7 +270,11 @@ namespace pdxpartyparrot.ssjAug2022.Player
 
         private void DoPowerUnleashedDamage()
         {
+            GD.Print($"[{Name}] Power unleashed damage!");
+
             DamageInteractableEnemeies(_powerUnleashedInteractables, _powerUnleashedDamage);
+
+            _powerUnleashedDamageTimer.Start();
         }
 
         private void CancelPowerUnleashed()
@@ -337,6 +342,8 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _powerUnleashedVFX.Play("power_unleashed");
 
             _powerUnleashedScaleTimer.Start();
+
+            DoPowerUnleashedDamage();
         }
 
         private void _on_PowerUnleashed_Scale_Timer_timeout()
@@ -344,6 +351,14 @@ namespace pdxpartyparrot.ssjAug2022.Player
             _powerUnleashedInteractables.Scale = _powerUnleashedInitialScale;
 
             _powerUnleashedCooldown.Start();
+            _powerUnleashedDamageTimer.Stop();
+        }
+
+        private void _on_PowerUnleashed_Damage_Timer_timeout()
+        {
+            if(IsPowerUnleashScaling) {
+                DoPowerUnleashedDamage();
+            }
         }
 
         private void _on_Dash_Timer_timeout()

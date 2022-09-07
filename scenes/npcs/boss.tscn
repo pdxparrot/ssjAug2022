@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/NPCs/Boss/Boss.cs" type="Script" id=1]
 [ext_resource path="res://audio/player/SFX_PC_Dash_1.wav" type="AudioStream" id=2]
@@ -23,6 +23,8 @@ height = 3.0
 
 [sub_resource type="BoxShape" id=4]
 
+[sub_resource type="CylinderShape" id=6]
+
 [node name="Main" type="KinematicBody"]
 script = ExtResource( 1 )
 _mass = 75.0
@@ -31,6 +33,8 @@ _maxHealth = 10
 _idleLeashRange = 60.0
 _trackingRange = 40.0
 _attackDamage = 10
+_shouldPowerUnleashedRoot = true
+_powerUnleashedDamage = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -0.75, 0, 1, -3.27835e-08, -0.0636828, 2.18711, 0.0658231 )
@@ -43,8 +47,11 @@ transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0 )
 script = ExtResource( 3 )
 _motionBlendPath = "parameters/attack_movement/Motion/blend_position"
 
+[node name="Skeleton" parent="Pivot/Model/HeroArmature" index="0"]
+bones/55/bound_children = [  ]
+
 [node name="BoneAttachment" parent="Pivot/Model/HeroArmature/Skeleton" index="1"]
-transform = Transform( 0.682251, -0.221787, 0.696666, -0.38056, 0.705887, 0.597409, -0.624265, -0.672706, 0.397189, -77.9169, -37.1942, -146.681 )
+transform = Transform( 0.726872, -0.238311, 0.644101, -0.306508, 0.72671, 0.614772, -0.61458, -0.644283, 0.455182, -76.7806, -46.0651, -157.911 )
 
 [node name="hero_scythe" parent="Pivot/Model/HeroArmature/Skeleton/BoneAttachment" index="0"]
 transform = Transform( 1.36702, -0.614298, 0.0623961, -0.0311385, -0.219976, -1.48346, 0.616667, 1.35066, -0.213226, -7.644, 72.5401, 9.53839 )
@@ -75,6 +82,14 @@ script = ExtResource( 6 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.218536 )
 shape = SubResource( 4 )
 
+[node name="PowerUnleashed Hitbox" type="Area" parent="Pivot"]
+transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 2, 0 )
+monitorable = false
+script = ExtResource( 6 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Pivot/PowerUnleashed Hitbox"]
+shape = SubResource( 6 )
+
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
 avoidance_enabled = true
 radius = 2.0
@@ -96,6 +111,22 @@ wait_time = 0.63
 one_shot = true
 
 [node name="Attack Cooldown" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="PowerUnleashed Delay Timer" type="Timer" parent="Timers"]
+wait_time = 0.15
+one_shot = true
+
+[node name="PowerUnleashed Scale Timer" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
+
+[node name="PowerUnleashed Damage Timer" type="Timer" parent="Timers"]
+wait_time = 0.2
+one_shot = true
+
+[node name="PowerUnleashed Cooldown" type="Timer" parent="Timers"]
+wait_time = 3.0
 one_shot = true
 
 [node name="Dash Timer" type="Timer" parent="Timers"]
@@ -127,9 +158,14 @@ volume_db = -12.0
 [connection signal="area_entered" from="Pivot/DetectionBox" to="." method="_on_DetectionBox_area_entered"]
 [connection signal="area_entered" from="Pivot/Attack Hitbox" to="Pivot/Attack Hitbox" method="_on_area_entered"]
 [connection signal="area_exited" from="Pivot/Attack Hitbox" to="Pivot/Attack Hitbox" method="_on_area_exited"]
+[connection signal="area_entered" from="Pivot/PowerUnleashed Hitbox" to="Pivot/PowerUnleashed Hitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Pivot/PowerUnleashed Hitbox" to="Pivot/PowerUnleashed Hitbox" method="_on_area_exited"]
 [connection signal="velocity_computed" from="NavigationAgent" to="." method="_on_NavigationAgent_velocity_computed"]
 [connection signal="timeout" from="Timers/Attack Animation Timer" to="." method="_on_Attack_Animation_Timer_timeout"]
 [connection signal="timeout" from="Timers/Attack Damage Timer" to="." method="_on_Attack_Damage_Timer_timeout"]
+[connection signal="timeout" from="Timers/PowerUnleashed Delay Timer" to="." method="_on_PowerUnleashed_Delay_Timer_timeout"]
+[connection signal="timeout" from="Timers/PowerUnleashed Scale Timer" to="." method="_on_PowerUnleashed_Scale_Timer_timeout"]
+[connection signal="timeout" from="Timers/PowerUnleashed Damage Timer" to="." method="_on_PowerUnleashed_Damage_Timer_timeout"]
 [connection signal="timeout" from="Timers/Dash Timer" to="." method="_on_Dash_Timer_timeout"]
 [connection signal="timeout" from="Timers/Death Timer" to="." method="_on_Death_Timer_timeout"]
 

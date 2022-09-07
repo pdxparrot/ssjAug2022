@@ -1,6 +1,5 @@
 using Godot;
 
-using System;
 using System.Linq;
 
 using pdxpartyparrot.ssjAug2022.Managers;
@@ -44,6 +43,44 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         #endregion
 
+        #region Power Unleashed
+
+        [Export]
+        private bool _shouldPowerUnleashedRoot;
+
+        [Export]
+        private int _powerUnleashedDamage = 1;
+
+        [Export]
+        private float _powerUnleashedScale = 1.5f;
+
+        private Interactables.Interactables _powerUnleashedInteractables;
+
+        // TODO: this would be better if it was driven by the animation
+        private Timer _powerUnleashedDelayTimer;
+
+        // TODO: this would be better if it was driven by the animation
+        private Timer _powerUnleashedScaleTimer;
+
+        // TODO: this would be better if it was driven by the animation
+        private Timer _powerUnleashedDamageTimer;
+
+        private Timer _powerUnleashedCooldown;
+
+        private Vector3 _powerUnleashedInitialScale;
+
+        private Vector3 _powerUnleashedMaxScale;
+
+        private bool IsPowerUnleashing => !_powerUnleashedDelayTimer.IsStopped() || !_powerUnleashedScaleTimer.IsStopped();
+
+        private bool IsPowerUnleashScaling => !_powerUnleashedScaleTimer.IsStopped();
+
+        private float PowerUnleashedPercent => _powerUnleashedScaleTimer.TimeLeft / _powerUnleashedScaleTimer.WaitTime;
+
+        private bool CanPowerUnleashed => !IsGlobalCooldown && !IsPowerUnleashing && _powerUnleashedCooldown.IsStopped();
+
+        #endregion
+
         #region Dash
 
         [Export]
@@ -67,7 +104,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         public BossSteering Steering { get; private set; }
 
-        private bool IsGlobalCooldown => !_attackAnimationTimer.IsStopped();
+        private bool IsGlobalCooldown => !_attackAnimationTimer.IsStopped() || IsPowerUnleashing || IsDashing;
+
+        private bool IsRooted => _shouldPowerUnleashedRoot && IsPowerUnleashing;
 
         #region Godot Lifecycle
 
@@ -80,6 +119,14 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             _attackCooldown = GetNode<Timer>("Timers/Attack Cooldown");
             _attackInteractables = Pivot.GetNode<Interactables.Interactables>("Attack Hitbox");
             _attackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Attack");
+
+            _powerUnleashedDelayTimer = GetNode<Timer>("Timers/PowerUnleashed Delay Timer");
+            _powerUnleashedScaleTimer = GetNode<Timer>("Timers/PowerUnleashed Scale Timer");
+            _powerUnleashedDamageTimer = GetNode<Timer>("Timers/PowerUnleashed Damage Timer");
+            _powerUnleashedCooldown = GetNode<Timer>("Timers/PowerUnleashed Cooldown");
+            _powerUnleashedInteractables = Pivot.GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
+            _powerUnleashedInitialScale = _powerUnleashedInteractables.Scale;
+            _powerUnleashedMaxScale = _powerUnleashedInitialScale * _powerUnleashedScale;
 
             _dashTimer = GetNode<Timer>("Timers/Dash Timer");
             _dashCooldown = GetNode<Timer>("Timers/Dash Cooldown");
@@ -102,6 +149,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             _stateMachine.Run();
 
             base._Process(delta);
+
+            if(IsPowerUnleashScaling) {
+                float pct = 1.0f - PowerUnleashedPercent;
+                var scale = _powerUnleashedInitialScale + (_powerUnleashedMaxScale - _powerUnleashedInitialScale) * pct;
+                scale.y = _powerUnleashedInitialScale.y;
+                _powerUnleashedInteractables.Scale = scale;
+            }
         }
 
         public override void _PhysicsProcess(float delta)
@@ -167,10 +221,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             DamageInteractablePlayers(_attackInteractables, _attackDamage);
         }
 
-        public void Attack()
+        public bool Attack()
         {
             if(!CanAttack) {
-                return;
+                return false;
             }
 
             GD.Print($"[{Id}] Attack!");
@@ -179,12 +233,41 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
             _attackAnimationTimer.Start();
             _attackDamageTimer.Start();
+
+            return true;
         }
 
-        public void Dash()
+        private void DoPowerUnleashedDamage()
+        {
+            GD.Print($"[{Id}] Power unleashed damage!");
+
+            DamageInteractablePlayers(_powerUnleashedInteractables, _powerUnleashedDamage);
+
+            _powerUnleashedDamageTimer.Start();
+        }
+
+        public bool PowerUnleashed()
+        {
+            if(!CanPowerUnleashed) {
+                return false;
+            }
+
+            GD.Print($"[{Id}] Power unleashed!");
+            Model.ChangeState("power_unleash");
+
+            _powerUnleashedDelayTimer.Start();
+
+            if(_shouldPowerUnleashedRoot) {
+                Stop();
+            }
+
+            return true;
+        }
+
+        public bool Dash()
         {
             if(!CanDash) {
-                return;
+                return false;
             }
 
             GD.Print($"[{Id}] Dash!");
@@ -195,11 +278,13 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             Velocity = Forward * MaxSpeed;
 
             _dashTimer.Start();
+
+            return true;
         }
 
         protected override void UpdateVelocity(Vector3 velocity)
         {
-            if(!IsDead && !IsDashing) {
+            if(!IsDead && !IsDashing && !IsRooted) {
                 base.UpdateVelocity(velocity);
             }
         }
@@ -225,6 +310,28 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
         private void _on_Attack_Damage_Timer_timeout()
         {
             DoAttackDamage();
+        }
+
+        private void _on_PowerUnleashed_Delay_Timer_timeout()
+        {
+            _powerUnleashedScaleTimer.Start();
+
+            DoPowerUnleashedDamage();
+        }
+
+        private void _on_PowerUnleashed_Scale_Timer_timeout()
+        {
+            _powerUnleashedInteractables.Scale = _powerUnleashedInitialScale;
+
+            _powerUnleashedCooldown.Start();
+            _powerUnleashedDamageTimer.Stop();
+        }
+
+        private void _on_PowerUnleashed_Damage_Timer_timeout()
+        {
+            if(IsPowerUnleashScaling) {
+                DoPowerUnleashedDamage();
+            }
         }
 
         private void _on_Dash_Timer_timeout()
