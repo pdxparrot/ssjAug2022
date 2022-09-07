@@ -62,45 +62,70 @@ margin_left = 88.0
 margin_top = 0.0
 margin_right = 288.0
 margin_bottom = 50.0
+focus_neighbour_top = NodePath("../Quit")
+focus_neighbour_bottom = NodePath("../Credits")
+focus_next = NodePath("../Credits")
+focus_previous = NodePath("../Quit")
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 4 )
+texture_focused = ExtResource( 4 )
 
 [node name="Credits" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
 margin_left = 88.0
 margin_top = 54.0
 margin_right = 288.0
 margin_bottom = 104.0
+focus_neighbour_top = NodePath("../Play")
+focus_neighbour_bottom = NodePath("../Windowed")
+focus_next = NodePath("../Windowed")
+focus_previous = NodePath("../Play")
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 texture_hover = ExtResource( 8 )
+texture_focused = ExtResource( 8 )
 
 [node name="Windowed" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
 margin_left = 88.0
 margin_top = 108.0
 margin_right = 288.0
 margin_bottom = 158.0
+focus_neighbour_top = NodePath("../Credits")
+focus_neighbour_bottom = NodePath("../Fullscreen")
+focus_next = NodePath("../Fullscreen")
+focus_previous = NodePath("../Credits")
 texture_normal = ExtResource( 16 )
 texture_pressed = ExtResource( 18 )
 texture_hover = ExtResource( 19 )
+texture_focused = ExtResource( 19 )
 
 [node name="Fullscreen" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
 margin_left = 88.0
 margin_top = 162.0
 margin_right = 288.0
 margin_bottom = 212.0
+focus_neighbour_top = NodePath("../Windowed")
+focus_neighbour_bottom = NodePath("../Quit")
+focus_next = NodePath("../Quit")
+focus_previous = NodePath("../Windowed")
 texture_normal = ExtResource( 17 )
 texture_pressed = ExtResource( 20 )
 texture_hover = ExtResource( 15 )
+texture_focused = ExtResource( 15 )
 
 [node name="Quit" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
 margin_left = 88.0
 margin_top = 216.0
 margin_right = 288.0
 margin_bottom = 266.0
+focus_neighbour_top = NodePath("../Fullscreen")
+focus_neighbour_bottom = NodePath("../Play")
+focus_next = NodePath("../Play")
+focus_previous = NodePath("../Fullscreen")
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
 texture_hover = ExtResource( 12 )
+texture_focused = ExtResource( 12 )
 
 [node name="Credits" parent="CanvasLayer" instance=ExtResource( 10 )]
 visible = false

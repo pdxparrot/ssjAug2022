@@ -25,6 +25,9 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
             _mainMenu = canvas.GetNode<Control>("Main Menu");
 
+            var playButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Play");
+            playButton.GrabFocus();
+
             _windowedButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Windowed");
             _fullscreenButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Fullscreen");
             UpdateFullscreenButtons();
@@ -58,6 +61,8 @@ namespace pdxpartyparrot.ssjAug2022.UI
             PartyParrotManager.Instance.IsFullscreen = false;
 
             UpdateFullscreenButtons();
+
+            _fullscreenButton.GrabFocus();
         }
 
         private void _on_Fullscreen_pressed()
@@ -65,6 +70,8 @@ namespace pdxpartyparrot.ssjAug2022.UI
             PartyParrotManager.Instance.IsFullscreen = true;
 
             UpdateFullscreenButtons();
+
+            _windowedButton.GrabFocus();
         }
 
         private void _on_Credits_pressed()
