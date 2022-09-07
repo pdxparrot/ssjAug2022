@@ -4,7 +4,6 @@ using System;
 
 using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.NPCs.AI;
-using pdxpartyparrot.ssjAug2022.Util;
 using pdxpartyparrot.ssjAug2022.World;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs

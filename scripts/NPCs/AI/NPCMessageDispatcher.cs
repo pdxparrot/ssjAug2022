@@ -1,27 +1,15 @@
 using Godot;
 
 using pdxpartyparrot.ssjAug2022.Collections;
-using pdxpartyparrot.ssjAug2022.Util;
+using pdxpartyparrot.ssjAug2022.Managers;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 {
-    public class NPCMessageDispatcher : SingletonNode<NPCMessageDispatcher>
+    public class NPCMessageDispatcher
     {
         private readonly PriorityQueue<Telegram> _messages = new PriorityQueue<Telegram>();
 
-        #region Godot Lifecycle
-
-        public override void _Process(float delta)
-        {
-            base._Process(delta);
-
-            // TODO: we probably don't want to do this every frame
-            DispatchDelayedMessages();
-        }
-
-        #endregion
-
-        private void DispatchDelayedMessages()
+        public void DispatchDelayedMessages()
         {
             ulong now = Time.GetTicksMsec();
 
@@ -38,13 +26,26 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
 
         private void Discharge(Telegram message)
         {
-            message.Receiver.HandleMessage(message);
+            if(message.Receiver == null) {
+                foreach(var npc in NPCManager.Instance.NPCs) {
+                    if(npc != message.Sender) {
+                        npc.HandleMessage(message);
+                    }
+                }
+            } else {
+                message.Receiver.HandleMessage(message);
+            }
         }
 
         public void DispatchMessageImmediate(SimpleNPC sender, SimpleNPC receiver, int message, object extraInfo = null)
         {
             var telegram = new Telegram(0, sender, receiver, message, extraInfo);
             Discharge(telegram);
+        }
+
+        public void BroadcastMessageImmediate(SimpleNPC sender, int message, object extraInfo = null)
+        {
+            DispatchMessageImmediate(sender, null, message, extraInfo);
         }
 
         public void DispatchMessage(ulong delay, SimpleNPC sender, SimpleNPC receiver, int message, object extraInfo = null)
@@ -56,6 +57,11 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.AI
             } else {
                 _messages.Enqueue(telegram);
             }
+        }
+
+        public void BroadcastMessage(ulong delay, SimpleNPC sender, int message, object extraInfo = null)
+        {
+            DispatchMessage(delay, sender, null, message, extraInfo);
         }
     }
 }

@@ -3,6 +3,7 @@ using Godot;
 using System.Collections.Generic;
 
 using pdxpartyparrot.ssjAug2022.NPCs;
+using pdxpartyparrot.ssjAug2022.NPCs.AI;
 using pdxpartyparrot.ssjAug2022.Util;
 using pdxpartyparrot.ssjAug2022.World;
 
@@ -15,6 +16,20 @@ namespace pdxpartyparrot.ssjAug2022.Managers
         public IReadOnlyCollection<SimpleNPC> NPCs => _npcs;
 
         public int NPCCount => NPCs.Count;
+
+        public readonly NPCMessageDispatcher MessageDispatcher = new NPCMessageDispatcher();
+
+        #region Godot Lifecycle
+
+        public override void _Process(float delta)
+        {
+            base._Process(delta);
+
+            // TODO: we probably don't want to do this every frame
+            MessageDispatcher.DispatchDelayedMessages();
+        }
+
+        #endregion
 
         public void RegisterNPC(SimpleNPC npc)
         {

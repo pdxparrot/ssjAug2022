@@ -3,12 +3,18 @@ using Godot;
 using System.Linq;
 
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.NPCs.AI;
 using pdxpartyparrot.ssjAug2022.Player;
 
 namespace pdxpartyparrot.ssjAug2022.NPCs.Human
 {
     public class Human : Enemy
     {
+        [Export]
+        private float _alarmRange = 10.0f;
+
+        public float AlarmRangeSquared => _alarmRange * _alarmRange;
+
         [Export]
         private float _trackingRange = 20.0f;
 
@@ -147,6 +153,16 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human
             }
         }
 
+        public override bool HandleMessage(Telegram message)
+        {
+            if(base.HandleMessage(message)) {
+                return true;
+            }
+
+            return _stateMachine.HandleMessage(message);
+        }
+
+
         #region Signal Handlers
 
         private void _on_Attack_Animation_Timer_timeout()
@@ -169,6 +185,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human
             // in the Global state so the AI is contained
             _stateMachine.ChangeState(new States.ChasePlayer {
                 Target = vampire,
+                Alarm = true,
             });
         }
 

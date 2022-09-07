@@ -39,6 +39,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
                 //GD.Print($"[{owner.Id} too far from target to attack");
                 stateMachine.ChangeState(new ChasePlayer {
                     Target = Target,
+                    Alarm = false,
                 });
                 return;
             }

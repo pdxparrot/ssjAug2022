@@ -3,6 +3,7 @@ using Godot;
 using System.Linq;
 
 using pdxpartyparrot.ssjAug2022.Managers;
+using pdxpartyparrot.ssjAug2022.NPCs.AI;
 using pdxpartyparrot.ssjAug2022.Player;
 using pdxpartyparrot.ssjAug2022.World;
 
@@ -287,6 +288,15 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             if(!IsDead && !IsDashing && !IsRooted) {
                 base.UpdateVelocity(velocity);
             }
+        }
+
+        public override bool HandleMessage(Telegram message)
+        {
+            if(base.HandleMessage(message)) {
+                return true;
+            }
+
+            return _stateMachine.HandleMessage(message);
         }
 
         #region Spawn

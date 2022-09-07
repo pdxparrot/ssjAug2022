@@ -1,5 +1,4 @@
-using Godot;
-
+using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.NPCs.AI;
 using pdxpartyparrot.ssjAug2022.Player;
 
@@ -9,6 +8,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
     {
         public Vampire Target { get; set; }
 
+        public bool Alarm { get; set; }
+
         public void Enter(Human owner, StateMachine<Human> stateMachine)
         {
             //GD.Print($"[{owner.Id} chasing vampire {Target.Name}");
@@ -17,6 +18,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Human.States
                 target = Target,
                 maxSpeed = owner.MaxSpeed,
             });
+
+            if(Alarm) {
+                NPCManager.Instance.MessageDispatcher.BroadcastMessageImmediate(owner, (int)Messages.VampireSpotted, Target);
+            }
         }
 
         public void Exit(Human owner, StateMachine<Human> stateMachine)
