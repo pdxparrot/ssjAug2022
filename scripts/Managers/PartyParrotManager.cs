@@ -50,6 +50,12 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         #endregion
 
+        public bool IsFullscreen
+        {
+            get => OS.WindowFullscreen;
+            set => OS.WindowFullscreen = value;
+        }
+
         private bool _isPaused;
 
         public bool IsPaused

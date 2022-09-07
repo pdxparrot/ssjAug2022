@@ -59,24 +59,23 @@ alignment = 1
 
 [node name="Play" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
 margin_left = 88.0
-margin_top = 36.0
+margin_top = 0.0
 margin_right = 288.0
-margin_bottom = 86.0
+margin_bottom = 50.0
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 4 )
 
 [node name="Credits" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
 margin_left = 88.0
-margin_top = 90.0
+margin_top = 54.0
 margin_right = 288.0
-margin_bottom = 140.0
+margin_bottom = 104.0
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 7 )
 texture_hover = ExtResource( 8 )
 
 [node name="Windowed" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
-visible = false
 margin_left = 88.0
 margin_top = 108.0
 margin_right = 288.0
@@ -86,20 +85,19 @@ texture_pressed = ExtResource( 18 )
 texture_hover = ExtResource( 19 )
 
 [node name="Fullscreen" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
-visible = false
 margin_left = 88.0
-margin_top = 117.0
+margin_top = 162.0
 margin_right = 288.0
-margin_bottom = 167.0
+margin_bottom = 212.0
 texture_normal = ExtResource( 17 )
 texture_pressed = ExtResource( 20 )
 texture_hover = ExtResource( 15 )
 
 [node name="Quit" parent="CanvasLayer/Main Menu/VBoxContainer" instance=ExtResource( 11 )]
 margin_left = 88.0
-margin_top = 144.0
+margin_top = 216.0
 margin_right = 288.0
-margin_bottom = 194.0
+margin_bottom = 266.0
 texture_normal = ExtResource( 13 )
 texture_pressed = ExtResource( 14 )
 texture_hover = ExtResource( 12 )
@@ -135,6 +133,8 @@ stream = ExtResource( 9 )
 
 [connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/Windowed" to="." method="_on_Windowed_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main Menu/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="pressed" from="CanvasLayer/Credits/Back" to="." method="_on_Credits_Back_pressed"]
 

@@ -79,4 +79,11 @@ margin_right = 181.0
 margin_bottom = 74.0
 text = "Debug Overlay"
 
+[node name="Quit" type="Button" parent="CanvasLayer/VBoxContainer"]
+margin_top = 78.0
+margin_right = 181.0
+margin_bottom = 98.0
+text = "Quit"
+
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Debug Overlay" to="." method="_on_Debug_Overlay_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

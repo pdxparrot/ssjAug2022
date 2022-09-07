@@ -10,6 +10,10 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         private Control _credits;
 
+        private BaseButton _windowedButton;
+
+        private BaseButton _fullscreenButton;
+
         // TODO: this belongs on the main menu state, not the UI
         private AudioStreamPlayer _musicPlayer;
 
@@ -17,10 +21,17 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         public override void _Ready()
         {
-            _mainMenu = GetNode<Control>("CanvasLayer/Main Menu");
+            var canvas = GetNode<CanvasLayer>("CanvasLayer");
+
+            _mainMenu = canvas.GetNode<Control>("Main Menu");
+
+            _windowedButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Windowed");
+            _fullscreenButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Fullscreen");
+            UpdateFullscreenButtons();
+
             _mainMenu.Show();
 
-            _credits = GetNode<Control>("CanvasLayer/Credits");
+            _credits = canvas.GetNode<Control>("Credits");
             _credits.Hide();
 
             _musicPlayer = GetNode<AudioStreamPlayer>("Music");
@@ -29,11 +40,31 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         #endregion
 
+        private void UpdateFullscreenButtons()
+        {
+            _windowedButton.Visible = PartyParrotManager.Instance.IsFullscreen;
+            _fullscreenButton.Visible = !PartyParrotManager.Instance.IsFullscreen;
+        }
+
         #region Signal Handlers
 
         private async void _on_Play_pressed()
         {
             await GameManager.Instance.StartGameAsync().ConfigureAwait(false);
+        }
+
+        private void _on_Windowed_pressed()
+        {
+            PartyParrotManager.Instance.IsFullscreen = false;
+
+            UpdateFullscreenButtons();
+        }
+
+        private void _on_Fullscreen_pressed()
+        {
+            PartyParrotManager.Instance.IsFullscreen = true;
+
+            UpdateFullscreenButtons();
         }
 
         private void _on_Credits_pressed()

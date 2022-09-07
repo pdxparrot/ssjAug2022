@@ -1,5 +1,6 @@
 using Godot;
 
+using pdxpartyparrot.ssjAug2022.Managers;
 using pdxpartyparrot.ssjAug2022.Util;
 
 namespace pdxpartyparrot.ssjAug2022
@@ -84,6 +85,11 @@ namespace pdxpartyparrot.ssjAug2022
         private void _on_Debug_Overlay_pressed()
         {
             DebugOverlay.Instance.Toggle();
+        }
+
+        private void _on_Quit_pressed()
+        {
+            PartyParrotManager.Instance.SafeQuit();
         }
 
         #endregion
