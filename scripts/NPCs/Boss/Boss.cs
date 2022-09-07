@@ -28,6 +28,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         private Interactables.Interactables _attackInteractables;
 
+        private VFX _attackVFX;
+
         // TODO: this would be better if it was driven by the animation
         private Timer _attackAnimationTimer;
 
@@ -56,6 +58,8 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
         private float _powerUnleashedScale = 1.5f;
 
         private Interactables.Interactables _powerUnleashedInteractables;
+
+        private VFX _powerUnleashedVFX;
 
         // TODO: this would be better if it was driven by the animation
         private Timer _powerUnleashedDelayTimer;
@@ -119,6 +123,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             _attackDamageTimer = GetNode<Timer>("Timers/Attack Damage Timer");
             _attackCooldown = GetNode<Timer>("Timers/Attack Cooldown");
             _attackInteractables = Pivot.GetNode<Interactables.Interactables>("Attack Hitbox");
+            _attackVFX = Pivot.GetNode<VFX>("Attack VFX");
             _attackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Attack");
 
             _powerUnleashedDelayTimer = GetNode<Timer>("Timers/PowerUnleashed Delay Timer");
@@ -126,6 +131,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             _powerUnleashedDamageTimer = GetNode<Timer>("Timers/PowerUnleashed Damage Timer");
             _powerUnleashedCooldown = GetNode<Timer>("Timers/PowerUnleashed Cooldown");
             _powerUnleashedInteractables = Pivot.GetNode<Interactables.Interactables>("PowerUnleashed Hitbox");
+            _powerUnleashedVFX = Pivot.GetNode<VFX>("PowerUnleashed VFX");
             _powerUnleashedInitialScale = _powerUnleashedInteractables.Scale;
             _powerUnleashedMaxScale = _powerUnleashedInitialScale * _powerUnleashedScale;
 
@@ -320,10 +326,14 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
         private void _on_Attack_Damage_Timer_timeout()
         {
             DoAttackDamage();
+
+            //_attackVFX.Play("attack");
         }
 
         private void _on_PowerUnleashed_Delay_Timer_timeout()
         {
+            _powerUnleashedVFX.Play("power_unleashed");
+
             _powerUnleashedScaleTimer.Start();
 
             DoPowerUnleashedDamage();
@@ -333,8 +343,10 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
         {
             _powerUnleashedInteractables.Scale = _powerUnleashedInitialScale;
 
-            _powerUnleashedCooldown.Start();
+            _powerUnleashedVFX.Stop();
             _powerUnleashedDamageTimer.Stop();
+
+            _powerUnleashedCooldown.Start();
         }
 
         private void _on_PowerUnleashed_Damage_Timer_timeout()

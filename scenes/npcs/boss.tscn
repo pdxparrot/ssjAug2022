@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/NPCs/Boss/Boss.cs" type="Script" id=1]
 [ext_resource path="res://audio/player/SFX_PC_Dash_1.wav" type="AudioStream" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://art/3d/character/hero/hero_anim.tscn" type="PackedScene" id=9]
 [ext_resource path="res://art/3d/3d_fx/hero_attack_vfx.tscn" type="PackedScene" id=10]
 [ext_resource path="res://art/3d/3d_fx/hero_pu_vfx.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scripts/VFX.cs" type="Script" id=12]
 
 [sub_resource type="CapsuleShape" id=1]
 margin = 0.001
@@ -51,7 +52,7 @@ script = ExtResource( 3 )
 _motionBlendPath = "parameters/attack_movement/Motion/blend_position"
 
 [node name="BoneAttachment" parent="Pivot/Model/HeroArmature/Skeleton" index="1"]
-transform = Transform( 0.683231, -0.229504, 0.693199, -0.390358, 0.687487, 0.612358, -0.617103, -0.688977, 0.380123, -78.102, -34.3878, -142.794 )
+transform = Transform( 0.776658, -0.198229, 0.59792, -0.300024, 0.71821, 0.627821, -0.553884, -0.666992, 0.49833, -79.5342, -49.1829, -163.081 )
 
 [node name="hero_scythe" parent="Pivot/Model/HeroArmature/Skeleton/BoneAttachment" index="0"]
 transform = Transform( 1.36702, -0.614298, 0.0623961, -0.0311385, -0.219976, -1.48346, 0.616667, 1.35066, -0.213226, -7.644, 72.5401, 9.53839 )
@@ -92,9 +93,12 @@ shape = SubResource( 6 )
 
 [node name="Attack VFX" parent="Pivot" instance=ExtResource( 10 )]
 transform = Transform( -6.4607e-08, 0, -1.47804, 0, 1, 0, 1.47804, 0, -6.4607e-08, 0, 2.39687, -4.0703 )
+visible = false
+script = ExtResource( 12 )
 
 [node name="PowerUnleashed VFX" parent="Pivot" instance=ExtResource( 11 )]
 transform = Transform( 3.62739, 0, 0, 0, 1, 0, 0, 0, 3.62739, 0, 0.2, 0 )
+script = ExtResource( 12 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
 avoidance_enabled = true

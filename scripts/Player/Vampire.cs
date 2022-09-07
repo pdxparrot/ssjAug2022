@@ -353,8 +353,10 @@ namespace pdxpartyparrot.ssjAug2022.Player
         {
             _powerUnleashedInteractables.Scale = _powerUnleashedInitialScale;
 
-            _powerUnleashedCooldown.Start();
+            _powerUnleashedVFX.Stop();
             _powerUnleashedDamageTimer.Stop();
+
+            _powerUnleashedCooldown.Start();
         }
 
         private void _on_PowerUnleashed_Damage_Timer_timeout()

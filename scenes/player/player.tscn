@@ -70,12 +70,12 @@ script = ExtResource( 4 )
 [node name="CollisionShape" type="CollisionShape" parent="Pivot/PowerUnleashed Hitbox"]
 shape = SubResource( 4 )
 
-[node name="PowerUnleashed VFX" parent="Pivot" instance=ExtResource( 9 )]
-transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
-script = ExtResource( 8 )
-
 [node name="ClawAttack VFX" parent="Pivot" instance=ExtResource( 7 )]
 transform = Transform( -1.76777, 6.18172e-08, -1.76777, -2.18557e-07, -1, 0, -1.76777, 6.18172e-08, 1.76777, 0.0934343, 3, -2.18131 )
+script = ExtResource( 8 )
+
+[node name="PowerUnleashed VFX" parent="Pivot" instance=ExtResource( 9 )]
+transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
 script = ExtResource( 8 )
 
 [node name="Dash VFX" type="Spatial" parent="Pivot"]
