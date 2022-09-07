@@ -47,6 +47,17 @@ namespace pdxpartyparrot.ssjAug2022.Managers
             _isGameOver = false;
         }
 
+        public override void _UnhandledInput(InputEvent @event)
+        {
+            if(IsGameOver) {
+                return;
+            }
+
+            if(@event.IsActionPressed("pause") && !PartyParrotManager.Instance.IsPaused) {
+                PartyParrotManager.Instance.TogglePause();
+            }
+        }
+
         #endregion
 
         public async Task StartGameAsync()

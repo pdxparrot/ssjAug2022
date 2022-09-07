@@ -24,7 +24,7 @@ namespace pdxpartyparrot.ssjAug2022.Util
 
         #region Godot Lifecycle
 
-        public override void _Ready()
+        public override void _EnterTree()
         {
             if(HasInstance) {
                 GD.PushError($"[Singleton] Instance '{typeof(T)}' already exists!");

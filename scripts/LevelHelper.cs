@@ -87,7 +87,7 @@ namespace pdxpartyparrot.ssjAug2022
                 return;
             }
 
-            if(GameManager.Instance.IsGameOver) {
+            if(GameManager.Instance.IsGameOver || PartyParrotManager.Instance.IsPaused) {
                 return;
             }
 

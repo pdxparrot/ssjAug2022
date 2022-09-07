@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/ui/button.tscn" type="PackedScene" id=1]
 [ext_resource path="res://art/ui/pause.png" type="Texture" id=2]
@@ -10,10 +10,12 @@
 [ext_resource path="res://art/ui/windowed_button_pressed.png" type="Texture" id=8]
 [ext_resource path="res://art/ui/windowed_button_selected.png" type="Texture" id=9]
 [ext_resource path="res://art/ui/resume_button_unselected.png" type="Texture" id=10]
+[ext_resource path="res://scripts/UI/PauseMenu.cs" type="Script" id=11]
 
-[node name="Control" type="Control"]
+[node name="Canvas" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 11 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -22,11 +24,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.784314 )
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="Pivot" type="Control" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Pivot"]
 anchor_left = 0.355
 anchor_top = 0.259
 anchor_right = 0.639
@@ -39,7 +41,7 @@ rect_scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 2 )
 stretch_mode = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Pivot"]
 anchor_left = 0.4
 anchor_top = 0.432
 anchor_right = 0.6
@@ -50,7 +52,7 @@ size_flags_horizontal = 5
 size_flags_vertical = 5
 alignment = 1
 
-[node name="Resume" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource( 1 )]
+[node name="Resume" parent="CanvasLayer/Pivot/VBoxContainer" instance=ExtResource( 1 )]
 margin_left = 92.0
 margin_top = 29.0
 margin_right = 292.0
@@ -59,7 +61,7 @@ texture_normal = ExtResource( 10 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 3 )
 
-[node name="Windowed" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource( 1 )]
+[node name="Windowed" parent="CanvasLayer/Pivot/VBoxContainer" instance=ExtResource( 1 )]
 margin_left = 92.0
 margin_top = 83.0
 margin_right = 292.0
@@ -68,10 +70,14 @@ texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 8 )
 texture_hover = ExtResource( 9 )
 
-[node name="Fullscreen" parent="CanvasLayer/Control/VBoxContainer" instance=ExtResource( 1 )]
+[node name="Fullscreen" parent="CanvasLayer/Pivot/VBoxContainer" instance=ExtResource( 1 )]
 margin_left = 92.0
 margin_top = 137.0
 margin_right = 292.0
 margin_bottom = 187.0
 texture_normal = ExtResource( 7 )
 texture_hover = ExtResource( 4 )
+
+[connection signal="pressed" from="CanvasLayer/Pivot/VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pivot/VBoxContainer/Windowed" to="." method="_on_Windowed_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pivot/VBoxContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]

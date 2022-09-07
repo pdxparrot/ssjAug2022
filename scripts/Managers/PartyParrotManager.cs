@@ -50,6 +50,7 @@ namespace pdxpartyparrot.ssjAug2022.Managers
 
         #endregion
 
+        // https://docs.godotengine.org/en/stable/tutorials/rendering/multiple_resolutions.html
         public bool IsFullscreen
         {
             get => OS.WindowFullscreen;
