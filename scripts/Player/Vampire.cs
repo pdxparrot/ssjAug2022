@@ -209,6 +209,9 @@ namespace pdxpartyparrot.ssjAug2022.Player
         {
             Stop();
 
+            // TODO: disable collision with *only* npcs
+            //Collider.Disabled = true;
+
             Model.ChangeState("death");
 
             // TODO: this should despawn the player but not destroy it

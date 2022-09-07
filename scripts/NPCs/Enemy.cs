@@ -53,6 +53,9 @@ namespace pdxpartyparrot.ssjAug2022.NPCs
         protected virtual void OnDied()
         {
             Stop();
+
+            // TODO: disable collision with *only* players and npcs
+            //Collider.Disabled = true;
         }
 
         public virtual void Damage(int amount)

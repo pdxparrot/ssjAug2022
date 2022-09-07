@@ -27,6 +27,8 @@ namespace pdxpartyparrot.ssjAug2022
         [Export]
         private float _gravityMultiplier = 5.0f;
 
+        protected CollisionShape Collider { get; private set; }
+
         private Vector3 _acceleration;
 
         private Vector3 _velocity;
@@ -58,6 +60,8 @@ namespace pdxpartyparrot.ssjAug2022
         public override void _Ready()
         {
             _gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
+
+            Collider = GetNode<CollisionShape>("CollisionShape");
 
             Pivot = GetNode<Spatial>("Pivot");
 
