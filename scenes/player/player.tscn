@@ -27,10 +27,10 @@ height = 2.0
 script = ExtResource( 1 )
 _mass = 50.0
 _maxHealth = 100
-_clawAttackDamage = 3
+_clawAttackDamage = 5
 _shouldPowerUnleashedRoot = true
 _dashCancelPowerUnleashed = true
-_powerUnleashedDamage = 10
+_powerUnleashedDamage = 5
 _powerUnleashedScale = 6.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

@@ -4679,10 +4679,13 @@ xfade_time = 0.2
 [sub_resource type="AnimationNodeStateMachineTransition" id=30]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=31]
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=32]
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=33]
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachine" id=12]
 states/Movement/node = SubResource( 18 )
@@ -4697,7 +4700,7 @@ states/power_unleash/node = SubResource( 20 )
 states/power_unleash/position = Vector2( 366, 37 )
 transitions = [ "Movement", "death", SubResource( 21 ), "Movement", "dash", SubResource( 22 ), "dash", "Movement", SubResource( 23 ), "Movement", "claw_attack", SubResource( 24 ), "claw_attack", "Movement", SubResource( 25 ), "Movement", "power_unleash", SubResource( 26 ), "power_unleash", "Movement", SubResource( 27 ), "power_unleash", "dash", SubResource( 30 ), "claw_attack", "death", SubResource( 31 ), "dash", "death", SubResource( 32 ), "power_unleash", "death", SubResource( 33 ) ]
 start_node = "Movement"
-graph_offset = Vector2( -271, -82 )
+graph_offset = Vector2( -306, -79 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=13]
 
