@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/ui/button.tscn" type="PackedScene" id=1]
 [ext_resource path="res://art/ui/pause.png" type="Texture" id=2]
@@ -11,6 +11,10 @@
 [ext_resource path="res://art/ui/windowed_button_selected.png" type="Texture" id=9]
 [ext_resource path="res://art/ui/resume_button_unselected.png" type="Texture" id=10]
 [ext_resource path="res://scripts/UI/PauseMenu.cs" type="Script" id=11]
+[ext_resource path="res://art/ui/fullscreen_pressed.png" type="Texture" id=12]
+[ext_resource path="res://art/ui/quit_button_pressed.png" type="Texture" id=13]
+[ext_resource path="res://art/ui/quit_button_unselected.png" type="Texture" id=14]
+[ext_resource path="res://art/ui/quit_button_selected.png" type="Texture" id=15]
 
 [node name="Canvas" type="Control"]
 anchor_right = 1.0
@@ -54,30 +58,41 @@ alignment = 1
 
 [node name="Resume" parent="CanvasLayer/Pivot/VBoxContainer" instance=ExtResource( 1 )]
 margin_left = 92.0
-margin_top = 29.0
+margin_top = 2.0
 margin_right = 292.0
-margin_bottom = 79.0
+margin_bottom = 52.0
 texture_normal = ExtResource( 10 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 3 )
 
 [node name="Windowed" parent="CanvasLayer/Pivot/VBoxContainer" instance=ExtResource( 1 )]
 margin_left = 92.0
-margin_top = 83.0
+margin_top = 56.0
 margin_right = 292.0
-margin_bottom = 133.0
+margin_bottom = 106.0
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 8 )
 texture_hover = ExtResource( 9 )
 
 [node name="Fullscreen" parent="CanvasLayer/Pivot/VBoxContainer" instance=ExtResource( 1 )]
 margin_left = 92.0
-margin_top = 137.0
+margin_top = 110.0
 margin_right = 292.0
-margin_bottom = 187.0
+margin_bottom = 160.0
 texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 12 )
 texture_hover = ExtResource( 4 )
+
+[node name="Quit" parent="CanvasLayer/Pivot/VBoxContainer" instance=ExtResource( 1 )]
+margin_left = 92.0
+margin_top = 164.0
+margin_right = 292.0
+margin_bottom = 214.0
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 15 )
 
 [connection signal="pressed" from="CanvasLayer/Pivot/VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pivot/VBoxContainer/Windowed" to="." method="_on_Windowed_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pivot/VBoxContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pivot/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
