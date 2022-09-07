@@ -6,6 +6,8 @@ namespace pdxpartyparrot.ssjAug2022.UI
 {
     public class PauseMenu : Control
     {
+        private BaseButton _resumeButton;
+
         private BaseButton _windowedButton;
 
         private BaseButton _fullscreenButton;
@@ -16,9 +18,19 @@ namespace pdxpartyparrot.ssjAug2022.UI
         {
             var canvas = GetNode<CanvasLayer>("CanvasLayer");
 
+            _resumeButton = canvas.GetNode<BaseButton>("Pivot/VBoxContainer/Resume");
+            _resumeButton.GrabFocus();
+
             _windowedButton = canvas.GetNode<BaseButton>("Pivot/VBoxContainer/Windowed");
             _fullscreenButton = canvas.GetNode<BaseButton>("Pivot/VBoxContainer/Fullscreen");
             UpdateFullscreenButtons();
+        }
+
+        public override void _EnterTree()
+        {
+            if(_resumeButton != null) {
+                _resumeButton.GrabFocus();
+            }
         }
 
         #endregion
@@ -41,6 +53,8 @@ namespace pdxpartyparrot.ssjAug2022.UI
             PartyParrotManager.Instance.IsFullscreen = false;
 
             UpdateFullscreenButtons();
+
+            _fullscreenButton.GrabFocus();
         }
 
         private void _on_Fullscreen_pressed()
@@ -48,6 +62,8 @@ namespace pdxpartyparrot.ssjAug2022.UI
             PartyParrotManager.Instance.IsFullscreen = true;
 
             UpdateFullscreenButtons();
+
+            _windowedButton.GrabFocus();
         }
 
         private void _on_Quit_pressed()

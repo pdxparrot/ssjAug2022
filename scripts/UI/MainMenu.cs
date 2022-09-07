@@ -10,9 +10,15 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
         private Control _credits;
 
+        private BaseButton _playButton;
+
+        private BaseButton _creditsButton;
+
         private BaseButton _windowedButton;
 
         private BaseButton _fullscreenButton;
+
+        private BaseButton _creditsBackButton;
 
         // TODO: this belongs on the main menu state, not the UI
         private AudioStreamPlayer _musicPlayer;
@@ -25,8 +31,10 @@ namespace pdxpartyparrot.ssjAug2022.UI
 
             _mainMenu = canvas.GetNode<Control>("Main Menu");
 
-            var playButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Play");
-            playButton.GrabFocus();
+            _playButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Play");
+            _playButton.GrabFocus();
+
+            _creditsButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Credits");
 
             _windowedButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Windowed");
             _fullscreenButton = _mainMenu.GetNode<BaseButton>("VBoxContainer/Fullscreen");
@@ -35,10 +43,18 @@ namespace pdxpartyparrot.ssjAug2022.UI
             _mainMenu.Show();
 
             _credits = canvas.GetNode<Control>("Credits");
+            _creditsBackButton = canvas.GetNode<BaseButton>("Credits/Back");
             _credits.Hide();
 
             _musicPlayer = GetNode<AudioStreamPlayer>("Music");
             _musicPlayer.Play();
+        }
+
+        public override void _EnterTree()
+        {
+            if(_playButton != null) {
+                _playButton.GrabFocus();
+            }
         }
 
         #endregion
@@ -78,12 +94,16 @@ namespace pdxpartyparrot.ssjAug2022.UI
         {
             _mainMenu.Hide();
             _credits.Show();
+
+            _creditsBackButton.GrabFocus();
         }
 
         private void _on_Credits_Back_pressed()
         {
             _mainMenu.Show();
             _credits.Hide();
+
+            _creditsButton.GrabFocus();
         }
 
         private void _on_Quit_pressed()
