@@ -6,7 +6,6 @@
 [sub_resource type="Animation" id=1]
 resource_name = "attack"
 length = 1.06667
-loop = true
 step = 0.0333333
 tracks/0/type = "value"
 tracks/0/path = NodePath("RootNode/hero_attack_vfx:visible")

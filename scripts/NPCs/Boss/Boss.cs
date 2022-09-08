@@ -28,7 +28,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
 
         private Interactables.Interactables _attackInteractables;
 
-        //private VFX _attackVFX;
+        private VFX _attackVFX;
 
         // TODO: this would be better if it was driven by the animation
         private Timer _attackAnimationTimer;
@@ -123,7 +123,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
             _attackDamageTimer = GetNode<Timer>("Timers/Attack Damage Timer");
             _attackCooldown = GetNode<Timer>("Timers/Attack Cooldown");
             _attackInteractables = Pivot.GetNode<Interactables.Interactables>("Attack Hitbox");
-            //_attackVFX = Pivot.GetNode<VFX>("Attack VFX");
+            _attackVFX = Pivot.GetNode<VFX>("Attack VFX");
             _attackAudioPlayer = GetNode<AudioStreamPlayer>("SFX/Attack");
 
             _powerUnleashedDelayTimer = GetNode<Timer>("Timers/PowerUnleashed Delay Timer");
@@ -327,7 +327,7 @@ namespace pdxpartyparrot.ssjAug2022.NPCs.Boss
         {
             DoAttackDamage();
 
-            //_attackVFX.Play("attack");
+            _attackVFX.Play("attack");
         }
 
         private void _on_PowerUnleashed_Delay_Timer_timeout()
